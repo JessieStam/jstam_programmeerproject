@@ -16,3 +16,10 @@ De applicatie zal dus bestaan uit het logboekarchief, waarin de duiker zijn gere
 Problemen die kunnen ontstaan bij het implementeren van de applicatie zijn vooral het ontbreken van passende API’s. Indien deze niet aanwezig zijn is het niet moeilijk om de informatie zelf te verkrijgen, maar dit zal wel aanzienlijk meer tijd in beslag nemen. Het is dus van belang vanaf begin af aan goed de tijd te managen.
 
 Er zijn wel al een aantal applicaties beschikbaar die ook een logboek bijhouden. Hier wordt echter niet specifiek aandacht gevestigd op de stikstoflevels en veiligheid. Ook is hier geen optie om specifieke flora en fauna toe te voegen aan een duik. Wat mij vooral opvalt is dat veel van de applicaties zeer technisch en complex ogen met een overschot aan technische informatie. Ik denk juist dat een minimalistische en simpele user interface is wat nodig is om een logboek overzichtelijk te houden. Dit is dan ook hoe ik mijn applicatie ga implementeren.
+
+<img src="https://github.com/JessieStam/jstam_programmeerproject/blob/master/doc/Titelscherm.bmp" width="400">
+<img src="https://github.com/JessieStam/jstam_programmeerproject/blob/master/doc/Start%20menu.bmp" width="400">
+<img src="https://github.com/JessieStam/jstam_programmeerproject/blob/master/doc/Nieuwe%20duik.bmp" width="400">
+<img src="https://github.com/JessieStam/jstam_programmeerproject/blob/master/doc/Logboek%20archief.bmp" width="400">
+<img src="https://github.com/JessieStam/jstam_programmeerproject/blob/master/doc/Statistieken.bmp" width="400">
+<img src="https://github.com/JessieStam/jstam_programmeerproject/blob/master/doc/Vissen%20gezien.bmp" width="400">
