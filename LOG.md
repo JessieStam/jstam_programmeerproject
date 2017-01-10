@@ -11,3 +11,5 @@
 *14:00* Design document is af. Ik heb dezelfde schetsen gebruikt aangezien deze al vrij uitgebreid waren.
 
 *14:10* Begonnen aan proposal.
+
+*16:15* Firebase toegevoegd aan app.
