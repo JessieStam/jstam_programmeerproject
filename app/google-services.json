@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "915963810813",
+    "firebase_url": "https://jessiestam-programmeerproject.firebaseio.com",
+    "project_id": "jessiestam-programmeerproject",
+    "storage_bucket": "jessiestam-programmeerproject.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:915963810813:android:a14d8d0b52c8483f",
+        "android_client_info": {
+          "package_name": "jstam.programmeerproject_scubascan"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "915963810813-nh51qshhmja8no9rvd834ji2cr24cvs6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "jstam.programmeerproject_scubascan",
+            "certificate_hash": "D8FF7381B09202114947D9EECA1E3CF791CF0351"
+          }
+        },
+        {
+          "client_id": "915963810813-k1rbepb60o71jvtte9i6dn2uvi9rlo37.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyALXjewovdB_cin35MDPUBhgcwpBB0NStg"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "915963810813-k1rbepb60o71jvtte9i6dn2uvi9rlo37.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

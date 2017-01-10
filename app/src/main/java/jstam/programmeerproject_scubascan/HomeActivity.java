@@ -2,6 +2,7 @@ package jstam.programmeerproject_scubascan;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -9,5 +10,16 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+    }
+
+    public void signUpUser(View view) {
+
+
+
+    }
+
+    public void logInUser(View view) {
+
+
     }
 }

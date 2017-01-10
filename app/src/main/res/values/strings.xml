@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">Programmeerproject - Scuba Scan</string>
+    <string name="app_title_string">Scuba Scan</string>
+    <string name="log_in_button_string">Log in</string>
+    <string name="sign_up_button_string">Sign Up</string>
 </resources>
