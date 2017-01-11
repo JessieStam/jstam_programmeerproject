@@ -1,4 +1,4 @@
-#Progress Log
+#PROCESS BOOK
 
 **Maandag 09-01-'17**
 
@@ -13,3 +13,9 @@
 *14:10* Begonnen aan proposal.
 
 *16:15* Firebase toegevoegd aan app.
+
+**Woensdag 11-01-'17**
+
+*10:00* Projecten gepitched voor groepje. Selfie gestuurd naar Martijn.
+
+*10:30* Verder werken aan Firebase ingloggen.
