@@ -233,26 +233,27 @@ public class LoginActivity extends HomeActivity implements View.OnClickListener 
                 if (mPasswordConfirmField.getVisibility() != View.INVISIBLE) {
                     mPasswordConfirmField.setVisibility(View.GONE);
                 }
-            }
-            else {
-            mStatusTextView.setText(R.string.signed_out);
-            mDetailTextView.setText(null);
+            } else {
+                mStatusTextView.setText(R.string.signed_out);
+                mDetailTextView.setText(null);
 
-            findViewById(R.id.sign_up_button).setVisibility(View.VISIBLE);
-            findViewById(R.id.sign_out_button).setVisibility(View.GONE);
+                findViewById(R.id.sign_up_button).setVisibility(View.VISIBLE);
+                findViewById(R.id.sign_out_button).setVisibility(View.GONE);
 
-            mEmailField.setVisibility(View.VISIBLE);
-            mPasswordField.setVisibility(View.VISIBLE);
+                mEmailField.setVisibility(View.VISIBLE);
+                mPasswordField.setVisibility(View.VISIBLE);
 
-            if (confirm_pass != null) {
-                if (confirm_pass.equals("invisible")) {
-                    mPasswordConfirmField.setVisibility(View.INVISIBLE);
+                if (confirm_pass != null) {
+                    if (confirm_pass.equals("invisible")) {
+                        mPasswordConfirmField.setVisibility(View.INVISIBLE);
+                    }
                 }
+            }
         }
     }
 
     @Override
-    public void onClick(View v) {
+    public void onClick (View v){
         int i = v.getId();
         String new_instr = "Logged in succesfully! Click the search button to look for " +
                 "books. Click the list button to access your lists.";
@@ -267,11 +268,9 @@ public class LoginActivity extends HomeActivity implements View.OnClickListener 
 
                 if (!password.equals(password_confirm)) {
                     Toast.makeText(this, "Passwords don't match!", Toast.LENGTH_SHORT).show();
-                }
-                else if (email.equals("")) {
+                } else if (email.equals("")) {
                     Toast.makeText(this, "Fill in your e-mail!", Toast.LENGTH_SHORT).show();
-                }
-                else {
+                } else {
                     createAccount(email, password);
                     instr_text.setText(new_instr);
                     //manager.create_user(email);
