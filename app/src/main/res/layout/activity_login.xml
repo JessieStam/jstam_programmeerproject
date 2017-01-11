@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="55dp"/>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp">
+
+            <TextView
+                android:text=""
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/signup_title"
+                android:textColor="#000000"
+                android:textSize="30sp"
+                android:textAlignment="center"
+                android:textAllCaps="false" />
+        </FrameLayout>
+
+        <TextView
+            android:text=""
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/signup_instr"
+            android:textColor="#000000"
+            android:padding="20dp"
+            android:textAlignment="center" />
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textEmailAddress"
+                android:hint="@string/enter_email_hint_string"
+                android:textColorHint="#59be7e"
+                android:ems="10"
+                android:id="@+id/email_input"
+                android:textColor="#000000"
+                android:padding="20dp"
+                android:textSize="15sp"
+                android:visibility="visible"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                android:textColorHint="#59be7e"
+                android:hint="@string/enter_password_hint_string"
+                android:ems="10"
+                android:id="@+id/password_input"
+                android:textColor="#000000"
+                android:padding="20dp"
+                android:textSize="15sp"
+                android:visibility="visible"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                android:textColorHint="#59be7e"
+                android:hint="@string/confirm_password_hint_string"
+                android:ems="10"
+                android:id="@+id/password_confirm_input"
+                android:textColor="#000000"
+                android:padding="20dp"
+                android:textSize="15sp"
+                android:visibility="invisible"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/status"
+                android:textColor="#FFFFFF"
+                android:padding="20dp"
+                android:background="#59be7e"
+                android:textAlignment="center"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/detail"
+                android:textColor="#FFFFFF"
+                android:padding="20dp"
+                android:background="#59be7e"
+                android:textAlignment="center"/>
+
+        </LinearLayout>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="40dp" />
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:text="@string/sign_up_button_string"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/sign_up_button" />
+            <Button
+                android:text="@string/sign_me_out_button_string"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/sign_out_button"
+                android:visibility="invisible"/>
+        </FrameLayout>
+
+    </LinearLayout>
+
+
+
+</RelativeLayout>
