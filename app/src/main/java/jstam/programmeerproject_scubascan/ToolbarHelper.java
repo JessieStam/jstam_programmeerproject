@@ -3,6 +3,7 @@ package jstam.programmeerproject_scubascan;
 import android.content.Context;
 import android.content.Intent;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 /**
  * TBR Jar - MenuHelper
@@ -38,54 +39,46 @@ public class ToolbarHelper {
                 Intent openAccountpage = new Intent(context, LoginActivity.class);
                 context.startActivity(openAccountpage);
                 break;
-        }
 
-            // if tbr list is clicked and user is logged in, take user to tbr
-//            case R.id.new_dive_toolbutton:
-//                //toast = checkIfLoggedIn();
-//
-//                if (toast.equals("")) {
-//                    Intent openTBR = new Intent(context, TbrJarList.class);
-//                    context.startActivity(openTBR);
-//                }
-//                break;
-//
-//            // if favorite list is clicked and user in logged in, take user to favorite
-//            case R.id.favList:
-//
-//                if (toast.equals("")) {
-//                    Intent openFavorites = new Intent(context, FavoritesList.class);
-//                    context.startActivity(openFavorites);
-//                }
-//                break;
-//
-//            // if finished list is clicked and user is logged in, take user to finished;
-//            case R.id.readList:
-//
-//                if (toast.equals("")) {
-//                    Intent openFinished = new Intent(context, FinishedList.class);
-//                    context.startActivity(openFinished);
-//                }
-//                break;
-//
-//            // if current list is clicked and user is logged in, take user to current list;
-//            case R.id.currentList:
-//
-//                if (toast.equals("")) {
-//                    Intent openNowreading = new Intent (context, NowReadingList.class);
-//                    context.startActivity(openNowreading);
-//                }
-//                break;
-//
-//            // if search button is clicked and user is logged in, take user to FindBooksActivity
-//            case R.id.action_search:
-//                toast = checkIfLoggedIn();
-//                if (toast.equals("")) {
-//                    Intent searchBook = new Intent(context, FindBooksActivity.class);
-//                    context.startActivity(searchBook);
-//                    break;
-//                }
-//        }
+            case R.id.new_dive_toolbutton:
+                if (toast.equals("")) {
+                    Intent new_dive_activity = new Intent(context, NewDiveActivity.class);
+                    toast = "Logging a new dive...";
+
+                    context.startActivity(new_dive_activity);
+                }
+                break;
+
+            // if favorite list is clicked and user in logged in, take user to favorite
+            case R.id.dive_log_toolbutton:
+                if (toast.equals("")) {
+                    Intent dive_log_activity = new Intent(context, DiveLogActivity.class);
+                    toast = "Opening dive log...";
+
+                    context.startActivity(dive_log_activity);
+                }
+                break;
+
+            // if finished list is clicked and user is logged in, take user to finished;
+            case R.id.statistics_toolbutton:
+                if (toast.equals("")) {
+                    Intent statistics_activity = new Intent(context, StatisticsActivity.class);
+                    toast = "Showing statistics...";
+
+                    context.startActivity(statistics_activity);
+                }
+                break;
+
+            // if current list is clicked and user is logged in, take user to current list;
+            case R.id.fish_log_toolbutton:
+                if (toast.equals("")) {
+                    Intent fish_log_activity = new Intent (context, FishLogActivity.class);
+                    toast = "Opening aquarium...";
+
+                    context.startActivity(fish_log_activity);
+                }
+                break;
+        }
         return toast;
     }
 }
