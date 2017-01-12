@@ -19,7 +19,7 @@
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:text="@string/app_title_string"
             android:textSize="50sp"
             android:textColor="#000000"
@@ -39,9 +39,6 @@
                 android:id="@+id/login_button_id"
                 android:onClick="logInUser"/>
 
-            <Space
-                android:layout_width="40dp"
-                android:layout_height="wrap_content" />
 
             <Button
                 android:text="@string/sign_up_button_string"

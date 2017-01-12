@@ -33,6 +33,8 @@ public class LoginActivity extends HomeActivity implements View.OnClickListener 
     private EditText mPasswordField;
     private EditText mPasswordConfirmField;
 
+    UserManager user_manager;
+
     // [START declare_auth]
     private FirebaseAuth mAuth;
     // [END declare_auth]
@@ -46,6 +48,8 @@ public class LoginActivity extends HomeActivity implements View.OnClickListener 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        user_manager = UserManager.getOurInstance();
+
         // Views
         mStatusTextView = (TextView) findViewById(R.id.status);
         mDetailTextView = (TextView) findViewById(R.id.detail);
@@ -53,6 +57,9 @@ public class LoginActivity extends HomeActivity implements View.OnClickListener 
         mEmailField = (EditText) findViewById(R.id.email_input);
         mPasswordField = (EditText) findViewById(R.id.password_input);
         mPasswordConfirmField = (EditText) findViewById(R.id.password_confirm_input);
+
+        title_text = (TextView) findViewById(R.id.signup_title);
+        instr_text = (TextView) findViewById(R.id.signup_instr);
 
         // get extras from MainActivity
         Bundle extras = getIntent().getExtras();
@@ -68,10 +75,6 @@ public class LoginActivity extends HomeActivity implements View.OnClickListener 
         // Buttons
         findViewById(R.id.sign_up_button).setOnClickListener(this);
         findViewById(R.id.sign_out_button).setOnClickListener(this);
-
-        mEmailField = (EditText) findViewById(R.id.email_input);
-        mPasswordField = (EditText) findViewById(R.id.password_input);
-        mPasswordConfirmField = (EditText) findViewById(R.id.password_confirm_input);
 
         // display edittext for password confirmation in case of signing up
         if (confirm_pass != null) {
@@ -147,6 +150,9 @@ public class LoginActivity extends HomeActivity implements View.OnClickListener 
                         if (!task.isSuccessful()) {
                             Toast.makeText(LoginActivity.this, R.string.auth_failed,
                                     Toast.LENGTH_SHORT).show();
+                        }
+                        else {
+                            Toast.makeText(LoginActivity.this, "You logged in I guess.", Toast.LENGTH_SHORT).show();
                         }
 
                         // [START_EXCLUDE]
@@ -255,8 +261,7 @@ public class LoginActivity extends HomeActivity implements View.OnClickListener 
     @Override
     public void onClick (View v){
         int i = v.getId();
-        String new_instr = "Logged in succesfully! Click the search button to look for " +
-                "books. Click the list button to access your lists.";
+        String new_instr = "Logged in succesfully!";
 
         if (i == R.id.sign_up_button) {
 
@@ -273,17 +278,17 @@ public class LoginActivity extends HomeActivity implements View.OnClickListener 
                 } else {
                     createAccount(email, password);
                     instr_text.setText(new_instr);
-                    //manager.create_user(email);
+                    user_manager.create_user(email);
                 }
 
             } else if (title.equals("Logging in")) {
-                //manager.create_user(email);
+                user_manager.create_user(email);
                 signIn(email, password);
                 instr_text.setText(new_instr);
             }
 
         } else if (i == R.id.sign_out_button) {
-            //manager.logout_user();
+            user_manager.logout_user();
             signOut();
             instr_text.setText(instr);
         }
