@@ -29,6 +29,9 @@ public class LoginActivity extends HomeActivity implements View.OnClickListener 
     private TextView mStatusTextView;
     private TextView mDetailTextView;
 
+    TextView status;
+    TextView detail;
+
     private EditText mEmailField;
     private EditText mPasswordField;
     private EditText mPasswordConfirmField;
@@ -60,6 +63,8 @@ public class LoginActivity extends HomeActivity implements View.OnClickListener 
 
         title_text = (TextView) findViewById(R.id.signup_title);
         instr_text = (TextView) findViewById(R.id.signup_instr);
+        status = (TextView) findViewById(R.id.status);
+        detail = (TextView) findViewById(R.id.detail);
 
         // get extras from MainActivity
         Bundle extras = getIntent().getExtras();
@@ -75,6 +80,10 @@ public class LoginActivity extends HomeActivity implements View.OnClickListener 
         // Buttons
         findViewById(R.id.sign_up_button).setOnClickListener(this);
         findViewById(R.id.sign_out_button).setOnClickListener(this);
+
+        // edit text according to log in or sign up
+        title_text.setText(title);
+        instr_text.setText(instr);
 
         // display edittext for password confirmation in case of signing up
         if (confirm_pass != null) {
