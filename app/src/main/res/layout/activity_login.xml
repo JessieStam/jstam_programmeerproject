@@ -78,6 +78,13 @@
                 android:textSize="15sp"
                 android:visibility="invisible"/>
 
+            <Button
+                android:text="@string/go_menu_button_string"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/go_menu_button"
+                android:visibility="invisible"/>
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

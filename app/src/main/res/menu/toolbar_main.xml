@@ -1,0 +1,41 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/apk/tools"
+    tools:context="jessie_stam.jessiestam_pset6_desktop.Activities.MainActivity">
+
+    <item
+        android:id="@+id/action_settings"
+        android:title="Settings"
+        android:orderInCategory="100"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/action_pages"
+        android:icon="@mipmap/ic_storage_white_24dp"
+        app:showAsAction="always"
+        android:title="List"
+        android:orderInCategory="200">
+        <menu>
+            <item
+                android:id="@+id/new_dive_toolbutton"
+                android:title="New Dive" />
+            <item
+                android:id="@+id/dive_log_toolbutton"
+                android:title="Dive Log" />
+            <item
+                android:id="@+id/statistics_toolbutton"
+                android:title="Statistics" />
+            <item
+                android:id="@+id/fish_log_toolbutton"
+                android:title="Fish Log" />
+        </menu>
+    </item>/>
+
+    <item
+        android:id="@+id/action_account"
+        android:orderInCategory="200"
+        android:title="Account"
+        android:icon="@mipmap/ic_pool_white_24dp"
+        app:showAsAction="always"/>
+
+</menu>

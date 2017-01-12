@@ -1,5 +1,6 @@
 package jstam.programmeerproject_scubascan;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
@@ -24,17 +25,15 @@ public class LoginActivity extends HomeActivity implements View.OnClickListener 
     String instr;
     String confirm_pass;
 
-    private TextView title_text;
-    private TextView instr_text;
-    private TextView mStatusTextView;
-    private TextView mDetailTextView;
+    TextView title_text;
+    TextView instr_text;
 
     TextView status;
     TextView detail;
 
-    private EditText mEmailField;
-    private EditText mPasswordField;
-    private EditText mPasswordConfirmField;
+    EditText mEmailField;
+    EditText mPasswordField;
+    EditText mPasswordConfirmField;
 
     UserManager user_manager;
 
@@ -54,8 +53,8 @@ public class LoginActivity extends HomeActivity implements View.OnClickListener 
         user_manager = UserManager.getOurInstance();
 
         // Views
-        mStatusTextView = (TextView) findViewById(R.id.status);
-        mDetailTextView = (TextView) findViewById(R.id.detail);
+        status = (TextView) findViewById(R.id.status);
+        detail = (TextView) findViewById(R.id.detail);
 
         mEmailField = (EditText) findViewById(R.id.email_input);
         mPasswordField = (EditText) findViewById(R.id.password_input);
@@ -63,8 +62,7 @@ public class LoginActivity extends HomeActivity implements View.OnClickListener 
 
         title_text = (TextView) findViewById(R.id.signup_title);
         instr_text = (TextView) findViewById(R.id.signup_instr);
-        status = (TextView) findViewById(R.id.status);
-        detail = (TextView) findViewById(R.id.detail);
+
 
         // get extras from MainActivity
         Bundle extras = getIntent().getExtras();
@@ -80,6 +78,7 @@ public class LoginActivity extends HomeActivity implements View.OnClickListener 
         // Buttons
         findViewById(R.id.sign_up_button).setOnClickListener(this);
         findViewById(R.id.sign_out_button).setOnClickListener(this);
+        findViewById(R.id.go_menu_button).setOnClickListener(this);
 
         // edit text according to log in or sign up
         title_text.setText(title);
@@ -198,7 +197,7 @@ public class LoginActivity extends HomeActivity implements View.OnClickListener 
 
                         // [START_EXCLUDE]
                         if (!task.isSuccessful()) {
-                            mStatusTextView.setText(R.string.auth_failed);
+                            status.setText(R.string.auth_failed);
                         }
                         //hideProgressDialog();
                         // [END_EXCLUDE]
@@ -242,6 +241,7 @@ public class LoginActivity extends HomeActivity implements View.OnClickListener 
             if (singup_login != null) {
                 findViewById(R.id.sign_up_button).setVisibility(View.GONE);
                 findViewById(R.id.sign_out_button).setVisibility(View.VISIBLE);
+                findViewById(R.id.go_menu_button).setVisibility(View.VISIBLE);
                 mEmailField.setVisibility(View.GONE);
                 mPasswordField.setVisibility(View.GONE);
 
@@ -249,11 +249,12 @@ public class LoginActivity extends HomeActivity implements View.OnClickListener 
                     mPasswordConfirmField.setVisibility(View.GONE);
                 }
             } else {
-                mStatusTextView.setText(R.string.signed_out);
-                mDetailTextView.setText(null);
+                status.setText(R.string.signed_out);
+                detail.setText(null);
 
-                findViewById(R.id.sign_up_button).setVisibility(View.VISIBLE);
-                findViewById(R.id.sign_out_button).setVisibility(View.GONE);
+                // findViewById(R.id.sign_up_button).setVisibility(View.VISIBLE);
+                // findViewById(R.id.sign_out_button).setVisibility(View.GONE);
+                // findViewById(R.id.go_menu_button).setVisibility(View.VISIBLE);
 
                 mEmailField.setVisibility(View.VISIBLE);
                 mPasswordField.setVisibility(View.VISIBLE);
@@ -280,10 +281,16 @@ public class LoginActivity extends HomeActivity implements View.OnClickListener 
 
             if (title.equals("Signing up")) {
 
+                int min_char = 6;
+
                 if (!password.equals(password_confirm)) {
                     Toast.makeText(this, "Passwords don't match!", Toast.LENGTH_SHORT).show();
                 } else if (email.equals("")) {
                     Toast.makeText(this, "Fill in your e-mail!", Toast.LENGTH_SHORT).show();
+                } else if (!email.contains("@") && !email.contains(".")) {
+                    Toast.makeText(this, "Unvalid e-amil!!", Toast.LENGTH_SHORT).show();
+                } else if (password.length() < min_char) {
+                    Toast.makeText(this, "Password must be 6 characters", Toast.LENGTH_SHORT).show();
                 } else {
                     createAccount(email, password);
                     instr_text.setText(new_instr);
@@ -299,7 +306,12 @@ public class LoginActivity extends HomeActivity implements View.OnClickListener 
         } else if (i == R.id.sign_out_button) {
             user_manager.logout_user();
             signOut();
-            instr_text.setText(instr);
+            finish();
+        }
+        else if (i == R.id.go_menu_button) {
+
+            Intent goToMenu = new Intent(this, MenuActivity.class);
+            startActivity(goToMenu);
         }
     }
 }

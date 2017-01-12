@@ -13,6 +13,7 @@
     <string name="firebase_status_fmt">Your magical code is: %s</string>
 
     <string name="signed_out">Youre signed out</string>
+    <string name="go_menu_button_string">Dive into App</string>
 
 
 </resources>
