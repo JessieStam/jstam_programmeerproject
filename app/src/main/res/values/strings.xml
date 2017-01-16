@@ -15,6 +15,11 @@
     <string name="signed_out">Youre signed out</string>
     <string name="go_menu_button_string">Dive into App</string>
     <string name="enter_username_hint_string">How shall I address you?</string>
+    <string name="frag_firstnewdive_title">General Dive Info</string>
+    <string name="frag_firstnewdive_date_string">Date of dive</string>
+    <string name="frag_firstnewdive_country_string">Country</string>
+    <string name="frag_firstnewdive_divespot_string">Dive spot</string>
+    <string name="frag_firstnewdive_buddy_string">Dive buddy</string>
 
 
 </resources>
