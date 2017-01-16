@@ -1,4 +1,4 @@
-package jstam.programmeerproject_scubascan;
+package jstam.programmeerproject_scubascan.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,6 +16,12 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import jstam.programmeerproject_scubascan.Items.UserItem;
+import jstam.programmeerproject_scubascan.R;
+import jstam.programmeerproject_scubascan.Helpers.UserManager;
 
 public class LoginActivity extends HomeActivity implements View.OnClickListener {
 
@@ -31,6 +37,7 @@ public class LoginActivity extends HomeActivity implements View.OnClickListener 
     TextView status;
     TextView detail;
 
+    EditText mUsernameField;
     EditText mEmailField;
     EditText mPasswordField;
     EditText mPasswordConfirmField;
@@ -45,6 +52,8 @@ public class LoginActivity extends HomeActivity implements View.OnClickListener 
     private FirebaseAuth.AuthStateListener mAuthListener;
     // [END declare_auth_listener]
 
+    private DatabaseReference my_database;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,6 +65,7 @@ public class LoginActivity extends HomeActivity implements View.OnClickListener 
         status = (TextView) findViewById(R.id.status);
         detail = (TextView) findViewById(R.id.detail);
 
+        mUsernameField = (EditText) findViewById(R.id.username_input);
         mEmailField = (EditText) findViewById(R.id.email_input);
         mPasswordField = (EditText) findViewById(R.id.password_input);
         mPasswordConfirmField = (EditText) findViewById(R.id.password_confirm_input);
@@ -87,6 +97,7 @@ public class LoginActivity extends HomeActivity implements View.OnClickListener 
         // display edittext for password confirmation in case of signing up
         if (confirm_pass != null) {
             if (confirm_pass.equals("visible")) {
+                mUsernameField.setVisibility(View.VISIBLE);
                 mPasswordConfirmField.setVisibility(View.VISIBLE);
                 signup_button.setText("Sign me up!");
             }
@@ -117,6 +128,8 @@ public class LoginActivity extends HomeActivity implements View.OnClickListener 
             }
         };
         // [END auth_state_listener]
+
+        my_database = FirebaseDatabase.getInstance().getReference();
     }
 
     // [START on_start_add_listener]
@@ -160,7 +173,7 @@ public class LoginActivity extends HomeActivity implements View.OnClickListener 
                                     Toast.LENGTH_SHORT).show();
                         }
                         else {
-                            Toast.makeText(LoginActivity.this, "You logged in I guess.", Toast.LENGTH_SHORT).show();
+                            saveUserInformation();
                         }
 
                         // [START_EXCLUDE]
@@ -199,6 +212,7 @@ public class LoginActivity extends HomeActivity implements View.OnClickListener 
                         if (!task.isSuccessful()) {
                             status.setText(R.string.auth_failed);
                         }
+
                         //hideProgressDialog();
                         // [END_EXCLUDE]
                     }
@@ -242,6 +256,7 @@ public class LoginActivity extends HomeActivity implements View.OnClickListener 
                 findViewById(R.id.sign_up_button).setVisibility(View.GONE);
                 findViewById(R.id.sign_out_button).setVisibility(View.VISIBLE);
                 findViewById(R.id.go_menu_button).setVisibility(View.VISIBLE);
+                mUsernameField.setVisibility(View.GONE);
                 mEmailField.setVisibility(View.GONE);
                 mPasswordField.setVisibility(View.GONE);
 
@@ -256,6 +271,7 @@ public class LoginActivity extends HomeActivity implements View.OnClickListener 
                 // findViewById(R.id.sign_out_button).setVisibility(View.GONE);
                 // findViewById(R.id.go_menu_button).setVisibility(View.VISIBLE);
 
+                mUsernameField.setVisibility(View.VISIBLE);
                 mEmailField.setVisibility(View.VISIBLE);
                 mPasswordField.setVisibility(View.VISIBLE);
 
@@ -268,6 +284,20 @@ public class LoginActivity extends HomeActivity implements View.OnClickListener 
         }
     }
 
+    private void saveUserInformation() {
+
+        String username = mUsernameField.getText().toString().trim();
+        String email = mEmailField.getText().toString().trim();
+
+        FirebaseUser firebase_user = mAuth.getCurrentUser();
+        String user_id = firebase_user.getUid();
+
+        UserItem user = new UserItem(username, email);
+
+        my_database.child("users").child(user_id).child("user_info").setValue(user);
+
+    }
+
     @Override
     public void onClick (View v){
         int i = v.getId();
@@ -275,12 +305,14 @@ public class LoginActivity extends HomeActivity implements View.OnClickListener 
 
         if (i == R.id.sign_up_button) {
 
+            String username = "";
             String email = mEmailField.getText().toString();
             String password = mPasswordField.getText().toString();
             String password_confirm = mPasswordConfirmField.getText().toString();
 
             if (title.equals("Signing up")) {
 
+                username = mUsernameField.getText().toString();
                 int min_char = 6;
 
                 if (!password.equals(password_confirm)) {
@@ -293,12 +325,14 @@ public class LoginActivity extends HomeActivity implements View.OnClickListener 
                     Toast.makeText(this, "Password must be 6 characters", Toast.LENGTH_SHORT).show();
                 } else {
                     createAccount(email, password);
+                    signIn(email, password);
                     instr_text.setText(new_instr);
-                    user_manager.create_user(email);
+                    user_manager.create_user(username, email);
                 }
 
             } else if (title.equals("Logging in")) {
-                user_manager.create_user(email);
+
+                user_manager.create_user(username, email);
                 signIn(email, password);
                 instr_text.setText(new_instr);
             }

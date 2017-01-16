@@ -1,4 +1,4 @@
-package jstam.programmeerproject_scubascan;
+package jstam.programmeerproject_scubascan.Activities;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -8,11 +8,14 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import jstam.programmeerproject_scubascan.R;
+import jstam.programmeerproject_scubascan.Helpers.ToolbarHelper;
+
 /**
  * Created by Jessie on 12/01/2017.
  */
 
-public class FishLogActivity extends AppCompatActivity {
+public class DiveLogActivity extends AppCompatActivity {
 
     private Toolbar toolbar;
     ToolbarHelper toolbar_helper;
@@ -20,7 +23,7 @@ public class FishLogActivity extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_fish_log);
+        setContentView(R.layout.activity_dive_log);
 
         // construct toolbar
         toolbar = (Toolbar) findViewById(R.id.toolbar);

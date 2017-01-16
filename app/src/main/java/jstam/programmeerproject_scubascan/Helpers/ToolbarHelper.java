@@ -1,9 +1,15 @@
-package jstam.programmeerproject_scubascan;
+package jstam.programmeerproject_scubascan.Helpers;
 
 import android.content.Context;
 import android.content.Intent;
 import android.view.MenuItem;
-import android.widget.Toast;
+
+import jstam.programmeerproject_scubascan.Activities.DiveLogActivity;
+import jstam.programmeerproject_scubascan.Activities.FishLogActivity;
+import jstam.programmeerproject_scubascan.Activities.LoginActivity;
+import jstam.programmeerproject_scubascan.Activities.NewDiveActivity;
+import jstam.programmeerproject_scubascan.Activities.StatisticsActivity;
+import jstam.programmeerproject_scubascan.R;
 
 /**
  * TBR Jar - MenuHelper

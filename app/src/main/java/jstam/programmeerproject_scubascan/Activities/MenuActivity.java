@@ -1,4 +1,4 @@
-package jstam.programmeerproject_scubascan;
+package jstam.programmeerproject_scubascan.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,6 +8,9 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
+
+import jstam.programmeerproject_scubascan.R;
+import jstam.programmeerproject_scubascan.Helpers.ToolbarHelper;
 
 /**
  * Created by Jessie on 12/01/2017.

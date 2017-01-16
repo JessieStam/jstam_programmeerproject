@@ -1,9 +1,11 @@
-package jstam.programmeerproject_scubascan;
+package jstam.programmeerproject_scubascan.Activities;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+
+import jstam.programmeerproject_scubascan.R;
 
 public class HomeActivity extends AppCompatActivity {
 

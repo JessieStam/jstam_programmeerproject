@@ -9,19 +9,19 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".HomeActivity">
+        <activity android:name=".Activities.HomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".LoginActivity"/>
-        <activity android:name=".MenuActivity"/>
-        <activity android:name=".NewDiveActivity"/>
-        <activity android:name=".DiveLogActivity"/>
-        <activity android:name=".StatisticsActivity"/>
-        <activity android:name=".FishLogActivity"/>
+        <activity android:name=".Activities.LoginActivity"/>
+        <activity android:name=".Activities.MenuActivity"/>
+        <activity android:name=".Activities.NewDiveActivity"/>
+        <activity android:name=".Activities.DiveLogActivity"/>
+        <activity android:name=".Activities.StatisticsActivity"/>
+        <activity android:name=".Activities.FishLogActivity"/>
 
     </application>
 

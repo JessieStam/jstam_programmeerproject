@@ -1,6 +1,8 @@
-package jstam.programmeerproject_scubascan;
+package jstam.programmeerproject_scubascan.Helpers;
 
 import java.util.ArrayList;
+
+import jstam.programmeerproject_scubascan.Items.UserItem;
 
 /**
  * Created by Jessie on 12/01/2017.
@@ -27,23 +29,25 @@ public class UserManager {
     /**
      * Create User and add User to users list.
      */
-    public void create_user(String user_email) {
+    public void create_user(String username, String user_email) {
 
-        //int i = 0;
-        boolean in_list = false;
+        current_user = user_email;
+
+        boolean not_in_list = false;
         current_user = user_email;
 
         // check if user is already in list
         for (UserItem user : users) {
             if (user_email.equals(user.getEmail())) {
-                in_list = true;
+                not_in_list = true;
             }
         }
 
         // if not already in list, add new user to list
-        if (in_list) {
+        if (not_in_list) {
 
             UserItem user = new UserItem();
+            user.setUsername(username);
             user.setEmail(user_email);
 
 //            user.setTBR(tbr_jar);
