@@ -20,6 +20,18 @@
     <string name="frag_firstnewdive_country_string">Country</string>
     <string name="frag_firstnewdive_divespot_string">Dive spot</string>
     <string name="frag_firstnewdive_buddy_string">Dive buddy</string>
+    <string name="frag_secondnewdive_title">Circumstances</string>
+    <string name="frag_secondnewdive_temp_string">Temperature</string>
+    <string name="frag_secondnewdive_temp_air_string">Air</string>
+    <string name="frag_secondnewdive_temp_surface_string">Surface</string>
+    <string name="frag_secondnewdive_temp_bottom_string">Bottom</string>
+    <string name="frag_secondnewdive_watertype_string">Water type</string>
+    <string name="frag_secondnewdive_watertype_sweet_string">Sweet</string>
+    <string name="frag_secondnewdive_watertype_salty_string">Salty</string>
+    <string name="frag_secondnewdive_visibility_string">Visibility</string>
+    <string name="frag_secondnewdive_divetype_string">Dive type</string>
+    <string name="frag_secondnewdive_divetype_shore_string">Shore</string>
+    <string name="frag_secondnewdive_divetype_boat_string">Boat</string>
 
 
 </resources>

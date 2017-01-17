@@ -1,4 +1,4 @@
-package jstam.programmeerproject_scubascan.Activities;
+package jstam.programmeerproject_scubascan.Fragments;
 
 import android.support.v4.app.Fragment;
 import android.content.Context;
@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import org.w3c.dom.Text;
 
+import jstam.programmeerproject_scubascan.Activities.NewDiveActivity;
 import jstam.programmeerproject_scubascan.R;
 
 /**

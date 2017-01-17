@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:padding="30dp">
 
     <TextView
         android:text="@string/frag_firstnewdive_title"
@@ -9,11 +10,12 @@
         android:layout_height="wrap_content"
         android:textSize="20sp"
         android:textColor="#000000"
-        android:id="@+id/frag_firstnewdive_title" />
+        android:id="@+id/frag_firstnewdive_title"
+        android:paddingBottom="20dp"/>
 
     <LinearLayout
         android:orientation="horizontal"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:weightSum="1">
 
@@ -22,8 +24,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="#000000"
-            android:id="@+id/frag_firstnewdive_date"
-            android:layout_weight="0.3" />
+            android:id="@+id/frag_firstnewdive_date" />
+
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
 
         <EditText
             android:layout_width="wrap_content"
@@ -31,13 +37,12 @@
             android:inputType="date"
             android:ems="10"
             android:textColor="#000000"
-            android:id="@+id/newdive_date_input"
-            android:layout_weight="0.7" />
+            android:id="@+id/newdive_date_input" />
     </LinearLayout>
 
     <LinearLayout
         android:orientation="horizontal"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:weightSum="1">
 
@@ -46,8 +51,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="#000000"
-            android:id="@+id/frag_firstnewdive_country"
-            android:layout_weight="0.3" />
+            android:id="@+id/frag_firstnewdive_country" />
+
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
 
         <EditText
             android:layout_width="wrap_content"
@@ -55,13 +64,12 @@
             android:inputType="textPersonName"
             android:ems="10"
             android:textColor="#000000"
-            android:id="@+id/newdive_country_input"
-            android:layout_weight="0.7" />
+            android:id="@+id/newdive_country_input" />
     </LinearLayout>
 
     <LinearLayout
         android:orientation="horizontal"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:weightSum="1">
 
@@ -70,8 +78,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="#000000"
-            android:id="@+id/frag_firstnewdive_divespot"
-            android:layout_weight="0.3" />
+            android:id="@+id/frag_firstnewdive_divespot" />
+
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
 
         <EditText
             android:layout_width="wrap_content"
@@ -79,14 +91,13 @@
             android:inputType="textPersonName"
             android:ems="10"
             android:textColor="#000000"
-            android:id="@+id/newdive_divespot_input"
-            android:layout_weight="0.7" />
+            android:id="@+id/newdive_divespot_input" />
 
     </LinearLayout>
 
     <LinearLayout
         android:orientation="horizontal"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:weightSum="1">
 
@@ -95,8 +106,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="#000000"
-            android:id="@+id/frag_firstnewdive_buddy"
-            android:layout_weight="0.3" />
+            android:id="@+id/frag_firstnewdive_buddy" />
+
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
 
         <EditText
             android:layout_width="wrap_content"
@@ -104,13 +119,12 @@
             android:inputType="textPersonName"
             android:ems="10"
             android:textColor="#000000"
-            android:id="@+id/newdive_buddy_input"
-            android:layout_weight="0.7" />
+            android:id="@+id/newdive_buddy_input" />
 
     </LinearLayout>
 
     <Button
-        android:text="Next"
+        android:text="Save"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/frag_firstnewdive_button" />
