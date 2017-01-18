@@ -6,7 +6,7 @@ android {
     defaultConfig {
         applicationId "jstam.programmeerproject_scubascan"
         minSdkVersion 10
-        targetSdkVersion 24
+        targetSdkVersion 25
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -19,6 +19,10 @@ android {
     }
 }
 
+ext {
+    supportLibVersion = '25.0.0'  // variable that can be referenced to keep support libs consistent
+}
+
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
@@ -27,10 +31,13 @@ dependencies {
     compile 'com.android.support:appcompat-v7:25.1.0'
     compile 'com.android.support:design:25.1.0'
 
+    compile "com.android.support:percent:25.1.0"
 
     compile 'com.google.firebase:firebase-core:9.6.1'
     compile 'com.google.firebase:firebase-auth:9.6.1'
     compile 'com.google.firebase:firebase-database:9.6.1'
+
+    compile "com.android.support:transition:25.1.0"
 
 
 

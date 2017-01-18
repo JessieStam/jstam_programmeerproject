@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import jstam.programmeerproject_scubascan.Activities.NewDiveActivity;
@@ -21,6 +22,10 @@ import jstam.programmeerproject_scubascan.R;
  */
 
 public class SecondNewDiveFragment extends Fragment{
+
+    public static final String ARG_PAGE = "ARG_PAGE";
+
+    private int mPage;
 
     String air_temp;
     String surface_temp;
@@ -41,11 +46,24 @@ public class SecondNewDiveFragment extends Fragment{
 
     Button save_button;
 
+    ImageView saved_image;
+
 
     //ThingsAdapter adapter;
     FragmentActivity listener;
 
     SecondNewDiveFragment.SecondNewDiveFragmentListener activityCommander;
+
+    public static SecondNewDiveFragment newInstance(int page) {
+
+        Log.d("Test", "In newInstance of SecondNewDiveFragment");
+
+        Bundle args = new Bundle();
+        args.putInt(ARG_PAGE, page);
+        SecondNewDiveFragment fragment = new SecondNewDiveFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     public interface SecondNewDiveFragmentListener {
         public void saveCircumstancesData(String air_temp, String surface_temp, String bottom_temp,
@@ -77,6 +95,7 @@ public class SecondNewDiveFragment extends Fragment{
         super.onCreate(savedInstanceState);
         //ArrayList<Thing> things = new ArrayList<Thing>();
         //adapter = new ThingsAdapter(getActivity(), things);
+        mPage = getArguments().getInt(ARG_PAGE);
 
     }
 
@@ -100,6 +119,8 @@ public class SecondNewDiveFragment extends Fragment{
         boat = (CheckBox) view.findViewById(R.id.frag_secondnewdive_checkbox_boat);
 
         save_button = (Button) view.findViewById(R.id.frag_secondnewdive_button);
+
+        saved_image = (ImageView) view.findViewById(R.id.data_saved_image2);
 
         //view.findViewById(R.id.frag_firstnewdive_button).setOnClickListener(NewDiveActivity);
         save_button.setOnClickListener(
@@ -179,6 +200,16 @@ public class SecondNewDiveFragment extends Fragment{
 
         if (!air_temp.equals("") && !surface_temp.equals("") && !bottom_temp.equals("")
                 && !visibility.equals("")) {
+
+            if (saved_image.getVisibility() == View.INVISIBLE) {
+                saved_image.setVisibility(View.VISIBLE);
+                save_button.setText("Edit");
+            }
+            else {
+                saved_image.setVisibility(View.INVISIBLE);
+                save_button.setText("Save");
+            }
+
             activityCommander.saveCircumstancesData(air_temp, surface_temp, bottom_temp, visibility, water_type, dive_type);
         }
         else {

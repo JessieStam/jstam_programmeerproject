@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -27,6 +28,10 @@ import jstam.programmeerproject_scubascan.R;
 @RequiresApi(api = Build.VERSION_CODES.HONEYCOMB)
 public class FirstNewDiveFragment extends Fragment {
 
+    public static final String ARG_PAGE = "ARG_PAGE";
+
+    private int mPage;
+
     String date;
     String country;
     String dive_spot;
@@ -39,10 +44,21 @@ public class FirstNewDiveFragment extends Fragment {
 
     Button next_button;
 
+    ImageView saved_image;
+
     //ThingsAdapter adapter;
     FragmentActivity listener;
 
     FirstNewDiveFragmentListener activityCommander;
+
+    public static FirstNewDiveFragment newInstance(int page) {
+
+        Bundle args = new Bundle();
+        args.putInt(ARG_PAGE, page);
+        FirstNewDiveFragment fragment = new FirstNewDiveFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     public interface FirstNewDiveFragmentListener {
         public void saveGeneralData(String date, String country, String dive_spot, String buddy);
@@ -63,6 +79,7 @@ public class FirstNewDiveFragment extends Fragment {
         }catch (ClassCastException e) {
             throw new ClassCastException(context.toString());
         }
+
     }
 
     // This event fires 2nd, before views are created for the fragment
@@ -73,6 +90,7 @@ public class FirstNewDiveFragment extends Fragment {
         super.onCreate(savedInstanceState);
         //ArrayList<Thing> things = new ArrayList<Thing>();
         //adapter = new ThingsAdapter(getActivity(), things);
+        mPage = getArguments().getInt(ARG_PAGE);
 
     }
 
@@ -88,6 +106,8 @@ public class FirstNewDiveFragment extends Fragment {
         buddy_input = (EditText) view.findViewById(R.id.newdive_buddy_input);
 
         next_button = (Button) view.findViewById(R.id.frag_firstnewdive_button);
+
+        saved_image = (ImageView) view.findViewById(R.id.data_saved_image1);
 
         //view.findViewById(R.id.frag_firstnewdive_button).setOnClickListener(NewDiveActivity);
         next_button.setOnClickListener(
@@ -134,6 +154,16 @@ public class FirstNewDiveFragment extends Fragment {
         buddy = buddy_input.getText().toString();
 
         if (!date.equals("") && !country.equals("") && !dive_spot.equals("") && !buddy.equals("")) {
+
+            if (saved_image.getVisibility() == View.INVISIBLE) {
+                saved_image.setVisibility(View.VISIBLE);
+                next_button.setText("Edit");
+            }
+            else {
+                saved_image.setVisibility(View.INVISIBLE);
+                next_button.setText("Save");
+            }
+
             activityCommander.saveGeneralData(date, country, dive_spot, buddy);
         }
         else {
