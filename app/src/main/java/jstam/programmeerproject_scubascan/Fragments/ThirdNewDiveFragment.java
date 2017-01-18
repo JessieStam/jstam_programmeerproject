@@ -57,7 +57,7 @@ public class ThirdNewDiveFragment extends Fragment implements View.OnClickListen
     }
 
     public interface ThirdNewDiveFragmentListener {
-        public void saveCircumstancesData();
+        public void saveEquipmentData(String lead, ArrayList<String> clothes);
     }
 
     // This event fires 1st, before creation of fragment or any views
@@ -94,34 +94,10 @@ public class ThirdNewDiveFragment extends Fragment implements View.OnClickListen
     // either dynamically or via XML layout inflation.
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
-        View view =  inflater.inflate(R.layout.fragment_secondnewdive, parent, false);
-
-        bool_swimsuit = false;
-        bool_shorty = false;
-        bool_wetsuit = false;
-        bool_drysuit = false;
-        bool_hood = false;
-        bool_gloves = false;
-        bool_fins = false;
-        bool_shoes = false;
-        bool_flashlight = false;
-        bool_mask = false;
+        View view =  inflater.inflate(R.layout.fragment_thirdnewdive, parent, false);
 
         lead_input = (EditText) view.findViewById(R.id.newdive_lead_input);
-
-//        swimsuit = (CheckBox) view.findViewById(R.id.frag_thirdnewdive_checkbox_swimsuit);
-//        shorty = (CheckBox) view.findViewById(R.id.frag_thirdnewdive_checkbox_shorty);
-//        wetsuit = (CheckBox) view.findViewById(R.id.frag_thirdnewdive_checkbox_wetsuit);
-//        drysuit = (CheckBox) view.findViewById(R.id.frag_thirdnewdive_checkbox_drysuit);
-//        hood = (CheckBox) view.findViewById(R.id.frag_thirdnewdive_checkbox_hood);
-//        gloves = (CheckBox) view.findViewById(R.id.frag_thirdnewdive_checkbox_gloves);
-//        fins = (CheckBox) view.findViewById(R.id.frag_thirdnewdive_checkbox_fins);
-//        shoes = (CheckBox) view.findViewById(R.id.frag_thirdnewdive_checkbox_shoes);
-//        flashlight = (CheckBox) view.findViewById(R.id.frag_thirdnewdive_checkbox_flash);
-//        mask = (CheckBox) view.findViewById(R.id.frag_thirdnewdive_checkbox_mask);
-
         save_button = (Button) view.findViewById(R.id.frag_thirdnewdive_button);
-
         saved_image = (ImageView) view.findViewById(R.id.data_saved_image2);
 
         return view;
@@ -157,87 +133,17 @@ public class ThirdNewDiveFragment extends Fragment implements View.OnClickListen
 
         int id = view.getId();
 
-        if (id == R.id.frag_thirdnewdive_checkbox_swimsuit) {
+        if (id == R.id.frag_thirdnewdive_checkbox_swimsuit || id == R.id.frag_thirdnewdive_checkbox_shorty
+                || id == R.id.frag_thirdnewdive_checkbox_wetsuit || id == R.id.frag_thirdnewdive_checkbox_drysuit
+                || id == R.id.frag_thirdnewdive_checkbox_hood || id == R.id.frag_thirdnewdive_checkbox_gloves
+                || id == R.id.frag_thirdnewdive_checkbox_fins || id == R.id.frag_thirdnewdive_checkbox_shoes
+                || id == R.id.frag_thirdnewdive_checkbox_flash || id == R.id.frag_thirdnewdive_checkbox_mask) {
 
-            for (String item : clothes) {
-                if (item.equals("swimsuit")) {
-                    clothes.remove(item);
-                    break;
-                }
-            }
-            clothes.add("swimsuit");
+            String item_name = getResources().getResourceEntryName(id)
+                    .replace("frag_thirdnewdive_checkbox_", "");
 
-        } else if (id == R.id.frag_thirdnewdive_checkbox_shorty) {
+            checkIfInList(item_name);
 
-            if (bool_shorty = false) {
-                bool_shorty = true;
-            } else {
-                bool_shorty = false;
-            }
-
-        } else if (id == R.id.frag_thirdnewdive_checkbox_wetsuit) {
-
-            if (bool_wetsuit = false) {
-                bool_wetsuit = true;
-            } else {
-                bool_wetsuit = false;
-            }
-
-        } else if (id == R.id.frag_thirdnewdive_checkbox_drysuit) {
-
-            if (bool_drysuit = false) {
-                bool_drysuit = true;
-            } else {
-                bool_drysuit = false;
-            }
-
-        } else if (id == R.id.frag_thirdnewdive_checkbox_hood) {
-
-            if (bool_hood = false) {
-                bool_hood = true;
-            } else {
-                bool_hood = false;
-            }
-
-        } else if (id == R.id.frag_thirdnewdive_checkbox_gloves) {
-
-            if (bool_gloves = false) {
-                bool_gloves = true;
-            } else {
-                bool_gloves = false;
-            }
-
-        } else if (id == R.id.frag_thirdnewdive_checkbox_fins) {
-
-            if (bool_fins = false) {
-                bool_fins = true;
-            } else {
-                bool_fins = false;
-            }
-
-        } else if (id == R.id.frag_thirdnewdive_checkbox_shoes) {
-
-            if (bool_shoes = false) {
-                bool_shoes = true;
-            } else {
-                bool_shoes = false;
-            }
-
-        } else if (id == R.id.frag_thirdnewdive_checkbox_flash) {
-
-            if (bool_flashlight = false) {
-                bool_flashlight = true;
-            } else {
-                bool_flashlight = true;
-            }
-
-        } else if (id == R.id.frag_thirdnewdive_checkbox_mask) {
-
-            if (bool_mask = false) {
-                bool_mask = true;
-            } else {
-                bool_mask = false;
-            }
         } else if (id == R.id.frag_thirdnewdive_button) {
 
             lead = lead_input.getText().toString();
@@ -253,13 +159,23 @@ public class ThirdNewDiveFragment extends Fragment implements View.OnClickListen
                     save_button.setText("Save");
                 }
 
-                activityCommander.saveCircumstancesData();
+                activityCommander.saveEquipmentData(lead, clothes);
             }
             else {
                 Log.d("Test", "Parameters incomplete...");
             }
-
-
         }
+    }
+
+    public void checkIfInList(String item_name) {
+
+        for (String item : clothes) {
+            if (item.equals(item_name)) {
+                clothes.remove(item);
+                break;
+            }
+        }
+        Log.d("test", "it still adds item_name to list");
+        clothes.add(item_name);
     }
 }

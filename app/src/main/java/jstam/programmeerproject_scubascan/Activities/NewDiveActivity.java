@@ -16,6 +16,8 @@ import android.widget.Toast;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.util.ArrayList;
+
 import jstam.programmeerproject_scubascan.Fragments.FirstNewDiveFragment;
 import jstam.programmeerproject_scubascan.Helpers.DiveManager;
 import jstam.programmeerproject_scubascan.Helpers.NewDiveFragmentPageAdapter;
@@ -140,6 +142,12 @@ public class NewDiveActivity extends AppCompatActivity implements FirstNewDiveFr
         circumstances_data = true;
 
         checkIfDataComplete();
+    }
+
+    @Override
+    public void saveEquipmentData(String lead, ArrayList<String> clothes) {
+        Toast.makeText(NewDiveActivity.this, "Saved data!", Toast.LENGTH_SHORT).show();
+
     }
 
     public void checkIfDataComplete() {
