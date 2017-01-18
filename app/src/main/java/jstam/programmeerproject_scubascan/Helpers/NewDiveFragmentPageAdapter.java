@@ -10,6 +10,7 @@ import android.util.Log;
 
 import jstam.programmeerproject_scubascan.Fragments.FirstNewDiveFragment;
 import jstam.programmeerproject_scubascan.Fragments.SecondNewDiveFragment;
+import jstam.programmeerproject_scubascan.Fragments.ThirdNewDiveFragment;
 
 /**
  * Created by Jessie on 18/01/2017.
@@ -17,8 +18,8 @@ import jstam.programmeerproject_scubascan.Fragments.SecondNewDiveFragment;
 
 public class NewDiveFragmentPageAdapter extends FragmentPagerAdapter {
 
-    final int PAGE_COUNT = 2;
-    private String tabTitles[] = new String[] { "General", "Circumstances" };
+    final int PAGE_COUNT = 3;
+    private String tabTitles[] = new String[] { "General", "Circumstances", "Equipment" };
     private Context context;
 
     public NewDiveFragmentPageAdapter(FragmentManager frag_manager, Context context) {
@@ -44,6 +45,8 @@ public class NewDiveFragmentPageAdapter extends FragmentPagerAdapter {
                 return FirstNewDiveFragment.newInstance(position + 1);
             case 1:
                 return SecondNewDiveFragment.newInstance(position + 1);
+            case 2:
+                return ThirdNewDiveFragment.newInstance(position + 1);
             default:
                 return null;
         }

@@ -32,6 +32,10 @@
     <string name="frag_secondnewdive_divetype_string">Dive type</string>
     <string name="frag_secondnewdive_divetype_shore_string">Shore</string>
     <string name="frag_secondnewdive_divetype_boat_string">Boat</string>
+    <string name="frag_thirdnewdive_title">Equipment</string>
+    <string name="thirdnewfrag_clothing_string">Clothing</string>
+    <string name="frag_thirdtnewdive_lead_string">Amount of lead</string>
+    <string name="newdiveleadinput_hint">. . . kg</string>
 
 
 </resources>
