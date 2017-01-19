@@ -22,7 +22,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:srcCompat="@mipmap/check_box_grey_192x192"
-            android:id="@+id/data_saved_image2"
+            android:id="@+id/data_saved_image3"
             android:visibility="invisible"/>
 
         <LinearLayout
@@ -62,7 +62,7 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:srcCompat="@mipmap/Zwembroek"
+                        app:srcCompat="@mipmap/zwembroek"
                         android:id="@+id/swimsuit_icon" />
 
                 </LinearLayout>
@@ -88,7 +88,7 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:srcCompat="@mipmap/Shorty"
+                        app:srcCompat="@mipmap/shorty"
                         android:id="@+id/shorty_icon"/>
                 </LinearLayout>
 
@@ -118,7 +118,7 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:srcCompat="@mipmap/Wetsuit"
+                        app:srcCompat="@mipmap/wetsuit"
                         android:id="@+id/wetsuit_icon" />
 
                 </LinearLayout>
@@ -144,7 +144,7 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:srcCompat="@mipmap/Droogpak"
+                        app:srcCompat="@mipmap/droogpak"
                         android:id="@+id/drysuit_icon"/>
                 </LinearLayout>
 
@@ -174,7 +174,7 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:srcCompat="@mipmap/Kap"
+                        app:srcCompat="@mipmap/kap"
                         android:id="@+id/hood_icon" />
 
                 </LinearLayout>
@@ -200,7 +200,7 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:srcCompat="@mipmap/Handschoen"
+                        app:srcCompat="@mipmap/handschoen"
                         android:id="@+id/gloves_icon"/>
                 </LinearLayout>
 
@@ -230,7 +230,7 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:srcCompat="@mipmap/Vinnen"
+                        app:srcCompat="@mipmap/vinnen"
                         android:id="@+id/fins_icon" />
 
                 </LinearLayout>
@@ -256,7 +256,7 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:srcCompat="@mipmap/Schoen"
+                        app:srcCompat="@mipmap/schoen"
                         android:id="@+id/shoes_icon"/>
                 </LinearLayout>
 
@@ -286,7 +286,7 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:srcCompat="@mipmap/Lamp"
+                        app:srcCompat="@mipmap/lamp"
                         android:id="@+id/flash_icon" />
 
                 </LinearLayout>
@@ -312,7 +312,7 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:srcCompat="@mipmap/Masker"
+                        app:srcCompat="@mipmap/masker"
                         android:id="@+id/mask_icon"/>
                 </LinearLayout>
 

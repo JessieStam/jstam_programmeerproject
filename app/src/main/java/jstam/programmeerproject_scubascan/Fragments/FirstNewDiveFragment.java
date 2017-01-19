@@ -172,4 +172,22 @@ public class FirstNewDiveFragment extends Fragment {
 
     }
 
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        Log.d("test", "first fragment was stopped");
+
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+
+        // save data
+        Log.d("test", "first fragments view was destroyed");
+
+    }
+
+
 }

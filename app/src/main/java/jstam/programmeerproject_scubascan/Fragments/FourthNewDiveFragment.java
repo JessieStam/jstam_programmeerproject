@@ -13,30 +13,24 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 
-import java.util.ArrayList;
-
 import jstam.programmeerproject_scubascan.Activities.NewDiveActivity;
 import jstam.programmeerproject_scubascan.R;
 
 /**
- * Created by Jessie on 18/01/2017.
+ * Created by Jessie on 19/01/2017.
  */
 
-public class ThirdNewDiveFragment extends Fragment implements View.OnClickListener {
+public class FourthNewDiveFragment extends Fragment implements View.OnClickListener {
 
     public static final String ARG_PAGE = "ARG_PAGE";
 
     private int mPage;
 
-    ArrayList<String> clothes;
+    String time_in, time_out, pressure_in, pressure_out, depth, safetystop;
 
-    Boolean bool_swimsuit, bool_shorty, bool_wetsuit, bool_drysuit, bool_hood, bool_gloves,
-            bool_fins, bool_shoes, bool_flashlight, bool_mask;
+    EditText time_in_input, time_out_input, pressure_in_input, pressure_out_input, depth_input;
 
-    CheckBox swimsuit, shorty, wetsuit, drysuit, hood, gloves, fins, shoes, flashlight, mask;
-
-    String lead = "";
-    EditText lead_input;
+    CheckBox yes, no;
 
     Button save_button;
 
@@ -45,19 +39,20 @@ public class ThirdNewDiveFragment extends Fragment implements View.OnClickListen
     //ThingsAdapter adapter;
     FragmentActivity listener;
 
-    ThirdNewDiveFragment.ThirdNewDiveFragmentListener activityCommander;
+    FourthNewDiveFragment.FourthNewDiveFragmentListener activityCommander;
 
-    public static ThirdNewDiveFragment newInstance(int page) {
+    public static FourthNewDiveFragment newInstance(int page) {
 
         Bundle args = new Bundle();
         args.putInt(ARG_PAGE, page);
-        ThirdNewDiveFragment fragment = new ThirdNewDiveFragment();
+        FourthNewDiveFragment fragment = new FourthNewDiveFragment();
         fragment.setArguments(args);
         return fragment;
     }
 
-    public interface ThirdNewDiveFragmentListener {
-        public void saveEquipmentData(String lead, ArrayList<String> clothes);
+    public interface FourthNewDiveFragmentListener {
+        public void saveTechnicalData(String time_in, String time_out, String pressure_in,
+                                      String pressure_out, String depth, String safetystop);
     }
 
     // This event fires 1st, before creation of fragment or any views
@@ -71,10 +66,11 @@ public class ThirdNewDiveFragment extends Fragment implements View.OnClickListen
         }
 
         try{
-            activityCommander = (ThirdNewDiveFragment.ThirdNewDiveFragmentListener) context;
+            activityCommander = (FourthNewDiveFragment.FourthNewDiveFragmentListener) context;
         }catch (ClassCastException e) {
             throw new ClassCastException(context.toString());
         }
+
     }
 
     // This event fires 2nd, before views are created for the fragment
@@ -86,7 +82,6 @@ public class ThirdNewDiveFragment extends Fragment implements View.OnClickListen
         //ArrayList<Thing> things = new ArrayList<Thing>();
         //adapter = new ThingsAdapter(getActivity(), things);
         mPage = getArguments().getInt(ARG_PAGE);
-        clothes = new ArrayList<>();
 
     }
 
@@ -94,11 +89,19 @@ public class ThirdNewDiveFragment extends Fragment implements View.OnClickListen
     // either dynamically or via XML layout inflation.
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
-        View view =  inflater.inflate(R.layout.fragment_thirdnewdive, parent, false);
+        View view =  inflater.inflate(R.layout.fragment_fourthnewdive, parent, false);
 
-        lead_input = (EditText) view.findViewById(R.id.newdive_lead_input);
-        save_button = (Button) view.findViewById(R.id.frag_thirdnewdive_button);
-        saved_image = (ImageView) view.findViewById(R.id.data_saved_image3);
+        time_in_input = (EditText) view.findViewById(R.id.newdive_timein_input);
+        time_out_input = (EditText) view.findViewById(R.id.newdive_timeout_input);
+        pressure_in_input = (EditText) view.findViewById(R.id.newdive_pressurein_input);
+        pressure_out_input = (EditText) view.findViewById(R.id.newdive_pressureout_input);
+        depth_input = (EditText) view.findViewById(R.id.newdive_depth_input);
+
+        safetystop = "";
+
+        save_button = (Button) view.findViewById(R.id.frag_fourthnewdive_button);
+
+        saved_image = (ImageView) view.findViewById(R.id.data_saved_image4);
 
         return view;
     }
@@ -108,20 +111,13 @@ public class ThirdNewDiveFragment extends Fragment implements View.OnClickListen
     // Any view setup should occur here.  E.g., view lookups and attaching view listeners.
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
-        //ListView lv = (ListView) view.findViewById(R.id.lvSome);
-        //lv.setAdapter(adapter);
 
         save_button.setOnClickListener(this);
-        view.findViewById(R.id.frag_thirdnewdive_checkbox_swimsuit).setOnClickListener(this);
-        view.findViewById(R.id.frag_thirdnewdive_checkbox_shorty).setOnClickListener(this);
-        view.findViewById(R.id.frag_thirdnewdive_checkbox_wetsuit).setOnClickListener(this);
-        view.findViewById(R.id.frag_thirdnewdive_checkbox_drysuit).setOnClickListener(this);
-        view.findViewById(R.id.frag_thirdnewdive_checkbox_hood).setOnClickListener(this);
-        view.findViewById(R.id.frag_thirdnewdive_checkbox_gloves).setOnClickListener(this);
-        view.findViewById(R.id.frag_thirdnewdive_checkbox_fins).setOnClickListener(this);
-        view.findViewById(R.id.frag_thirdnewdive_checkbox_shoes).setOnClickListener(this);
-        view.findViewById(R.id.frag_thirdnewdive_checkbox_flash).setOnClickListener(this);
-        view.findViewById(R.id.frag_thirdnewdive_checkbox_mask).setOnClickListener(this);
+        yes = (CheckBox) view.findViewById(R.id.frag_fourthnewdive_checkbox_yes);
+        no = (CheckBox) view.findViewById(R.id.frag_fourthnewdive_checkbox_no);
+
+        view.findViewById(R.id.frag_fourthnewdive_checkbox_yes).setOnClickListener(this);
+        view.findViewById(R.id.frag_fourthnewdive_checkbox_no).setOnClickListener(this);
 
     }
 
@@ -144,30 +140,27 @@ public class ThirdNewDiveFragment extends Fragment implements View.OnClickListen
     @Override
     public void onClick(View view) {
 
-        Log.d("test", "something in third is clicked");
+        Log.d("test", "something in fourth is clicked");
 
-        int id = view.getId();
+        if (view == no) {
+            yes.setChecked(false);
+            safetystop = "no";
+        } else if (view == yes) {
+            no.setChecked(false);
+            safetystop = "no";
+        }
+        else if (view == save_button) {
 
-        if (id == R.id.frag_thirdnewdive_checkbox_swimsuit || id == R.id.frag_thirdnewdive_checkbox_shorty
-                || id == R.id.frag_thirdnewdive_checkbox_wetsuit || id == R.id.frag_thirdnewdive_checkbox_drysuit
-                || id == R.id.frag_thirdnewdive_checkbox_hood || id == R.id.frag_thirdnewdive_checkbox_gloves
-                || id == R.id.frag_thirdnewdive_checkbox_fins || id == R.id.frag_thirdnewdive_checkbox_shoes
-                || id == R.id.frag_thirdnewdive_checkbox_flash || id == R.id.frag_thirdnewdive_checkbox_mask) {
+            Log.d("test", "save button 4 clicked");
 
-            String item_name = getResources().getResourceEntryName(id)
-                    .replace("frag_thirdnewdive_checkbox_", "");
+            time_in = time_in_input.getText().toString();
+            time_out = time_out_input.getText().toString();
+            pressure_in = pressure_in_input.getText().toString();
+            pressure_out = pressure_out_input.getText().toString();
+            depth = depth_input.getText().toString();
 
-            Log.d("test", "name of clicked item is " + item_name);
-
-            checkIfInList(item_name);
-
-        } else if (id == R.id.frag_thirdnewdive_button) {
-
-            Log.d("test", "save button 3 clicked");
-
-            lead = lead_input.getText().toString();
-
-            if (!lead.equals("")) {
+            if (time_in != null && time_out != null && pressure_in != null && pressure_out != null
+                    && depth != null && !safetystop.equals("")) {
 
                 if (saved_image.getVisibility() == View.INVISIBLE) {
                     saved_image.setVisibility(View.VISIBLE);
@@ -178,7 +171,8 @@ public class ThirdNewDiveFragment extends Fragment implements View.OnClickListen
                     save_button.setText("Save");
                 }
 
-                activityCommander.saveEquipmentData(lead, clothes);
+                activityCommander.saveTechnicalData(time_in, time_out, pressure_in, pressure_out,
+                        depth, safetystop);
             }
             else {
                 Log.d("Test", "Parameters incomplete...");
@@ -186,15 +180,20 @@ public class ThirdNewDiveFragment extends Fragment implements View.OnClickListen
         }
     }
 
-    public void checkIfInList(String item_name) {
+    @Override
+    public void onStop() {
+        super.onStop();
 
-        for (String item : clothes) {
-            if (item.equals(item_name)) {
-                clothes.remove(item);
-                break;
-            }
-        }
-        Log.d("test", "it still adds item_name to list");
-        clothes.add(item_name);
+        Log.d("test", "fourth fragment was stopped");
+
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+
+        // save data
+        Log.d("test", "fourth fragments view was destroyed");
+
     }
 }

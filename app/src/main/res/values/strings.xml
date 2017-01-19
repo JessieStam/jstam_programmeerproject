@@ -36,6 +36,14 @@
     <string name="thirdnewfrag_clothing_string">Clothing</string>
     <string name="frag_thirdtnewdive_lead_string">Amount of lead</string>
     <string name="newdiveleadinput_hint">. . . kg</string>
+    <string name="frag_fourthnewdive_title">Technical Data</string>
+    <string name="rag_fourthnewdive_timein_string">Time in:</string>
+    <string name="rag_fourthnewdive_timeout_string">Time out:</string>
+    <string name="frag_fourthnewdive_pressurein_string">Pressure in</string>
+    <string name="frag_fourthnewdive_depth_string">Max Depth:</string>
+    <string name="frag_fourthnewdive_safety_string">Safety stop</string>
+    <string name="frag_fourthnewdive_yes_string">Yes</string>
+    <string name="frag_fourthnewdive_no_string">No</string>
 
 
 </resources>

@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.util.Log;
 
 import jstam.programmeerproject_scubascan.Fragments.FirstNewDiveFragment;
+import jstam.programmeerproject_scubascan.Fragments.FourthNewDiveFragment;
 import jstam.programmeerproject_scubascan.Fragments.SecondNewDiveFragment;
 import jstam.programmeerproject_scubascan.Fragments.ThirdNewDiveFragment;
 
@@ -18,8 +19,8 @@ import jstam.programmeerproject_scubascan.Fragments.ThirdNewDiveFragment;
 
 public class NewDiveFragmentPageAdapter extends FragmentPagerAdapter {
 
-    final int PAGE_COUNT = 3;
-    private String tabTitles[] = new String[] { "General", "Circumstances", "Equipment" };
+    final int PAGE_COUNT = 4;
+    private String tabTitles[] = new String[] { "One", "Two", "Three", "Four" };
     private Context context;
 
     public NewDiveFragmentPageAdapter(FragmentManager frag_manager, Context context) {
@@ -35,10 +36,8 @@ public class NewDiveFragmentPageAdapter extends FragmentPagerAdapter {
     @RequiresApi(api = Build.VERSION_CODES.HONEYCOMB)
     @Override
     public Fragment getItem(int position) {
-        Log.d("test", "In Fragment getItem");
 
         String pos = String.valueOf(position);
-        Log.d("test", "Position is " + pos);
 
         switch (position) {
             case 0:
@@ -47,6 +46,8 @@ public class NewDiveFragmentPageAdapter extends FragmentPagerAdapter {
                 return SecondNewDiveFragment.newInstance(position + 1);
             case 2:
                 return ThirdNewDiveFragment.newInstance(position + 1);
+            case 3:
+                return FourthNewDiveFragment.newInstance(position + 1);
             default:
                 return null;
         }

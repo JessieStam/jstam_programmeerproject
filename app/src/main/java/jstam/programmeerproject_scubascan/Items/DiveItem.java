@@ -1,5 +1,7 @@
 package jstam.programmeerproject_scubascan.Items;
 
+import java.util.ArrayList;
+
 /**
  * Created by Jessie on 18/01/2017.
  */
@@ -8,7 +10,10 @@ public class DiveItem {
 
     // fields for email and username
     private String date, country, dive_spot, buddy, air_temp, surface_temp, bottom_temp, visibility,
-            water_type, dive_type;
+            water_type, dive_type, lead, time_in, time_out, pressure_in, pressure_out, depth,
+            safetystop;
+
+    private ArrayList<String> clothing_list;
 
     private int dive_number;
 
@@ -18,7 +23,7 @@ public class DiveItem {
 
     public DiveItem(String date, String country, String dive_spot, String buddy, String air_temp,
                     String surface_temp, String bottom_temp, String visibility, String water_type,
-                    String dive_type) {
+                    String dive_type, String lead, ArrayList<String> clothing_list) {
 
         this.date = date;
         this.country = country;
@@ -30,6 +35,8 @@ public class DiveItem {
         this.visibility = visibility;
         this.water_type = water_type;
         this.dive_type = dive_type;
+        this.lead = lead;
+        this.clothing_list = clothing_list;
 
     }
 
@@ -76,5 +83,37 @@ public class DiveItem {
     // methods for dive type
     public String getDiveType() { return dive_type; }
     public void setDiveType(String new_dive_type) { dive_type = new_dive_type; }
+
+    // methods for amount of lead
+    public String getLead() { return lead; }
+    public void setLead(String new_lead) { lead = new_lead; }
+
+    // methods for list of clothing
+    public ArrayList<String> getClothingList() { return clothing_list; }
+    public void setClothingList(ArrayList<String> new_clothing_list) { clothing_list = new_clothing_list; }
+
+    // methods for time in
+    public String getTimeIn() { return time_in; }
+    public void setTimeIn(String new_time_in) { time_in = new_time_in; }
+
+    // methods for time out
+    public String getTimeOut() { return time_out; }
+    public void setTimeOut(String new_time_out) { time_out = new_time_out; }
+
+    // methods for pressure in
+    public String getPressureIn() { return pressure_in; }
+    public void setPressureIn(String new_pressure_in) { pressure_in = new_pressure_in; }
+
+    // methods for pressure out
+    public String getPressureOut() { return pressure_out; }
+    public void setPressureOut(String new_pressure_out) { pressure_out = new_pressure_out; }
+
+    // methods for depth
+    public String getDepth() { return depth; }
+    public void setDepth(String new_depth) { depth = new_depth; }
+
+    // methods for safetystop
+    public String getSafetystop() { return safetystop; }
+    public void setSafetystop(String new_safetystop) { safetystop = new_safetystop; }
 
 }

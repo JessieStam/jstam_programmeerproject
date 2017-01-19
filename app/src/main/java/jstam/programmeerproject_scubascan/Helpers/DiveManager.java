@@ -36,9 +36,12 @@ public class DiveManager {
     /**
      * Create dive and add dive to dive list.
      */
-    public void create_dive(String user, String date, String country, String dive_spot, String buddy, String air_temp,
-                            String surface_temp, String bottom_temp, String visibility, String water_type,
-                            String dive_type) {
+    public void create_dive(String user, String date, String country, String dive_spot,
+                            String buddy, String air_temp, String surface_temp, String bottom_temp,
+                            String visibility, String water_type, String dive_type, String lead,
+                            ArrayList<String> clothes_list, String time_in, String time_out,
+                            String pressure_in, String pressure_out, String depth,
+                            String safetystop) {
 
         my_database = FirebaseDatabase.getInstance().getReference();
 
@@ -57,6 +60,14 @@ public class DiveManager {
         new_dive.setVisibility(visibility);
         new_dive.setWaterType(water_type);
         new_dive.setDiveType(dive_type);
+        new_dive.setLead(lead);
+        new_dive.setClothingList(clothes_list);
+        new_dive.setTimeIn(time_in);
+        new_dive.setTimeOut(time_out);
+        new_dive.setPressureIn(pressure_in);
+        new_dive.setPressureOut(pressure_out);
+        new_dive.setDepth(depth);
+        new_dive.setSafetystop(safetystop);
 
         dive_list.add(new_dive);
 
