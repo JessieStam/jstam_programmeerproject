@@ -41,7 +41,7 @@ public class DiveManager {
                             String visibility, String water_type, String dive_type, String lead,
                             ArrayList<String> clothes_list, String time_in, String time_out,
                             String pressure_in, String pressure_out, String depth,
-                            String safetystop) {
+                            String safetystop, String notes) {
 
         my_database = FirebaseDatabase.getInstance().getReference();
 
@@ -68,6 +68,7 @@ public class DiveManager {
         new_dive.setPressureOut(pressure_out);
         new_dive.setDepth(depth);
         new_dive.setSafetystop(safetystop);
+        new_dive.setNotes(notes);
 
         dive_list.add(new_dive);
 

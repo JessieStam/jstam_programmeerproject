@@ -44,6 +44,7 @@
     <string name="frag_fourthnewdive_safety_string">Safety stop</string>
     <string name="frag_fourthnewdive_yes_string">Yes</string>
     <string name="frag_fourthnewdive_no_string">No</string>
+    <string name="frag_fifthnewdive_title">Personal notes</string>
 
 
 </resources>

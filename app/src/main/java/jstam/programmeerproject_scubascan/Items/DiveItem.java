@@ -11,7 +11,7 @@ public class DiveItem {
     // fields for email and username
     private String date, country, dive_spot, buddy, air_temp, surface_temp, bottom_temp, visibility,
             water_type, dive_type, lead, time_in, time_out, pressure_in, pressure_out, depth,
-            safetystop;
+            safetystop, notes;
 
     private ArrayList<String> clothing_list;
 
@@ -23,7 +23,10 @@ public class DiveItem {
 
     public DiveItem(String date, String country, String dive_spot, String buddy, String air_temp,
                     String surface_temp, String bottom_temp, String visibility, String water_type,
-                    String dive_type, String lead, ArrayList<String> clothing_list) {
+                    String dive_type, String lead, ArrayList<String> clothing_list,
+                    String time_in, String time_out, String pressure_in,
+                    String pressure_out, String depth, String safetystop,
+                    String notes) {
 
         this.date = date;
         this.country = country;
@@ -37,6 +40,13 @@ public class DiveItem {
         this.dive_type = dive_type;
         this.lead = lead;
         this.clothing_list = clothing_list;
+        this.time_in = time_in;
+        this.time_out = time_out;
+        this.pressure_in = pressure_in;
+        this.pressure_out = pressure_out;
+        this.depth = depth;
+        this.safetystop = safetystop;
+        this.notes = notes;
 
     }
 
@@ -54,7 +64,7 @@ public class DiveItem {
 
     // methods for dive spot
     public String getDiveSpot() { return dive_spot; }
-    public void setDiveSpot(String new_dive_spot) { country = new_dive_spot; }
+    public void setDiveSpot(String new_dive_spot) { dive_spot = new_dive_spot; }
 
     // methods for buddy
     public String getBuddy() { return buddy; }
@@ -115,5 +125,9 @@ public class DiveItem {
     // methods for safetystop
     public String getSafetystop() { return safetystop; }
     public void setSafetystop(String new_safetystop) { safetystop = new_safetystop; }
+
+    // methods for notes
+    public String getNotes() { return notes; }
+    public void setNotes(String new_notes) { notes = new_notes; }
 
 }

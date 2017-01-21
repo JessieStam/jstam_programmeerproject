@@ -18,6 +18,7 @@ import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 
+import jstam.programmeerproject_scubascan.Fragments.FifthNewDiveFragment;
 import jstam.programmeerproject_scubascan.Fragments.FirstNewDiveFragment;
 import jstam.programmeerproject_scubascan.Fragments.FourthNewDiveFragment;
 import jstam.programmeerproject_scubascan.Fragments.ThirdNewDiveFragment;
@@ -33,7 +34,7 @@ import jstam.programmeerproject_scubascan.Helpers.ToolbarHelper;
 
 public class NewDiveActivity extends AppCompatActivity implements FirstNewDiveFragment.FirstNewDiveFragmentListener,
         SecondNewDiveFragment.SecondNewDiveFragmentListener, ThirdNewDiveFragment.ThirdNewDiveFragmentListener,
-        FourthNewDiveFragment.FourthNewDiveFragmentListener {
+        FourthNewDiveFragment.FourthNewDiveFragmentListener, FifthNewDiveFragment.FifthNewDiveFragmentListener {
 
     private Toolbar toolbar;
     ToolbarHelper toolbar_helper;
@@ -42,7 +43,7 @@ public class NewDiveActivity extends AppCompatActivity implements FirstNewDiveFr
 
     String date, country, dive_spot, buddy, air_temp, surface_temp, bottom_temp, visibility,
             water_type, dive_type, lead, time_in, time_out, pressure_in, pressure_out, depth,
-            safetystop;
+            safetystop, notes;
 
     Button final_save_button;
 
@@ -171,11 +172,23 @@ public class NewDiveActivity extends AppCompatActivity implements FirstNewDiveFr
         checkIfDataComplete();
     }
 
+    @Override
+    public void saveExtraData(String notes_input) {
+
+        Toast.makeText(NewDiveActivity.this, "Saved data!", Toast.LENGTH_SHORT).show();
+
+        notes = notes_input;
+
+        extra_data = true;
+
+        checkIfDataComplete();
+    }
+
     public void checkIfDataComplete() {
 
         Log.d("test", "checkIfDataComplete is running");
 
-        if (general_data && circumstances_data && equipment_data && technical_data) {
+        if (general_data && circumstances_data && equipment_data && technical_data && extra_data) {
             final_save_button.setVisibility(View.VISIBLE);
 
             Log.d("test", "data are true");
@@ -197,7 +210,8 @@ public class NewDiveActivity extends AppCompatActivity implements FirstNewDiveFr
 
         dive_manager.create_dive(user_id, date, country, dive_spot, buddy, air_temp, surface_temp,
                 bottom_temp, visibility, water_type, dive_type, lead, clothing_list, time_in,
-                time_out, pressure_in, pressure_out, depth, safetystop);
+                time_out, pressure_in, pressure_out, depth, safetystop, notes);
 
     }
+
 }
