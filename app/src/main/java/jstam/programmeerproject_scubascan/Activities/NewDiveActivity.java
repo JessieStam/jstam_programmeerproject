@@ -67,6 +67,8 @@ public class NewDiveActivity extends AppCompatActivity implements FirstNewDiveFr
         view_pager.setAdapter(new NewDiveFragmentPageAdapter(getSupportFragmentManager(),
                 NewDiveActivity.this));
 
+        view_pager.setOffscreenPageLimit(50);
+
         // Give the TabLayout the ViewPager
         TabLayout tabLayout = (TabLayout) findViewById(R.id.sliding_tabs);
         tabLayout.setupWithViewPager(view_pager);

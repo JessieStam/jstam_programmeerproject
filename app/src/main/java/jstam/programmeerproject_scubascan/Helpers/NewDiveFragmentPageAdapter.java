@@ -11,6 +11,7 @@ import android.util.Log;
 import jstam.programmeerproject_scubascan.Fragments.FifthNewDiveFragment;
 import jstam.programmeerproject_scubascan.Fragments.FirstNewDiveFragment;
 import jstam.programmeerproject_scubascan.Fragments.FourthNewDiveFragment;
+import jstam.programmeerproject_scubascan.Fragments.RootFirstNewDiveFragment;
 import jstam.programmeerproject_scubascan.Fragments.SecondNewDiveFragment;
 import jstam.programmeerproject_scubascan.Fragments.ThirdNewDiveFragment;
 
@@ -40,7 +41,7 @@ public class NewDiveFragmentPageAdapter extends FragmentPagerAdapter {
 
         switch (position) {
             case 0:
-                return FirstNewDiveFragment.newInstance(position + 1);
+                return RootFirstNewDiveFragment.newInstance(position + 1);
             case 1:
                 return SecondNewDiveFragment.newInstance(position + 1);
             case 2:

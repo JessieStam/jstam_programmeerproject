@@ -1,11 +1,13 @@
 package jstam.programmeerproject_scubascan.Fragments;
 
+import android.os.health.PackageHealthStats;
 import android.support.v4.app.Fragment;
 import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,6 +34,8 @@ public class FirstNewDiveFragment extends Fragment {
 
     private int mPage;
 
+    int current_fragment;
+
     String date;
     String country;
     String dive_spot;
@@ -51,14 +55,14 @@ public class FirstNewDiveFragment extends Fragment {
 
     FirstNewDiveFragmentListener activityCommander;
 
-    public static FirstNewDiveFragment newInstance(int page) {
-
-        Bundle args = new Bundle();
-        args.putInt(ARG_PAGE, page);
-        FirstNewDiveFragment fragment = new FirstNewDiveFragment();
-        fragment.setArguments(args);
-        return fragment;
-    }
+//    public static FirstNewDiveFragment newInstance(int page) {
+//
+//        Bundle args = new Bundle();
+//        args.putInt(ARG_PAGE, page);
+//        FirstNewDiveFragment fragment = new FirstNewDiveFragment();
+//        fragment.setArguments(args);
+//        return fragment;
+//    }
 
     public interface FirstNewDiveFragmentListener {
         public void saveGeneralData(String date, String country, String dive_spot, String buddy);
@@ -90,7 +94,29 @@ public class FirstNewDiveFragment extends Fragment {
         super.onCreate(savedInstanceState);
         //ArrayList<Thing> things = new ArrayList<Thing>();
         //adapter = new ThingsAdapter(getActivity(), things);
-        mPage = getArguments().getInt(ARG_PAGE);
+//        mPage = getArguments().getInt(ARG_PAGE);
+
+        if (savedInstanceState != null) {
+
+            date = savedInstanceState.getString("date");
+            country = savedInstanceState.getString("country");
+            dive_spot = savedInstanceState.getString("dive_spot");
+            buddy = savedInstanceState.getString("buddy");
+            current_fragment = savedInstanceState.getInt("current_frag");
+
+            date_input.setText(date);
+            country_input.setText(country);
+            dive_spot_input.setText(dive_spot);
+            buddy_input.setText(buddy);
+
+            Log.d("test", "saved instance state is NOT null in firstnewdivefragment");
+
+        } else {
+
+            current_fragment = 1;
+
+            Log.d("test", "saved instance state is null in firstnewdivefragment");
+        }
 
     }
 
@@ -99,6 +125,15 @@ public class FirstNewDiveFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
         View view =  inflater.inflate(R.layout.fragment_firstnewdive, parent, false);
+
+        if (current_fragment == 2) {
+
+            FragmentTransaction trans = getFragmentManager().beginTransaction();
+            trans.replace(R.id.root_frame, new FirstNewDiveFragmentFinished());
+
+            trans.commit();
+
+        }
 
         date_input = (EditText) view.findViewById(R.id.newdive_date_input);
         country_input = (EditText) view.findViewById(R.id.newdive_country_input);
@@ -136,6 +171,8 @@ public class FirstNewDiveFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         this.listener = null;
+
+        Log.d("test", "first new dive fragment is detached");
     }
 
     // This method is called after the parent Activity's onCreate() method has completed.
@@ -165,6 +202,13 @@ public class FirstNewDiveFragment extends Fragment {
             }
 
             activityCommander.saveGeneralData(date, country, dive_spot, buddy);
+
+            current_fragment = 2;
+
+            FragmentTransaction trans = getFragmentManager().beginTransaction();
+            trans.replace(R.id.root_frame, new FirstNewDiveFragmentFinished());
+
+            trans.commit();
         }
         else {
             Log.d("Test", "Parameters incomplete...");
@@ -189,5 +233,54 @@ public class FirstNewDiveFragment extends Fragment {
 
     }
 
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        outState.putString("date", date);
+        outState.putString("country", country);
+        outState.putString("dive_spot", dive_spot);
+        outState.putString("buddy", buddy);
+        outState.putInt("current_frag", current_fragment);
+
+    }
+//
+//    @Override
+//    public void onRestoreInstanceState(Bundle savedInstanceState) {
+//        super.onRestoreInstanceState(savedInstanceState);
+//
+//        // restore ArrayList of visible ImageViews
+//        checked_images_list = savedInstanceState.getIntegerArrayList("savedList");
+//    }
+
+//    @Override
+//    public void onResume() {
+//        super.onResume();
+//
+//        item_list.clear();
+//        todo_list.clear();
+//
+//        // read SQLite database
+//        db_list = db_helper.read_item();
+//
+//        // iterate over TodoItems in databases
+//        for (HashMap<String, String> hashmap : db_list) {
+//
+//            //ave id, title and status
+//            String retrieved_id = hashmap.get("_id");
+//            String retrieved_title = hashmap.get("todo_text");
+//            String retrieved_status = hashmap.get("current_status");
+//
+//            // recreate TodoItem and put in list
+//            TodoItem new_item = todo_manager.create_item(retrieved_title);
+//            new_item.setId(Integer.parseInt(retrieved_id));
+//            new_item.setCurrentStatus(retrieved_status);
+//
+//            // put items back into the listview
+//            item_list.add(new_item);
+//            todo_list.add(retrieved_title);
+//            todoAdapter.notifyDataSetChanged();
+//        }
+//    }
 
 }
