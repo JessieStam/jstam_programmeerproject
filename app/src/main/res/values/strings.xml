@@ -45,6 +45,7 @@
     <string name="frag_fourthnewdive_yes_string">Yes</string>
     <string name="frag_fourthnewdive_no_string">No</string>
     <string name="frag_fifthnewdive_title">Personal notes</string>
+    <string name="firstfinishedfragment_editbutton">Edit general data</string>
 
 
 </resources>

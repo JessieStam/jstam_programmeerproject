@@ -20,6 +20,8 @@ import android.widget.TextView;
 
 import org.w3c.dom.Text;
 
+import java.util.ArrayList;
+
 import jstam.programmeerproject_scubascan.Activities.NewDiveActivity;
 import jstam.programmeerproject_scubascan.R;
 
@@ -104,11 +106,6 @@ public class FirstNewDiveFragment extends Fragment {
             buddy = savedInstanceState.getString("buddy");
             current_fragment = savedInstanceState.getInt("current_frag");
 
-            date_input.setText(date);
-            country_input.setText(country);
-            dive_spot_input.setText(dive_spot);
-            buddy_input.setText(buddy);
-
             Log.d("test", "saved instance state is NOT null in firstnewdivefragment");
 
         } else {
@@ -139,6 +136,15 @@ public class FirstNewDiveFragment extends Fragment {
         country_input = (EditText) view.findViewById(R.id.newdive_country_input);
         dive_spot_input = (EditText) view.findViewById(R.id.newdive_divespot_input);
         buddy_input = (EditText) view.findViewById(R.id.newdive_buddy_input);
+
+        if (savedInstanceState != null) {
+
+            date_input.setText(date);
+            country_input.setText(country);
+            dive_spot_input.setText(dive_spot);
+            buddy_input.setText(buddy);
+
+        }
 
         next_button = (Button) view.findViewById(R.id.frag_firstnewdive_button);
 
@@ -205,9 +211,20 @@ public class FirstNewDiveFragment extends Fragment {
 
             current_fragment = 2;
 
-            FragmentTransaction trans = getFragmentManager().beginTransaction();
-            trans.replace(R.id.root_frame, new FirstNewDiveFragmentFinished());
+            Fragment new_frag = new FirstNewDiveFragmentFinished();
 
+            Bundle data_input = new Bundle();
+
+            FragmentTransaction trans = getFragmentManager().beginTransaction();
+
+            data_input.putString("date", date);
+            data_input.putString("country", country);
+            data_input.putString("dive_spot", dive_spot);
+            data_input.putString("buddy", buddy);
+
+            new_frag.setArguments(data_input);
+
+            trans.replace(R.id.root_frame, new_frag);
             trans.commit();
         }
         else {

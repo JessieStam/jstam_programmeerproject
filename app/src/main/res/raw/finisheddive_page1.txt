@@ -1,0 +1,2 @@
+On <date>, I was diving with <buddy> .
+We were diving in <country> at the <dive_spot> dive spot.
