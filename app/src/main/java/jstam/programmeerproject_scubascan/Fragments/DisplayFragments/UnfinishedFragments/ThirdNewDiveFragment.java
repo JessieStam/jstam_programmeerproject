@@ -1,4 +1,4 @@
-package jstam.programmeerproject_scubascan.Fragments;
+package jstam.programmeerproject_scubascan.Fragments.DisplayFragments.UnfinishedFragments;
 
 import android.content.Context;
 import android.os.Bundle;

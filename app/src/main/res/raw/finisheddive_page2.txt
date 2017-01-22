@@ -1,0 +1,1 @@
+The air temperature was <air_temp> degrees Celcius. On the surface the temperature was <surface_temp> degrees and on the bottom it was <bottom_temp> degrees. The water was <water_type> and we entered the water from the <dive_type> . We were able to see <visibility> meters in front of us.

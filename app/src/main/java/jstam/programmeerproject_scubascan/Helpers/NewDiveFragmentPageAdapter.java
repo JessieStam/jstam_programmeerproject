@@ -6,14 +6,12 @@ import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.util.Log;
 
-import jstam.programmeerproject_scubascan.Fragments.FifthNewDiveFragment;
-import jstam.programmeerproject_scubascan.Fragments.FirstNewDiveFragment;
-import jstam.programmeerproject_scubascan.Fragments.FourthNewDiveFragment;
-import jstam.programmeerproject_scubascan.Fragments.RootFirstNewDiveFragment;
-import jstam.programmeerproject_scubascan.Fragments.SecondNewDiveFragment;
-import jstam.programmeerproject_scubascan.Fragments.ThirdNewDiveFragment;
+import jstam.programmeerproject_scubascan.Fragments.DisplayFragments.UnfinishedFragments.FifthNewDiveFragment;
+import jstam.programmeerproject_scubascan.Fragments.DisplayFragments.UnfinishedFragments.FourthNewDiveFragment;
+import jstam.programmeerproject_scubascan.Fragments.RootFragments.RootFirstNewDiveFragment;
+import jstam.programmeerproject_scubascan.Fragments.DisplayFragments.UnfinishedFragments.ThirdNewDiveFragment;
+import jstam.programmeerproject_scubascan.Fragments.RootFragments.RootSecondNewDiveFragment;
 
 /**
  * Created by Jessie on 18/01/2017.
@@ -43,7 +41,7 @@ public class NewDiveFragmentPageAdapter extends FragmentPagerAdapter {
             case 0:
                 return RootFirstNewDiveFragment.newInstance(position + 1);
             case 1:
-                return SecondNewDiveFragment.newInstance(position + 1);
+                return RootSecondNewDiveFragment.newInstance(position + 1);
             case 2:
                 return ThirdNewDiveFragment.newInstance(position + 1);
             case 3:

@@ -18,13 +18,13 @@ import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 
-import jstam.programmeerproject_scubascan.Fragments.FifthNewDiveFragment;
-import jstam.programmeerproject_scubascan.Fragments.FirstNewDiveFragment;
-import jstam.programmeerproject_scubascan.Fragments.FourthNewDiveFragment;
-import jstam.programmeerproject_scubascan.Fragments.ThirdNewDiveFragment;
+import jstam.programmeerproject_scubascan.Fragments.DisplayFragments.UnfinishedFragments.FifthNewDiveFragment;
+import jstam.programmeerproject_scubascan.Fragments.DisplayFragments.UnfinishedFragments.FirstNewDiveFragment;
+import jstam.programmeerproject_scubascan.Fragments.DisplayFragments.UnfinishedFragments.FourthNewDiveFragment;
+import jstam.programmeerproject_scubascan.Fragments.DisplayFragments.UnfinishedFragments.ThirdNewDiveFragment;
 import jstam.programmeerproject_scubascan.Helpers.DiveManager;
 import jstam.programmeerproject_scubascan.Helpers.NewDiveFragmentPageAdapter;
-import jstam.programmeerproject_scubascan.Fragments.SecondNewDiveFragment;
+import jstam.programmeerproject_scubascan.Fragments.DisplayFragments.UnfinishedFragments.SecondNewDiveFragment;
 import jstam.programmeerproject_scubascan.R;
 import jstam.programmeerproject_scubascan.Helpers.ToolbarHelper;
 

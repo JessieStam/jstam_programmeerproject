@@ -1,6 +1,5 @@
-package jstam.programmeerproject_scubascan.Fragments;
+package jstam.programmeerproject_scubascan.Fragments.DisplayFragments.UnfinishedFragments;
 
-import android.os.health.PackageHealthStats;
 import android.support.v4.app.Fragment;
 import android.content.Context;
 import android.os.Build;
@@ -15,14 +14,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.TextView;
-
-import org.w3c.dom.Text;
-
-import java.util.ArrayList;
 
 import jstam.programmeerproject_scubascan.Activities.NewDiveActivity;
+import jstam.programmeerproject_scubascan.Fragments.DisplayFragments.FinishedFragments.FirstNewDiveFragmentFinished;
 import jstam.programmeerproject_scubascan.R;
 
 /**
@@ -261,43 +255,5 @@ public class FirstNewDiveFragment extends Fragment {
         outState.putInt("current_frag", current_fragment);
 
     }
-//
-//    @Override
-//    public void onRestoreInstanceState(Bundle savedInstanceState) {
-//        super.onRestoreInstanceState(savedInstanceState);
-//
-//        // restore ArrayList of visible ImageViews
-//        checked_images_list = savedInstanceState.getIntegerArrayList("savedList");
-//    }
-
-//    @Override
-//    public void onResume() {
-//        super.onResume();
-//
-//        item_list.clear();
-//        todo_list.clear();
-//
-//        // read SQLite database
-//        db_list = db_helper.read_item();
-//
-//        // iterate over TodoItems in databases
-//        for (HashMap<String, String> hashmap : db_list) {
-//
-//            //ave id, title and status
-//            String retrieved_id = hashmap.get("_id");
-//            String retrieved_title = hashmap.get("todo_text");
-//            String retrieved_status = hashmap.get("current_status");
-//
-//            // recreate TodoItem and put in list
-//            TodoItem new_item = todo_manager.create_item(retrieved_title);
-//            new_item.setId(Integer.parseInt(retrieved_id));
-//            new_item.setCurrentStatus(retrieved_status);
-//
-//            // put items back into the listview
-//            item_list.add(new_item);
-//            todo_list.add(retrieved_title);
-//            todoAdapter.notifyDataSetChanged();
-//        }
-//    }
 
 }

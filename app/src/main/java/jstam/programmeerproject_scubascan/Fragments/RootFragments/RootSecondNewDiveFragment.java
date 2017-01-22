@@ -1,22 +1,22 @@
-package jstam.programmeerproject_scubascan.Fragments;
+package jstam.programmeerproject_scubascan.Fragments.RootFragments;
 
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import jstam.programmeerproject_scubascan.Fragments.DisplayFragments.UnfinishedFragments.SecondNewDiveFragment;
 import jstam.programmeerproject_scubascan.R;
 
 /**
- * Created by Jessie on 21/01/2017.
+ * Created by Jessie on 22/01/2017.
  */
 
-public class RootFirstNewDiveFragment extends Fragment {
+public class RootSecondNewDiveFragment extends Fragment {
 
     private static final String TAG = "RootFragment";
 
@@ -24,15 +24,11 @@ public class RootFirstNewDiveFragment extends Fragment {
 
     private int mPage;
 
-    //private String fragment;
-    //int cur_check_pos = 0;
-
-
-    public static RootFirstNewDiveFragment newInstance(int page) {
+    public static RootSecondNewDiveFragment newInstance(int page) {
 
         Bundle args = new Bundle();
         args.putInt(ARG_PAGE, page);
-        RootFirstNewDiveFragment fragment = new RootFirstNewDiveFragment();
+        RootSecondNewDiveFragment fragment = new RootSecondNewDiveFragment();
         fragment.setArguments(args);
         return fragment;
     }
@@ -62,7 +58,7 @@ public class RootFirstNewDiveFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 		/* Inflate the layout for this fragment */
-        View view = inflater.inflate(R.layout.fragment_root, container, false);
+        View view = inflater.inflate(R.layout.fragment_root_second, container, false);
 
         FragmentTransaction transaction = getFragmentManager()
                 .beginTransaction();
@@ -70,23 +66,11 @@ public class RootFirstNewDiveFragment extends Fragment {
 		 * When this container fragment is created, we fill it with our first
 		 * "real" fragment
 		 */
-        transaction.replace(R.id.root_frame, new FirstNewDiveFragment());
+        transaction.replace(R.id.root_frame_second, new SecondNewDiveFragment());
 
         transaction.commit();
 
-        Log.d("test", "In the root");
 
         return view;
     }
-
-//    @Override
-//    public void onSaveInstanceState(Bundle outState) {
-//        super.onSaveInstanceState(outState);
-//
-//        outState.putString("fragment", fragment);
-//
-//        outState.putInt("curChoice", cur_check_pos);
-//
-//    }
-
 }

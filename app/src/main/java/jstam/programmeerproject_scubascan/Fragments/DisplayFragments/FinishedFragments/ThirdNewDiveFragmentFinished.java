@@ -1,10 +1,10 @@
-package jstam.programmeerproject_scubascan.Fragments;
+package jstam.programmeerproject_scubascan.Fragments.DisplayFragments.FinishedFragments;
 
-import android.os.Build;
+import android.app.Fragment;
 import android.os.Bundle;
-import android.support.annotation.RequiresApi;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.FragmentTransaction;
 import android.text.Html;
 import android.util.Log;
@@ -15,21 +15,21 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import java.io.InputStream;
-import java.io.Serializable;
 import java.util.ArrayList;
 
+import jstam.programmeerproject_scubascan.Fragments.DisplayFragments.UnfinishedFragments.FirstNewDiveFragment;
 import jstam.programmeerproject_scubascan.Helpers.FinishedDiveDisplayManager;
 import jstam.programmeerproject_scubascan.R;
 
 /**
- * Created by Jessie on 21/01/2017.
+ * Created by Jessie on 22/01/2017.
  */
 
-public class FirstNewDiveFragmentFinished extends Fragment {
+public class ThirdNewDiveFragmentFinished extends android.support.v4.app.Fragment {
 
     FragmentActivity listener;
-    String date, country, dive_spot, buddy;
-    ArrayList<String> general_data;
+    String air_temp, surface_temp, bottom_temp, water_type, visibility, dive_type;
+    ArrayList<String> circumstances_data;
     TextView text;
     InputStream displaytext;
     FinishedDiveDisplayManager display_manager;
@@ -40,10 +40,10 @@ public class FirstNewDiveFragmentFinished extends Fragment {
 
         if (savedInstanceState != null) {
 
-            date = savedInstanceState.getString("date");
-            country = savedInstanceState.getString("country");
-            dive_spot = savedInstanceState.getString("dive_spot");
-            buddy = savedInstanceState.getString("buddy");
+//            date = savedInstanceState.getString("date");
+//            country = savedInstanceState.getString("country");
+//            dive_spot = savedInstanceState.getString("dive_spot");
+//            buddy = savedInstanceState.getString("buddy");
 
         }
     }
@@ -54,9 +54,9 @@ public class FirstNewDiveFragmentFinished extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater
-                .inflate(R.layout.fragment_firstnewdivefinished, container, false);
+                .inflate(R.layout.fragment_secondnewdivefinished, container, false);
 
-        displaytext = getResources().openRawResource(R.raw.finisheddive_page1);
+        displaytext = getResources().openRawResource(R.raw.finisheddive_page2);
 
         // if savedInstanceState is empty, create new manager object
         if (savedInstanceState == null) {
@@ -64,36 +64,43 @@ public class FirstNewDiveFragmentFinished extends Fragment {
             display_manager = new FinishedDiveDisplayManager(displaytext);
             display_manager.read(displaytext);
 
-            general_data = new ArrayList<>();
+            circumstances_data = new ArrayList<>();
 
         } else {
 
-            date = savedInstanceState.getString("date");
-            country = savedInstanceState.getString("country");
-            dive_spot = savedInstanceState.getString("dive_spot");
-            buddy = savedInstanceState.getString("buddy");
+//            date = savedInstanceState.getString("date");
+//            country = savedInstanceState.getString("country");
+//            dive_spot = savedInstanceState.getString("dive_spot");
+//            buddy = savedInstanceState.getString("buddy");
 
             display_manager = (FinishedDiveDisplayManager) savedInstanceState.getSerializable("manager");
 
         }
 
-        if (getArguments()!=null) {
+        if (getArguments() != null) {
 
-            Log.d("test", "finished firstnewdive getarguments are null :(");
+            Log.d("test", "finished secondnewdive getarguments are NOT null");
 
-            date = getArguments().getString("date");
-            country = getArguments().getString("country");
-            dive_spot = getArguments().getString("dive_spot");
-            buddy = getArguments().getString("buddy");
+            air_temp = getArguments().getString("air_temp");
+            surface_temp = getArguments().getString("surface_temp");
+            bottom_temp = getArguments().getString("bottom_temp");
+            visibility = getArguments().getString("visibility");
+            water_type = getArguments().getString("water_type");
+            dive_type = getArguments().getString("dive_type");
+
+        } else {
+            Log.d("test", "finished secondnewdive getarguments are null");
         }
 
-        general_data.add(date);
-        general_data.add(buddy);
-        general_data.add(country);
-        general_data.add(dive_spot);
+        circumstances_data.add(air_temp);
+        circumstances_data.add(surface_temp);
+        circumstances_data.add(bottom_temp);
+        circumstances_data.add(water_type);
+        circumstances_data.add(dive_type);
+        circumstances_data.add(visibility);
 
-        text = (TextView) view.findViewById(R.id.finished_text);
-        Button btn = (Button) view.findViewById(R.id.edit_firstnewdive_button);
+        text = (TextView) view.findViewById(R.id.finished_text_second);
+        Button btn = (Button) view.findViewById(R.id.edit_secondnewdive_button);
 
         btn.setOnClickListener(new View.OnClickListener() {
 
@@ -114,9 +121,9 @@ public class FirstNewDiveFragmentFinished extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
 
-        if (general_data != null) {
+        if (circumstances_data != null) {
 
-            for (String detail : general_data) {
+            for (String detail : circumstances_data) {
 
                 Log.d("test", "detail is " + detail);
 
@@ -153,11 +160,11 @@ public class FirstNewDiveFragmentFinished extends Fragment {
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
 
-        outState.putString("date", date);
-        outState.putString("country", country);
-        outState.putString("dive_spot", dive_spot);
-        outState.putString("buddy", buddy);
-        outState.putSerializable("manager", display_manager);
+//        outState.putString("date", date);
+//        outState.putString("country", country);
+//        outState.putString("dive_spot", dive_spot);
+//        outState.putString("buddy", buddy);
+//        outState.putSerializable("manager", display_manager);
 
     }
 }

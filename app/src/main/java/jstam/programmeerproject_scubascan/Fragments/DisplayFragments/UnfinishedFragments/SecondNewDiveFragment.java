@@ -1,9 +1,10 @@
-package jstam.programmeerproject_scubascan.Fragments;
+package jstam.programmeerproject_scubascan.Fragments.DisplayFragments.UnfinishedFragments;
 
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,58 +13,44 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import jstam.programmeerproject_scubascan.Activities.NewDiveActivity;
+import jstam.programmeerproject_scubascan.Fragments.DisplayFragments.FinishedFragments.SecondNewDiveFragmentFinished;
 import jstam.programmeerproject_scubascan.R;
 
 /**
  * Created by Jessie on 17/01/2017.
  */
 
-public class SecondNewDiveFragment extends Fragment{
+public class SecondNewDiveFragment extends Fragment implements View.OnClickListener {
 
     public static final String ARG_PAGE = "ARG_PAGE";
 
     private int mPage;
 
-    String air_temp;
-    String surface_temp;
-    String bottom_temp;
-    String water_type;
-    String visibility;
-    String dive_type;
-
-    EditText air_temp_input;
-    EditText surface_temp_input;
-    EditText bottom_temp_input;
-    EditText visibility_input;
-
-    CheckBox salty;
-    CheckBox sweet;
-    CheckBox shore;
-    CheckBox boat;
+    String air_temp, surface_temp, bottom_temp, water_type, visibility, dive_type;
+    EditText air_temp_input, surface_temp_input, bottom_temp_input, visibility_input;
+    CheckBox salty, sweet, shore, boat;
 
     Button save_button;
 
     ImageView saved_image;
-
 
     //ThingsAdapter adapter;
     FragmentActivity listener;
 
     SecondNewDiveFragment.SecondNewDiveFragmentListener activityCommander;
 
-    public static SecondNewDiveFragment newInstance(int page) {
-
-        Log.d("Test", "In newInstance of SecondNewDiveFragment");
-
-        Bundle args = new Bundle();
-        args.putInt(ARG_PAGE, page);
-        SecondNewDiveFragment fragment = new SecondNewDiveFragment();
-        fragment.setArguments(args);
-        return fragment;
-    }
+//    public static SecondNewDiveFragment newInstance(int page) {
+//
+//        Log.d("Test", "In newInstance of SecondNewDiveFragment");
+//
+//        Bundle args = new Bundle();
+//        args.putInt(ARG_PAGE, page);
+//        SecondNewDiveFragment fragment = new SecondNewDiveFragment();
+//        fragment.setArguments(args);
+//        return fragment;
+//    }
 
     public interface SecondNewDiveFragmentListener {
         public void saveCircumstancesData(String air_temp, String surface_temp, String bottom_temp,
@@ -95,7 +82,7 @@ public class SecondNewDiveFragment extends Fragment{
         super.onCreate(savedInstanceState);
         //ArrayList<Thing> things = new ArrayList<Thing>();
         //adapter = new ThingsAdapter(getActivity(), things);
-        mPage = getArguments().getInt(ARG_PAGE);
+//        mPage = getArguments().getInt(ARG_PAGE);
 
     }
 
@@ -118,50 +105,16 @@ public class SecondNewDiveFragment extends Fragment{
         shore = (CheckBox) view.findViewById(R.id.frag_secondnewdive_checkbox_shore);
         boat = (CheckBox) view.findViewById(R.id.frag_secondnewdive_checkbox_boat);
 
+        salty.setOnClickListener(this);
+        sweet.setOnClickListener(this);
+        shore.setOnClickListener(this);
+        boat.setOnClickListener(this);
+
         save_button = (Button) view.findViewById(R.id.frag_secondnewdive_button);
 
+        save_button.setOnClickListener(this);
+
         saved_image = (ImageView) view.findViewById(R.id.data_saved_image2);
-
-        //view.findViewById(R.id.frag_firstnewdive_button).setOnClickListener(NewDiveActivity);
-        save_button.setOnClickListener(
-                new View.OnClickListener(){
-                    public void onClick(View v) {
-                        buttonClicked(v);
-                    }
-                }
-        );
-
-        salty.setOnClickListener(
-                new View.OnClickListener(){
-                    public void onClick(View v) {
-                        checkboxClicked(v);
-                    }
-                }
-        );
-
-        sweet.setOnClickListener(
-                new View.OnClickListener(){
-                    public void onClick(View v) {
-                        checkboxClicked(v);
-                    }
-                }
-        );
-
-        shore.setOnClickListener(
-                new View.OnClickListener(){
-                    public void onClick(View v) {
-                        checkboxClicked(v);
-                    }
-                }
-        );
-
-        boat.setOnClickListener(
-                new View.OnClickListener(){
-                    public void onClick(View v) {
-                        checkboxClicked(v);
-                    }
-                }
-        );
 
         return view;
     }
@@ -191,55 +144,63 @@ public class SecondNewDiveFragment extends Fragment{
         super.onActivityCreated(savedInstanceState);
     }
 
-    public void buttonClicked(View view) {
+    @Override
+    public void onClick(View view) {
 
-        air_temp = air_temp_input.getText().toString();
-        surface_temp = surface_temp_input.getText().toString();
-        bottom_temp = bottom_temp_input.getText().toString();
-        visibility = visibility_input.getText().toString();
-
-        if (!air_temp.equals("") && !surface_temp.equals("") && !bottom_temp.equals("")
-                && !visibility.equals("")) {
-
-            if (saved_image.getVisibility() == View.INVISIBLE) {
-                saved_image.setVisibility(View.VISIBLE);
-                save_button.setText("Edit");
-            }
-            else {
-                saved_image.setVisibility(View.INVISIBLE);
-                save_button.setText("Save");
-            }
-
-            activityCommander.saveCircumstancesData(air_temp, surface_temp, bottom_temp, visibility, water_type, dive_type);
-        }
-        else {
-            Log.d("Test", "Parameters incomplete...");
-        }
-
-    }
-
-    public void checkboxClicked(View checkbox) {
-
-        if (checkbox == salty) {
-            Log.d("test", "Salty is checked");
+        if (view == salty) {
             water_type = "salty";
             sweet.setChecked(false);
-        }
-        else if (checkbox == sweet) {
-            Log.d("test", "Sweet is checked");
+        } else if (view == sweet) {
             water_type = "sweet";
             salty.setChecked(false);
-        }
-        else if (checkbox == shore) {
-            Log.d("test", "Shore is checked");
-            dive_type = "shore";
+        } else if (view == shore) {
+            dive_type = "boat";
             boat.setChecked(false);
-        }
-        else if (checkbox == boat) {
-            Log.d("test", "Boat is checked");
+        } else if (view == boat) {
             dive_type = "boat";
             shore.setChecked(false);
-        }
+        } else if (view == save_button) {
 
+            air_temp = air_temp_input.getText().toString();
+            surface_temp = surface_temp_input.getText().toString();
+            bottom_temp = bottom_temp_input.getText().toString();
+            visibility = visibility_input.getText().toString();
+
+            if (!air_temp.equals("") && !surface_temp.equals("") && !bottom_temp.equals("")
+                    && !visibility.equals("")) {
+
+                if (saved_image.getVisibility() == View.INVISIBLE) {
+                    saved_image.setVisibility(View.VISIBLE);
+                    save_button.setText("Edit");
+                }
+                else {
+                    saved_image.setVisibility(View.INVISIBLE);
+                    save_button.setText("Save");
+                }
+
+                activityCommander.saveCircumstancesData(air_temp, surface_temp, bottom_temp, visibility, water_type, dive_type);
+
+                Fragment new_frag = new SecondNewDiveFragmentFinished();
+
+                Bundle data_input = new Bundle();
+
+                FragmentTransaction trans = getFragmentManager().beginTransaction();
+
+                data_input.putString("air_temp", air_temp);
+                data_input.putString("surface_temp", surface_temp);
+                data_input.putString("bottom_temp", bottom_temp);
+                data_input.putString("visibility", visibility);
+                data_input.putString("water_type", water_type);
+                data_input.putString("dive_type", dive_type);
+
+                new_frag.setArguments(data_input);
+
+                trans.replace(R.id.root_frame_second, new_frag);
+                trans.commit();
+            }
+            else {
+                Log.d("Test", "Parameters incomplete...");
+            }
+        }
     }
 }
