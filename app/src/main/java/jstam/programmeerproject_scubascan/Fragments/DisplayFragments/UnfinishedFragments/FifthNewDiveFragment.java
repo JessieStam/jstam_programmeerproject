@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import jstam.programmeerproject_scubascan.Activities.NewDiveActivity;
+import jstam.programmeerproject_scubascan.Fragments.DisplayFragments.FinishedFragments.FifthNewDiveFragmentFinished;
+import jstam.programmeerproject_scubascan.Fragments.DisplayFragments.FinishedFragments.FourthNewDiveFragmentFinished;
 import jstam.programmeerproject_scubascan.R;
 
 /**
@@ -37,14 +40,14 @@ public class FifthNewDiveFragment extends Fragment {
 
     FifthNewDiveFragment.FifthNewDiveFragmentListener activityCommander;
 
-    public static FifthNewDiveFragment newInstance(int page) {
-
-        Bundle args = new Bundle();
-        args.putInt(ARG_PAGE, page);
-        FifthNewDiveFragment fragment = new FifthNewDiveFragment();
-        fragment.setArguments(args);
-        return fragment;
-    }
+//    public static FifthNewDiveFragment newInstance(int page) {
+//
+//        Bundle args = new Bundle();
+//        args.putInt(ARG_PAGE, page);
+//        FifthNewDiveFragment fragment = new FifthNewDiveFragment();
+//        fragment.setArguments(args);
+//        return fragment;
+//    }
 
     public interface FifthNewDiveFragmentListener {
         public void saveExtraData(String notes);
@@ -76,7 +79,7 @@ public class FifthNewDiveFragment extends Fragment {
         super.onCreate(savedInstanceState);
         //ArrayList<Thing> things = new ArrayList<Thing>();
         //adapter = new ThingsAdapter(getActivity(), things);
-        mPage = getArguments().getInt(ARG_PAGE);
+        //mPage = getArguments().getInt(ARG_PAGE);
 
     }
 
@@ -148,6 +151,18 @@ public class FifthNewDiveFragment extends Fragment {
             }
 
             activityCommander.saveExtraData(notes);
+
+            // fragment transaction
+            Fragment new_frag = new FifthNewDiveFragmentFinished();
+            Bundle data_input = new Bundle();
+            FragmentTransaction trans = getFragmentManager().beginTransaction();
+
+            data_input.putString("notes", notes);
+
+            new_frag.setArguments(data_input);
+
+            trans.replace(R.id.root_frame_fifth, new_frag);
+            trans.commit();
         }
         else {
             Log.d("Test", "Parameters incomplete...");

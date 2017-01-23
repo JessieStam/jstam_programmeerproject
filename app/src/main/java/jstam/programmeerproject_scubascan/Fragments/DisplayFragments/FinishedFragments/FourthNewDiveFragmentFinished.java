@@ -106,9 +106,13 @@ public class FourthNewDiveFragmentFinished extends android.support.v4.app.Fragme
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
 
+        Log.d("test2", "onviewcreated");
+
         if (technicaldata_list != null) {
 
             for (String item : technicaldata_list) {
+                Log.d("test2", "item in technical_data list = " + item);
+
                 display_manager.fillInPlaceholder(item);
             }
 
@@ -117,6 +121,8 @@ public class FourthNewDiveFragmentFinished extends android.support.v4.app.Fragme
 
             // when everything is filled in, move on to fourth Activity to print story
             if (filledIn) {
+
+                Log.d("test2", "is filled in");
 
                 String final_display = display_manager.toString();
 
@@ -127,6 +133,8 @@ public class FourthNewDiveFragmentFinished extends android.support.v4.app.Fragme
                 }
             }
 
+        } else {
+            Log.d("test2", "onviewcreated: data list is null");
         }
     }
 

@@ -7,10 +7,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import jstam.programmeerproject_scubascan.Fragments.DisplayFragments.UnfinishedFragments.FifthNewDiveFragment;
-import jstam.programmeerproject_scubascan.Fragments.DisplayFragments.UnfinishedFragments.FourthNewDiveFragment;
+import jstam.programmeerproject_scubascan.Fragments.RootFragments.RootFifthNewDiveFragment;
 import jstam.programmeerproject_scubascan.Fragments.RootFragments.RootFirstNewDiveFragment;
-import jstam.programmeerproject_scubascan.Fragments.DisplayFragments.UnfinishedFragments.ThirdNewDiveFragment;
 import jstam.programmeerproject_scubascan.Fragments.RootFragments.RootFourthNewDiveFragment;
 import jstam.programmeerproject_scubascan.Fragments.RootFragments.RootSecondNewDiveFragment;
 import jstam.programmeerproject_scubascan.Fragments.RootFragments.RootThirdNewDiveFragment;
@@ -49,7 +47,7 @@ public class NewDiveFragmentPageAdapter extends FragmentPagerAdapter {
             case 3:
                 return RootFourthNewDiveFragment.newInstance(position + 1);
             case 4:
-                return FifthNewDiveFragment.newInstance(position + 1);
+                return RootFifthNewDiveFragment.newInstance(position + 1);
             default:
                 return null;
         }

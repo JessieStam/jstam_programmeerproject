@@ -152,10 +152,10 @@ public class FourthNewDiveFragment extends Fragment implements View.OnClickListe
 
         if (view == no) {
             yes.setChecked(false);
-            safetystop = "no";
+            safetystop = "no safetystop.";
         } else if (view == yes) {
             no.setChecked(false);
-            safetystop = "</b>a<b>";
+            safetystop = "</b>a<b> safetystop.";
         }
         else if (view == save_button) {
 
@@ -172,10 +172,11 @@ public class FourthNewDiveFragment extends Fragment implements View.OnClickListe
             technicaldata_list.add(pressure_in);
             technicaldata_list.add(pressure_out);
             technicaldata_list.add(depth);
-            technicaldata_list.add(safetystop);
 
             if (time_in != null && time_out != null && pressure_in != null && pressure_out != null
                     && depth != null && !safetystop.equals("")) {
+
+                technicaldata_list.add(safetystop);
 
                 if (saved_image.getVisibility() == View.INVISIBLE) {
                     saved_image.setVisibility(View.VISIBLE);

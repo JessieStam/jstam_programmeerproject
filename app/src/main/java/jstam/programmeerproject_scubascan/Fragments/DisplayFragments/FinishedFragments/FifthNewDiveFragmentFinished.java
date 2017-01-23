@@ -1,12 +1,10 @@
 package jstam.programmeerproject_scubascan.Fragments.DisplayFragments.FinishedFragments;
 
-import android.app.Fragment;
-import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.os.Build;
+import android.os.Bundle;
 import android.support.annotation.RequiresApi;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.PagerAdapter;
 import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,19 +16,18 @@ import android.widget.TextView;
 import java.io.InputStream;
 import java.util.ArrayList;
 
-import jstam.programmeerproject_scubascan.Fragments.DisplayFragments.UnfinishedFragments.ThirdNewDiveFragment;
+import jstam.programmeerproject_scubascan.Fragments.DisplayFragments.UnfinishedFragments.FifthNewDiveFragment;
 import jstam.programmeerproject_scubascan.Helpers.FinishedDiveDisplayManager;
 import jstam.programmeerproject_scubascan.R;
 
 /**
- * Created by Jessie on 22/01/2017.
+ * Created by Jessie on 23/01/2017.
  */
 
-public class ThirdNewDiveFragmentFinished extends android.support.v4.app.Fragment {
+public class FifthNewDiveFragmentFinished extends android.support.v4.app.Fragment {
 
     FragmentActivity listener;
-    String lead;
-    ArrayList<String> clothes;
+    String notes;
     TextView text;
     InputStream displaytext;
     FinishedDiveDisplayManager display_manager;
@@ -55,17 +52,15 @@ public class ThirdNewDiveFragmentFinished extends android.support.v4.app.Fragmen
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater
-                .inflate(R.layout.fragment_thirdnewdivefinished, container, false);
+                .inflate(R.layout.fragment_fifthnewdivefinished, container, false);
 
-        displaytext = getResources().openRawResource(R.raw.finisheddive_page3);
+        displaytext = getResources().openRawResource(R.raw.finisheddive_page5);
 
         // if savedInstanceState is empty, create new manager object
         if (savedInstanceState == null) {
 
             display_manager = new FinishedDiveDisplayManager(displaytext);
             display_manager.read(displaytext);
-
-            clothes = new ArrayList<>();
 
         } else {
 
@@ -80,21 +75,15 @@ public class ThirdNewDiveFragmentFinished extends android.support.v4.app.Fragmen
 
         if (getArguments() != null) {
 
-            Log.d("test", "finished thirdnewdive getarguments are NOT null");
-
-            clothes = getArguments().getStringArrayList("clothes_strings");
-            lead = getArguments().getString("lead");
-
-            for (String item : clothes) {
-                Log.d("test", "clothes item: " + item);
-            }
+            Log.d("test", "finished fifthnewdive getarguments are NOT null");
+            notes = getArguments().getString("notes");
 
         } else {
-            Log.d("test", "finished thirdnewdive getarguments are null");
+            Log.d("test", "finished fifthnewdive getarguments are null");
         }
 
-        text = (TextView) view.findViewById(R.id.finished_text_third);
-        Button btn = (Button) view.findViewById(R.id.edit_thirdnewdive_button);
+        text = (TextView) view.findViewById(R.id.finished_text_fifth);
+        Button btn = (Button) view.findViewById(R.id.edit_fifthnewdive_button);
 
         btn.setOnClickListener(new View.OnClickListener() {
 
@@ -102,7 +91,7 @@ public class ThirdNewDiveFragmentFinished extends android.support.v4.app.Fragmen
             public void onClick(View v) {
                 FragmentTransaction trans = getFragmentManager()
                         .beginTransaction();
-                trans.replace(R.id.root_frame_third, new ThirdNewDiveFragment());
+                trans.replace(R.id.root_frame_fifth, new FifthNewDiveFragment());
                 trans.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
                 trans.addToBackStack(null);
                 trans.commit();
@@ -115,26 +104,15 @@ public class ThirdNewDiveFragmentFinished extends android.support.v4.app.Fragmen
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
 
-        if (lead != null && clothes != null) {
+        if (notes != null) {
 
-            display_manager.fillInPlaceholder(lead);
-            String placeholder_string = "";
+            display_manager.fillInPlaceholder(notes);
 
-            for (String item : clothes) {
-
-                if (clothes.indexOf(item) != (clothes.size() -1)) {
-                    placeholder_string += "</b>a <b>" + item + ", ";
-                } else {
-                    placeholder_string += "</b>and a <b>" + item + ".";
-                }
-            }
-
-            display_manager.fillInPlaceholder(placeholder_string);
 
             // create boolean to check if isFilledIn function returns true
             boolean filledIn = display_manager.isFilledIn();
 
-            // when everything is filled in, move on to Third Activity to print story
+            // when everything is filled in, move on to fifth Activity to print story
             if (filledIn) {
 
                 String final_display = display_manager.toString();
