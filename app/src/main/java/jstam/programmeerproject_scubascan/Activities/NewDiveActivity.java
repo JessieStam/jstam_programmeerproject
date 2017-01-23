@@ -1,8 +1,12 @@
 package jstam.programmeerproject_scubascan.Activities;
 
+import android.app.Activity;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.preference.DialogPreference;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -216,4 +220,24 @@ public class NewDiveActivity extends AppCompatActivity implements FirstNewDiveFr
 
     }
 
+    @Override
+    public void onBackPressed() {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(NewDiveActivity.this);
+        builder.setMessage("Are you sure you want to leave? Progress will be lost.");
+        builder.setCancelable(true);
+        builder.setNegativeButton("Leave", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog_interface, int which) {
+                finish();
+            }
+        });
+        builder.setPositiveButton("Stay", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog_interface, int which) {
+                dialog_interface.cancel();
+            }
+        });
+        AlertDialog alert_dialog = builder.create();
+        alert_dialog.show();
+    }
 }
