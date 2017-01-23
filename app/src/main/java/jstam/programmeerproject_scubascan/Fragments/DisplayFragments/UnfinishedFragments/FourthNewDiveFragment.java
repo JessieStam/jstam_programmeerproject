@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,7 +14,11 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import java.util.ArrayList;
+
 import jstam.programmeerproject_scubascan.Activities.NewDiveActivity;
+import jstam.programmeerproject_scubascan.Fragments.DisplayFragments.FinishedFragments.FourthNewDiveFragmentFinished;
+import jstam.programmeerproject_scubascan.Fragments.DisplayFragments.FinishedFragments.ThirdNewDiveFragmentFinished;
 import jstam.programmeerproject_scubascan.R;
 
 /**
@@ -27,6 +32,7 @@ public class FourthNewDiveFragment extends Fragment implements View.OnClickListe
     private int mPage;
 
     String time_in, time_out, pressure_in, pressure_out, depth, safetystop;
+    ArrayList<String> technicaldata_list;
 
     EditText time_in_input, time_out_input, pressure_in_input, pressure_out_input, depth_input;
 
@@ -41,14 +47,14 @@ public class FourthNewDiveFragment extends Fragment implements View.OnClickListe
 
     FourthNewDiveFragment.FourthNewDiveFragmentListener activityCommander;
 
-    public static FourthNewDiveFragment newInstance(int page) {
-
-        Bundle args = new Bundle();
-        args.putInt(ARG_PAGE, page);
-        FourthNewDiveFragment fragment = new FourthNewDiveFragment();
-        fragment.setArguments(args);
-        return fragment;
-    }
+//    public static FourthNewDiveFragment newInstance(int page) {
+//
+//        Bundle args = new Bundle();
+//        args.putInt(ARG_PAGE, page);
+//        FourthNewDiveFragment fragment = new FourthNewDiveFragment();
+//        fragment.setArguments(args);
+//        return fragment;
+//    }
 
     public interface FourthNewDiveFragmentListener {
         public void saveTechnicalData(String time_in, String time_out, String pressure_in,
@@ -81,7 +87,7 @@ public class FourthNewDiveFragment extends Fragment implements View.OnClickListe
         super.onCreate(savedInstanceState);
         //ArrayList<Thing> things = new ArrayList<Thing>();
         //adapter = new ThingsAdapter(getActivity(), things);
-        mPage = getArguments().getInt(ARG_PAGE);
+        //mPage = getArguments().getInt(ARG_PAGE);
 
     }
 
@@ -96,6 +102,8 @@ public class FourthNewDiveFragment extends Fragment implements View.OnClickListe
         pressure_in_input = (EditText) view.findViewById(R.id.newdive_pressurein_input);
         pressure_out_input = (EditText) view.findViewById(R.id.newdive_pressureout_input);
         depth_input = (EditText) view.findViewById(R.id.newdive_depth_input);
+
+        technicaldata_list = new ArrayList<>();
 
         safetystop = "";
 
@@ -147,7 +155,7 @@ public class FourthNewDiveFragment extends Fragment implements View.OnClickListe
             safetystop = "no";
         } else if (view == yes) {
             no.setChecked(false);
-            safetystop = "no";
+            safetystop = "</b>a<b>";
         }
         else if (view == save_button) {
 
@@ -158,6 +166,13 @@ public class FourthNewDiveFragment extends Fragment implements View.OnClickListe
             pressure_in = pressure_in_input.getText().toString();
             pressure_out = pressure_out_input.getText().toString();
             depth = depth_input.getText().toString();
+
+            technicaldata_list.add(time_in);
+            technicaldata_list.add(time_out);
+            technicaldata_list.add(pressure_in);
+            technicaldata_list.add(pressure_out);
+            technicaldata_list.add(depth);
+            technicaldata_list.add(safetystop);
 
             if (time_in != null && time_out != null && pressure_in != null && pressure_out != null
                     && depth != null && !safetystop.equals("")) {
@@ -173,6 +188,19 @@ public class FourthNewDiveFragment extends Fragment implements View.OnClickListe
 
                 activityCommander.saveTechnicalData(time_in, time_out, pressure_in, pressure_out,
                         depth, safetystop);
+
+                // fragment transaction
+                Fragment new_frag = new FourthNewDiveFragmentFinished();
+                Bundle data_input = new Bundle();
+                FragmentTransaction trans = getFragmentManager().beginTransaction();
+
+                data_input.putStringArrayList("technicaldata", technicaldata_list);
+
+                new_frag.setArguments(data_input);
+
+                trans.replace(R.id.root_frame_fourth, new_frag);
+                trans.commit();
+
             }
             else {
                 Log.d("Test", "Parameters incomplete...");

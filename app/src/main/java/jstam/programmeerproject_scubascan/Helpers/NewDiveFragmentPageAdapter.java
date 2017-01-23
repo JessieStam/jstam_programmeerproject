@@ -11,6 +11,7 @@ import jstam.programmeerproject_scubascan.Fragments.DisplayFragments.UnfinishedF
 import jstam.programmeerproject_scubascan.Fragments.DisplayFragments.UnfinishedFragments.FourthNewDiveFragment;
 import jstam.programmeerproject_scubascan.Fragments.RootFragments.RootFirstNewDiveFragment;
 import jstam.programmeerproject_scubascan.Fragments.DisplayFragments.UnfinishedFragments.ThirdNewDiveFragment;
+import jstam.programmeerproject_scubascan.Fragments.RootFragments.RootFourthNewDiveFragment;
 import jstam.programmeerproject_scubascan.Fragments.RootFragments.RootSecondNewDiveFragment;
 import jstam.programmeerproject_scubascan.Fragments.RootFragments.RootThirdNewDiveFragment;
 
@@ -46,7 +47,7 @@ public class NewDiveFragmentPageAdapter extends FragmentPagerAdapter {
             case 2:
                 return RootThirdNewDiveFragment.newInstance(position + 1);
             case 3:
-                return FourthNewDiveFragment.newInstance(position + 1);
+                return RootFourthNewDiveFragment.newInstance(position + 1);
             case 4:
                 return FifthNewDiveFragment.newInstance(position + 1);
             default:

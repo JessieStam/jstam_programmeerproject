@@ -47,6 +47,7 @@
     <string name="frag_fifthnewdive_title">Personal notes</string>
     <string name="firstfinishedfragment_editbutton">Edit general data</string>
     <string name="thirdfinishedfragment_editbutton">Edit equipment data</string>
+    <string name="fourthfinishedfragment_editbutton">Edit technical data</string>
 
 
 </resources>
