@@ -18,6 +18,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 
 import jstam.programmeerproject_scubascan.Fragments.DisplayFragments.UnfinishedFragments.FirstNewDiveFragment;
+import jstam.programmeerproject_scubascan.Fragments.DisplayFragments.UnfinishedFragments.SecondNewDiveFragment;
 import jstam.programmeerproject_scubascan.Helpers.FinishedDiveDisplayManager;
 import jstam.programmeerproject_scubascan.R;
 
@@ -108,7 +109,7 @@ public class SecondNewDiveFragmentFinished extends Fragment {
             public void onClick(View v) {
                 FragmentTransaction trans = getFragmentManager()
                         .beginTransaction();
-                trans.replace(R.id.root_frame, new FirstNewDiveFragment());
+                trans.replace(R.id.root_frame_second, new SecondNewDiveFragment());
                 trans.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
                 trans.addToBackStack(null);
                 trans.commit();

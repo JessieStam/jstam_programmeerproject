@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentActivity;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.PagerAdapter;
 import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,7 +18,7 @@ import android.widget.TextView;
 import java.io.InputStream;
 import java.util.ArrayList;
 
-import jstam.programmeerproject_scubascan.Fragments.DisplayFragments.UnfinishedFragments.FirstNewDiveFragment;
+import jstam.programmeerproject_scubascan.Fragments.DisplayFragments.UnfinishedFragments.ThirdNewDiveFragment;
 import jstam.programmeerproject_scubascan.Helpers.FinishedDiveDisplayManager;
 import jstam.programmeerproject_scubascan.R;
 
@@ -28,8 +29,8 @@ import jstam.programmeerproject_scubascan.R;
 public class ThirdNewDiveFragmentFinished extends android.support.v4.app.Fragment {
 
     FragmentActivity listener;
-    String air_temp, surface_temp, bottom_temp, water_type, visibility, dive_type;
-    ArrayList<String> circumstances_data;
+    String lead;
+    ArrayList<String> clothes;
     TextView text;
     InputStream displaytext;
     FinishedDiveDisplayManager display_manager;
@@ -38,14 +39,14 @@ public class ThirdNewDiveFragmentFinished extends android.support.v4.app.Fragmen
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (savedInstanceState != null) {
-
-//            date = savedInstanceState.getString("date");
-//            country = savedInstanceState.getString("country");
-//            dive_spot = savedInstanceState.getString("dive_spot");
-//            buddy = savedInstanceState.getString("buddy");
-
-        }
+//        if (savedInstanceState != null) {
+//
+////            date = savedInstanceState.getString("date");
+////            country = savedInstanceState.getString("country");
+////            dive_spot = savedInstanceState.getString("dive_spot");
+////            buddy = savedInstanceState.getString("buddy");
+//
+//        }
     }
 
     @RequiresApi(api = Build.VERSION_CODES.HONEYCOMB_MR1)
@@ -54,9 +55,9 @@ public class ThirdNewDiveFragmentFinished extends android.support.v4.app.Fragmen
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater
-                .inflate(R.layout.fragment_secondnewdivefinished, container, false);
+                .inflate(R.layout.fragment_thirdnewdivefinished, container, false);
 
-        displaytext = getResources().openRawResource(R.raw.finisheddive_page2);
+        displaytext = getResources().openRawResource(R.raw.finisheddive_page3);
 
         // if savedInstanceState is empty, create new manager object
         if (savedInstanceState == null) {
@@ -64,7 +65,7 @@ public class ThirdNewDiveFragmentFinished extends android.support.v4.app.Fragmen
             display_manager = new FinishedDiveDisplayManager(displaytext);
             display_manager.read(displaytext);
 
-            circumstances_data = new ArrayList<>();
+            clothes = new ArrayList<>();
 
         } else {
 
@@ -79,28 +80,21 @@ public class ThirdNewDiveFragmentFinished extends android.support.v4.app.Fragmen
 
         if (getArguments() != null) {
 
-            Log.d("test", "finished secondnewdive getarguments are NOT null");
+            Log.d("test", "finished thirdnewdive getarguments are NOT null");
 
-            air_temp = getArguments().getString("air_temp");
-            surface_temp = getArguments().getString("surface_temp");
-            bottom_temp = getArguments().getString("bottom_temp");
-            visibility = getArguments().getString("visibility");
-            water_type = getArguments().getString("water_type");
-            dive_type = getArguments().getString("dive_type");
+            clothes = getArguments().getStringArrayList("clothes_strings");
+            lead = getArguments().getString("lead");
+
+            for (String item : clothes) {
+                Log.d("test", "clothes item: " + item);
+            }
 
         } else {
-            Log.d("test", "finished secondnewdive getarguments are null");
+            Log.d("test", "finished thirdnewdive getarguments are null");
         }
 
-        circumstances_data.add(air_temp);
-        circumstances_data.add(surface_temp);
-        circumstances_data.add(bottom_temp);
-        circumstances_data.add(water_type);
-        circumstances_data.add(dive_type);
-        circumstances_data.add(visibility);
-
-        text = (TextView) view.findViewById(R.id.finished_text_second);
-        Button btn = (Button) view.findViewById(R.id.edit_secondnewdive_button);
+        text = (TextView) view.findViewById(R.id.finished_text_third);
+        Button btn = (Button) view.findViewById(R.id.edit_thirdnewdive_button);
 
         btn.setOnClickListener(new View.OnClickListener() {
 
@@ -108,7 +102,7 @@ public class ThirdNewDiveFragmentFinished extends android.support.v4.app.Fragmen
             public void onClick(View v) {
                 FragmentTransaction trans = getFragmentManager()
                         .beginTransaction();
-                trans.replace(R.id.root_frame, new FirstNewDiveFragment());
+                trans.replace(R.id.root_frame_third, new ThirdNewDiveFragment());
                 trans.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
                 trans.addToBackStack(null);
                 trans.commit();
@@ -121,14 +115,21 @@ public class ThirdNewDiveFragmentFinished extends android.support.v4.app.Fragmen
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
 
-        if (circumstances_data != null) {
+        if (lead != null && clothes != null) {
 
-            for (String detail : circumstances_data) {
+            display_manager.fillInPlaceholder(lead);
+            String placeholder_string = "";
 
-                Log.d("test", "detail is " + detail);
+            for (String item : clothes) {
 
-                display_manager.fillInPlaceholder(detail);
+                if (clothes.indexOf(item) != (clothes.size() -1)) {
+                    placeholder_string += "a " + item + ", ";
+                } else {
+                    placeholder_string += "</b>and a<b>" + item + ".";
+                }
             }
+
+            display_manager.fillInPlaceholder(placeholder_string);
 
             // create boolean to check if isFilledIn function returns true
             boolean filledIn = display_manager.isFilledIn();

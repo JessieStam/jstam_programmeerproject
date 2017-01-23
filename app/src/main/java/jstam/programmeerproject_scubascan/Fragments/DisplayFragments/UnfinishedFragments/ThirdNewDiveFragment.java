@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +17,7 @@ import android.widget.ImageView;
 import java.util.ArrayList;
 
 import jstam.programmeerproject_scubascan.Activities.NewDiveActivity;
+import jstam.programmeerproject_scubascan.Fragments.DisplayFragments.FinishedFragments.ThirdNewDiveFragmentFinished;
 import jstam.programmeerproject_scubascan.R;
 
 /**
@@ -47,14 +49,14 @@ public class ThirdNewDiveFragment extends Fragment implements View.OnClickListen
 
     ThirdNewDiveFragment.ThirdNewDiveFragmentListener activityCommander;
 
-    public static ThirdNewDiveFragment newInstance(int page) {
-
-        Bundle args = new Bundle();
-        args.putInt(ARG_PAGE, page);
-        ThirdNewDiveFragment fragment = new ThirdNewDiveFragment();
-        fragment.setArguments(args);
-        return fragment;
-    }
+//    public static ThirdNewDiveFragment newInstance(int page) {
+//
+//        Bundle args = new Bundle();
+//        args.putInt(ARG_PAGE, page);
+//        ThirdNewDiveFragment fragment = new ThirdNewDiveFragment();
+//        fragment.setArguments(args);
+//        return fragment;
+//    }
 
     public interface ThirdNewDiveFragmentListener {
         public void saveEquipmentData(String lead, ArrayList<String> clothes);
@@ -85,7 +87,7 @@ public class ThirdNewDiveFragment extends Fragment implements View.OnClickListen
         super.onCreate(savedInstanceState);
         //ArrayList<Thing> things = new ArrayList<Thing>();
         //adapter = new ThingsAdapter(getActivity(), things);
-        mPage = getArguments().getInt(ARG_PAGE);
+//        mPage = getArguments().getInt(ARG_PAGE);
         clothes = new ArrayList<>();
 
     }
@@ -117,10 +119,10 @@ public class ThirdNewDiveFragment extends Fragment implements View.OnClickListen
         view.findViewById(R.id.frag_thirdnewdive_checkbox_wetsuit).setOnClickListener(this);
         view.findViewById(R.id.frag_thirdnewdive_checkbox_drysuit).setOnClickListener(this);
         view.findViewById(R.id.frag_thirdnewdive_checkbox_hood).setOnClickListener(this);
-        view.findViewById(R.id.frag_thirdnewdive_checkbox_gloves).setOnClickListener(this);
-        view.findViewById(R.id.frag_thirdnewdive_checkbox_fins).setOnClickListener(this);
-        view.findViewById(R.id.frag_thirdnewdive_checkbox_shoes).setOnClickListener(this);
-        view.findViewById(R.id.frag_thirdnewdive_checkbox_flash).setOnClickListener(this);
+        view.findViewById(R.id.frag_thirdnewdive_checkbox_pair0of0gloves).setOnClickListener(this);
+        view.findViewById(R.id.frag_thirdnewdive_checkbox_set0of0fins).setOnClickListener(this);
+        view.findViewById(R.id.frag_thirdnewdive_checkbox_pair0of0shoes).setOnClickListener(this);
+        view.findViewById(R.id.frag_thirdnewdive_checkbox_flashlight).setOnClickListener(this);
         view.findViewById(R.id.frag_thirdnewdive_checkbox_mask).setOnClickListener(this);
 
     }
@@ -150,18 +152,19 @@ public class ThirdNewDiveFragment extends Fragment implements View.OnClickListen
 
         if (id == R.id.frag_thirdnewdive_checkbox_swimsuit || id == R.id.frag_thirdnewdive_checkbox_shorty
                 || id == R.id.frag_thirdnewdive_checkbox_wetsuit || id == R.id.frag_thirdnewdive_checkbox_drysuit
-                || id == R.id.frag_thirdnewdive_checkbox_hood || id == R.id.frag_thirdnewdive_checkbox_gloves
-                || id == R.id.frag_thirdnewdive_checkbox_fins || id == R.id.frag_thirdnewdive_checkbox_shoes
-                || id == R.id.frag_thirdnewdive_checkbox_flash || id == R.id.frag_thirdnewdive_checkbox_mask) {
+                || id == R.id.frag_thirdnewdive_checkbox_hood || id == R.id.frag_thirdnewdive_checkbox_pair0of0gloves
+                || id == R.id.frag_thirdnewdive_checkbox_set0of0fins || id == R.id.frag_thirdnewdive_checkbox_pair0of0shoes
+                || id == R.id.frag_thirdnewdive_checkbox_flashlight || id == R.id.frag_thirdnewdive_checkbox_mask) {
 
             String item_name = getResources().getResourceEntryName(id)
-                    .replace("frag_thirdnewdive_checkbox_", "");
+                    .replace("frag_thirdnewdive_checkbox_", "").replace("0", " ");
+
 
             Log.d("test", "name of clicked item is " + item_name);
 
             checkIfInList(item_name);
 
-        } else if (id == R.id.frag_thirdnewdive_button) {
+        } else if (view == save_button) {
 
             Log.d("test", "save button 3 clicked");
 
@@ -179,6 +182,26 @@ public class ThirdNewDiveFragment extends Fragment implements View.OnClickListen
                 }
 
                 activityCommander.saveEquipmentData(lead, clothes);
+
+                // fragment transaction
+                Fragment new_frag = new ThirdNewDiveFragmentFinished();
+                Bundle data_input = new Bundle();
+                FragmentTransaction trans = getFragmentManager().beginTransaction();
+
+                data_input.putString("lead", lead);
+
+                data_input.putStringArrayList("clothes_strings", clothes);
+
+//                for (String item : clothes) {
+//                    String tag = item;
+//                    data_input.putString(tag, item);
+//                }
+
+                new_frag.setArguments(data_input);
+
+                trans.replace(R.id.root_frame_third, new_frag);
+                trans.commit();
+
             }
             else {
                 Log.d("Test", "Parameters incomplete...");
@@ -188,13 +211,21 @@ public class ThirdNewDiveFragment extends Fragment implements View.OnClickListen
 
     public void checkIfInList(String item_name) {
 
+        int item_count = 0;
+        Log.d("test", "checkIfInList: itemcount 1 is " + item_count);
+
         for (String item : clothes) {
+            Log.d("test", "checkIfInList: clothes item " + item);
+
             if (item.equals(item_name)) {
+                item_count = 1;
                 clothes.remove(item);
-                break;
+                Log.d("test", "checkIfInList: in_list is true");
             }
         }
-        Log.d("test", "it still adds item_name to list");
-        clothes.add(item_name);
+
+        if (item_count == 0) {
+            clothes.add(item_name);
+        }
     }
 }

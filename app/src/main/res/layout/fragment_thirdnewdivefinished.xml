@@ -12,7 +12,7 @@
         android:textSize="20sp"/>
 
     <Button
-        android:text="@string/firstfinishedfragment_editbutton"
+        android:text="@string/thirdfinishedfragment_editbutton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/edit_thirdnewdive_button" />

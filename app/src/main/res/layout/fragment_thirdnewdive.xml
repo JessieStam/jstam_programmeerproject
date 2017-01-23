@@ -193,7 +193,7 @@
                     <CheckBox
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/frag_thirdnewdive_checkbox_gloves"
+                        android:id="@+id/frag_thirdnewdive_checkbox_pair0of0gloves"
                         android:buttonTint="#000000"
                         android:textColor="#000000"/>
 
@@ -223,7 +223,7 @@
                     <CheckBox
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/frag_thirdnewdive_checkbox_fins"
+                        android:id="@+id/frag_thirdnewdive_checkbox_set0of0fins"
                         android:buttonTint="#000000"
                         android:textColor="#000000"/>
 
@@ -249,7 +249,7 @@
                     <CheckBox
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/frag_thirdnewdive_checkbox_shoes"
+                        android:id="@+id/frag_thirdnewdive_checkbox_pair0of0shoes"
                         android:buttonTint="#000000"
                         android:textColor="#000000"/>
 
@@ -279,7 +279,7 @@
                     <CheckBox
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/frag_thirdnewdive_checkbox_flash"
+                        android:id="@+id/frag_thirdnewdive_checkbox_flashlight"
                         android:buttonTint="#000000"
                         android:textColor="#000000"/>
 
