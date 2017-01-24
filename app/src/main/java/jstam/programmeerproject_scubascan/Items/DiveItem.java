@@ -21,13 +21,14 @@ public class DiveItem {
         // Default constructor required for calls to DataSnapshot.getValue(User.class)
     }
 
-    public DiveItem(String date, String country, String dive_spot, String buddy, String air_temp,
+    public DiveItem(int dive_number, String date, String country, String dive_spot, String buddy, String air_temp,
                     String surface_temp, String bottom_temp, String visibility, String water_type,
                     String dive_type, String lead, ArrayList<String> clothing_list,
                     String time_in, String time_out, String pressure_in,
                     String pressure_out, String depth, String safetystop,
                     String notes) {
 
+        this.dive_number = dive_number;
         this.date = date;
         this.country = country;
         this.dive_spot = dive_spot;
@@ -51,8 +52,8 @@ public class DiveItem {
     }
 
     //methods for number
-    public int getNumber() { return dive_number; }
-    public void setNumber(int dive_number) { int new_dive_number = dive_number; }
+    public int getDiveNumber() { return dive_number; }
+    public void setDiveNumber(int new_dive_number) { dive_number = new_dive_number; }
 
     // methods for date
     public String getDate() { return date; }

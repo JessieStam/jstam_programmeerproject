@@ -1,7 +1,14 @@
 package jstam.programmeerproject_scubascan.Helpers;
 
+import android.util.Log;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
@@ -15,14 +22,14 @@ public class DiveManager {
 
     private DatabaseReference my_database;
 
-
-    int dive_number = 0;
+    int dive_number = 1;
     String dive_name;
 
     // define instance
     private static DiveManager ourInstance = null;
 
     private ArrayList<DiveItem> dive_list = new ArrayList<>();
+    private ArrayList<DiveItem> firebase_dive_list = new ArrayList<>();
 
     // construct the instance
     public static DiveManager getOurInstance(){
@@ -45,11 +52,11 @@ public class DiveManager {
 
         my_database = FirebaseDatabase.getInstance().getReference();
 
-        dive_number++;
-
         DiveItem new_dive = new DiveItem();
 
-        new_dive.setNumber(dive_number);
+        dive_number = getDiveNumber();
+
+        new_dive.setDiveNumber(dive_number);
         new_dive.setDate(date);
         new_dive.setCountry(country);
         new_dive.setDiveSpot(dive_spot);
@@ -70,12 +77,110 @@ public class DiveManager {
         new_dive.setSafetystop(safetystop);
         new_dive.setNotes(notes);
 
+        Log.d("test4", "hardcoded number is: " + new_dive.getDiveNumber());
+
         dive_list.add(new_dive);
 
         dive_name = "Dive " + String.valueOf(dive_number);
 
         my_database.child("users").child(user).child("dive_log").child(dive_name).setValue(new_dive);
 
+    }
+
+    public int getDiveNumber() {
+
+        FirebaseAuth mAuth;
+        mAuth = FirebaseAuth.getInstance();
+        FirebaseUser firebase_user = mAuth.getCurrentUser();
+        String user_id = firebase_user.getUid();
+
+
+        Log.d("test4", "in getDiveNumber");
+        my_database = FirebaseDatabase.getInstance().getReference();
+        my_database.child("users").child(user_id).child("dive_log").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                Log.d("test4", "in onDataChange");
+
+                Iterable<DataSnapshot> dive_log = dataSnapshot.getChildren();
+
+                // shake hands with each of them.'
+                for (DataSnapshot dive : dive_log) {
+
+                    Log.d("test4", "in dive log list");
+
+                    DiveItem dive_item = dive.getValue(DiveItem.class);
+                    firebase_dive_list.add(dive_item);
+                }
+
+                if (firebase_dive_list.size() == 0) {
+                    dive_number = 1;
+
+                    Log.d("test4", "firebase_dive_list is 0");
+
+                } else {
+                    Log.d("test4", "firebase_dive_list is NOT 0");
+
+                    int highest = 0;
+
+                    for (DiveItem dive : firebase_dive_list) {
+                        Log.d("test4", "dive number: " + dive.getDiveNumber());
+                        Log.d("test4", "buddy: " + dive.getBuddy());
+
+                        if (highest < dive.getDiveNumber()) {
+                            highest = dive.getDiveNumber();
+
+                            dive_number = highest + 1;
+
+                            Log.d("test4", "dive number = " + dive_number);
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.d("test4", "in onCancelled");
+            }
+        });
+
+
+
+//        final ArrayList<Integer> dive_number = new ArrayList<>();
+//
+//        my_database_divelog = FirebaseDatabase.getInstance().getReference("dive_log");
+//
+//        // My top posts by number of stars
+//        my_database_divelog.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot log_snap) {
+//
+//                for (DataSnapshot dive_snap : log_snap.getChildren()) {
+//
+//                    dive_snap.getValue("number");
+//
+//                    dive_snap = log_snap.getValue(DiveItem.class);
+//
+//                    DataSnapshot number_snap = dive_snap.child("number");
+//
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//                // Getting Post failed, log a message
+//                Log.w("test4", "loadPost:onCancelled", databaseError.toException());
+//                // ...
+//            }
+//        });
+//
+//        for (int number : dive_number) {
+//
+//            Log.d("test4", "number is: " + number);
+//
+//        }
+        return dive_number;
     }
 
 }

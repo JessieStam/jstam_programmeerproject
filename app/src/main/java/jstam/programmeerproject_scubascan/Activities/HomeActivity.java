@@ -5,14 +5,22 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
+import jstam.programmeerproject_scubascan.Helpers.DiveManager;
 import jstam.programmeerproject_scubascan.R;
 
 public class HomeActivity extends AppCompatActivity {
+
+    DiveManager manager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        manager = new DiveManager();
+
+        manager.getDiveNumber();
+
     }
 
     public void signUpUser(View view) {

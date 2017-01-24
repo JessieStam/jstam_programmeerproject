@@ -64,7 +64,7 @@ public class NewDiveActivity extends AppCompatActivity implements FirstNewDiveFr
 
         mAuth = FirebaseAuth.getInstance();
 
-        dive_manager = new DiveManager();
+        dive_manager = DiveManager.getOurInstance();
 
         // Get the ViewPager and set it's PagerAdapter so that it can display items
         ViewPager view_pager = (ViewPager) findViewById(R.id.viewpager);

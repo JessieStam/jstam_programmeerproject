@@ -16,7 +16,7 @@ import jstam.programmeerproject_scubascan.Helpers.ToolbarHelper;
  * Created by Jessie on 12/01/2017.
  */
 
-public class MenuActivity extends LoginActivity {
+public class MenuActivity extends LoginActivity implements View.OnClickListener {
 
     private Toolbar toolbar;
     ToolbarHelper toolbar_helper;
