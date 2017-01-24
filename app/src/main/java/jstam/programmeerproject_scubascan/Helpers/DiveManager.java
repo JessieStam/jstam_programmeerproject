@@ -145,41 +145,6 @@ public class DiveManager {
             }
         });
 
-
-
-//        final ArrayList<Integer> dive_number = new ArrayList<>();
-//
-//        my_database_divelog = FirebaseDatabase.getInstance().getReference("dive_log");
-//
-//        // My top posts by number of stars
-//        my_database_divelog.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot log_snap) {
-//
-//                for (DataSnapshot dive_snap : log_snap.getChildren()) {
-//
-//                    dive_snap.getValue("number");
-//
-//                    dive_snap = log_snap.getValue(DiveItem.class);
-//
-//                    DataSnapshot number_snap = dive_snap.child("number");
-//
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//                // Getting Post failed, log a message
-//                Log.w("test4", "loadPost:onCancelled", databaseError.toException());
-//                // ...
-//            }
-//        });
-//
-//        for (int number : dive_number) {
-//
-//            Log.d("test4", "number is: " + number);
-//
-//        }
         return dive_number;
     }
 
