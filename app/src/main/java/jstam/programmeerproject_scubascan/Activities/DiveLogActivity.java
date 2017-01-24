@@ -79,10 +79,7 @@ public class DiveLogActivity extends AppCompatActivity {
         date_list = new ArrayList<>();
 
         // haal shit van firebase
-        firebase_dive_list = getLogFromFirebase();
-
-        // fill the list
-        fillDiveLog(firebase_dive_list);
+        getLogFromFirebase();
 
         // create new BooksAdapter object and set to RecyclerView
         adapter = new DiveListAdapter(this, dive_number_list, location_list, date_list);
@@ -109,11 +106,9 @@ public class DiveLogActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(toolbar);
     }
 
-    public ArrayList<DiveItem> getLogFromFirebase() {
+    public void getLogFromFirebase() {
 
-        final ArrayList<DiveItem> list = new ArrayList<>();
-
-        database_ref.child(user_id).child("dive_log").addValueEventListener(new ValueEventListener() {
+        database_ref.child("users").child(user_id).child("dive_log").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
@@ -121,34 +116,25 @@ public class DiveLogActivity extends AppCompatActivity {
 
                 for (DataSnapshot dive : dive_log) {
 
+                    Log.d("test5", "in dive");
+
                     DiveItem dive_item = dive.getValue(DiveItem.class);
-                    list.add(dive_item);
+                    String dive_number = "Dive " + String.valueOf(dive_item.getDiveNumber());
+
+                    dive_number_list.add(dive_number);
+                    location_list.add(dive_item.getCountry());
+                    date_list.add(dive_item.getDate());
+
+                    Log.d("test5", "dive_number_list = " + String.valueOf(dive_number_list.size()));
+
                 }
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                Log.d("test4", "in onCancelled");
+                // cancelled
             }
         });
 
-        return list;
     }
-
-    public void fillDiveLog(ArrayList<DiveItem> dives) {
-
-        // remove old data
-        dive_number_list.clear();
-        location_list.clear();
-        date_list.clear();
-
-        if (dives.size() != 0) {
-            for (DiveItem dive : dives){
-                dive_number_list.add(String.valueOf(dive.getDiveNumber()));
-                location_list.add(dive.getCountry());
-                date_list.add(dive.getDate());
-            }
-        }
-    }
-
 }
