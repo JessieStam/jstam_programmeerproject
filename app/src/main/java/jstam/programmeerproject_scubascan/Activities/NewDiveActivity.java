@@ -1,7 +1,9 @@
 package jstam.programmeerproject_scubascan.Activities;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.preference.DialogPreference;
 import android.support.design.widget.TabLayout;
@@ -15,11 +17,14 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 
 import jstam.programmeerproject_scubascan.Fragments.DisplayFragments.UnfinishedFragments.FifthNewDiveFragment;
@@ -29,6 +34,7 @@ import jstam.programmeerproject_scubascan.Fragments.DisplayFragments.UnfinishedF
 import jstam.programmeerproject_scubascan.Helpers.DiveManager;
 import jstam.programmeerproject_scubascan.Helpers.NewDiveFragmentPageAdapter;
 import jstam.programmeerproject_scubascan.Fragments.DisplayFragments.UnfinishedFragments.SecondNewDiveFragment;
+import jstam.programmeerproject_scubascan.Helpers.NitrogenCalculator;
 import jstam.programmeerproject_scubascan.R;
 import jstam.programmeerproject_scubascan.Helpers.ToolbarHelper;
 
@@ -56,6 +62,8 @@ public class NewDiveActivity extends AppCompatActivity implements FirstNewDiveFr
     private FirebaseAuth mAuth;
 
     DiveManager dive_manager;
+
+    NitrogenCalculator nitrogen;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -218,6 +226,76 @@ public class NewDiveActivity extends AppCompatActivity implements FirstNewDiveFr
                 bottom_temp, visibility, water_type, dive_type, lead, clothing_list, time_in,
                 time_out, pressure_in, pressure_out, depth, safetystop, notes);
 
+        //calculate all the things
+        InputStream input_stream_first = getResources().openRawResource(R.raw.nitrogen_first);
+        InputStream input_stream_second = getResources().openRawResource(R.raw.nitrogen_second);
+        InputStream input_stream_third = getResources().openRawResource(R.raw.nitrogen_third);
+
+        nitrogen = new NitrogenCalculator();
+
+        try {
+            nitrogen.readToHashMap("first", input_stream_first);
+            nitrogen.readToHashMap("second", input_stream_second);
+            nitrogen.readToHashMap("third", input_stream_third);
+        } catch (IOException e) {
+            Log.d("test6", "HomeActivity throws exception");
+
+            e.printStackTrace();
+        }
+
+        long bottomtime = nitrogen.calculateBottomTime(time_in, time_out);
+        //long totalbottomtime = nitrogen.calculateTotalTime(total_time, bottomtime);
+
+        //nitrogen.calculateSurfaceInterval(time_out, date);
+        String nitrogen_level = nitrogen.calculateNitrogen(depth, String.valueOf(bottomtime));
+
+        // custom dialog
+        final Dialog dialog = new Dialog(this);
+        dialog.setContentView(R.layout.dialog_divesaved);
+        dialog.setTitle("Dive logged!");
+
+        // set the custom dialog components - text, image and button
+        TextView info = (TextView) dialog.findViewById(R.id.dialog_newdive_info);
+        info.setText("Dived for " + bottomtime + " minutes. Nitrogen level is " + nitrogen_level + ".");
+
+        Button yesbutton = (Button) dialog.findViewById(R.id.dialog_newdive_yesbutton);
+        // if button is clicked, close the custom dialog
+        yesbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showToast("Timer was set!");
+                backToMenu();
+
+                dialog.dismiss();
+            }
+        });
+
+        Button nobutton = (Button) dialog.findViewById(R.id.dialog_newdive_nobutton);
+        // if button is clicked, close the custom dialog
+        nobutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showToast("No timers set");
+                backToMenu();
+
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
+
+    }
+
+    public void showToast(String toast){
+        Toast.makeText(this, toast, Toast.LENGTH_SHORT).show();
+    }
+
+    public void backToMenu() {
+
+        Intent menu_activity = new Intent(this, MenuActivity.class);
+        startActivity(menu_activity);
+
+        finish();
     }
 
     @Override

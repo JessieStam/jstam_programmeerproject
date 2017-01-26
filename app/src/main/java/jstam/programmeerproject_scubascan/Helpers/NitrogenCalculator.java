@@ -23,11 +23,13 @@ import jstam.programmeerproject_scubascan.R;
 
 public class NitrogenCalculator implements Serializable {
 
-    InputStream input_stream;
+    HashMap<String, HashMap<String, String>> nitrogen_first = new HashMap<>();
+    HashMap<String, HashMap<String, String>> nitrogen_second = new HashMap<>();
+    HashMap<String, HashMap<String, String>> nitrogen_third = new HashMap<>();
 
     private HashMap<String, HashMap<String, String>> nitrogen_table = new HashMap<>();
 
-    public void readToHashMap(InputStream input_stream) throws IOException {
+    public void readToHashMap(String table_name, InputStream input_stream) throws IOException {
 
         Log.d("test6", "ReadToHashMap started");
 
@@ -54,26 +56,62 @@ public class NitrogenCalculator implements Serializable {
 
         }
 
-        for (HashMap.Entry<String, HashMap<String, String>> entry : nitrogen_table.entrySet()) {
-            String key = entry.getKey();
-            HashMap<String, String> value = entry.getValue();
+        switch (table_name) {
+            case "first":
+                nitrogen_first = nitrogen_table;
 
-            for (HashMap.Entry<String, String> depth : value.entrySet()) {
-                String time_key = depth.getKey();
-                String time_value = depth.getValue();
+//            for (HashMap.Entry<String, HashMap<String, String>> entry : nitrogen_first.entrySet()) {
+//                String key = entry.getKey();
+//                HashMap<String, String> value = entry.getValue();
+//
+//                for (HashMap.Entry<String, String> depth : value.entrySet()) {
+//                    String time_key = depth.getKey();
+//                    String time_value = depth.getValue();
+//
+//                    Log.d("test6", "Depth is: " + key + ". Time is: " + time_key + ". Letter is: " + time_value);
+//                }
+//            }
 
-                Log.d("test6", "Depth is: " + key + ". Time is: " + time_key + ". Letter is: " + time_value);
-            }
+                break;
+            case "second":
+                nitrogen_second = nitrogen_table;
+
+//            for (HashMap.Entry<String, HashMap<String, String>> entry : nitrogen_second.entrySet()) {
+//                String key = entry.getKey();
+//                HashMap<String, String> value = entry.getValue();
+//
+//                for (HashMap.Entry<String, String> letter : value.entrySet()) {
+//                    String interval_key = letter.getKey();
+//                    String interval_value = letter.getValue();
+//
+//                    Log.d("test6", "Letter is: " + key + ". Time is: " + interval_key + ". Letter is: " + interval_value);
+//                }
+//            }
+                break;
+            case "third":
+                nitrogen_third = nitrogen_table;
+
+//            for (HashMap.Entry<String, HashMap<String, String>> entry : nitrogen_third.entrySet()) {
+//                String key = entry.getKey();
+//                HashMap<String, String> value = entry.getValue();
+//
+//                for (HashMap.Entry<String, String> letter : value.entrySet()) {
+//                    String depth_key = letter.getKey();
+//                    String depth_value = letter.getValue();
+//
+//                    Log.d("test6", "Letter is: " + key + ". Depth is: " + depth_key + ". Time is: " + depth_value);
+//                }
+//            }
+                break;
         }
     }
 
     public String calculateNitrogen(String depth, String bottomtime) {
 
         String letter = "";
-        String depth_key = "";
 
         // calculate highest key
-        if (nitrogen_table != null) {
+        if (nitrogen_first != null) {
 
             if (Integer.parseInt(depth) < 10) {
                 depth = String.valueOf(10);
@@ -83,7 +121,7 @@ public class NitrogenCalculator implements Serializable {
 
             while (depth_not_found) {
 
-                if (nitrogen_table.get(depth) != null) {
+                if (nitrogen_first.get(depth) != null) {
                     depth_not_found = false;
 
                     Log.d("test7", "depth is: " + depth);
@@ -100,7 +138,7 @@ public class NitrogenCalculator implements Serializable {
 
             while (time_not_found) {
 
-                letter = nitrogen_table.get(depth).get(bottomtime);
+                letter = nitrogen_first.get(depth).get(bottomtime);
 
                 if (letter != null) {
                     time_not_found = false;
@@ -112,6 +150,9 @@ public class NitrogenCalculator implements Serializable {
                     bottomtime = String.valueOf(bottomtime_int);
 
                     Log.d("test7", "letter is empty, new bottomtime is " + bottomtime);
+
+
+                    // if bottomtime_int is increased more than 5 times or so, warn diver, because probably Z
                 }
             }
 
