@@ -3,18 +3,39 @@ package jstam.programmeerproject_scubascan.Activities;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
+import java.io.IOException;
+import java.io.InputStream;
+
 import jstam.programmeerproject_scubascan.Helpers.DiveManager;
+import jstam.programmeerproject_scubascan.Helpers.NitrogenHashmap;
 import jstam.programmeerproject_scubascan.R;
 
 public class HomeActivity extends AppCompatActivity {
 
+    NitrogenHashmap nitrogen;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        Log.d("test6", "HomeActivity calls nitrogen calculator");
+
+        InputStream input_stream = getResources().openRawResource(R.raw.nitrogen);
+
+        nitrogen = new NitrogenHashmap();
+
+        try {
+            nitrogen.readToHashMap(input_stream);
+        } catch (IOException e) {
+            Log.d("test6", "HomeActivity throws exception");
+
+            e.printStackTrace();
+        }
+
     }
 
     public void signUpUser(View view) {
