@@ -9,13 +9,12 @@ import android.view.View;
 import java.io.IOException;
 import java.io.InputStream;
 
-import jstam.programmeerproject_scubascan.Helpers.DiveManager;
-import jstam.programmeerproject_scubascan.Helpers.NitrogenHashmap;
+import jstam.programmeerproject_scubascan.Helpers.NitrogenCalculator;
 import jstam.programmeerproject_scubascan.R;
 
 public class HomeActivity extends AppCompatActivity {
 
-    NitrogenHashmap nitrogen;
+    NitrogenCalculator nitrogen;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,7 +25,7 @@ public class HomeActivity extends AppCompatActivity {
 
         InputStream input_stream = getResources().openRawResource(R.raw.nitrogen);
 
-        nitrogen = new NitrogenHashmap();
+        nitrogen = new NitrogenCalculator();
 
         try {
             nitrogen.readToHashMap(input_stream);
@@ -35,6 +34,10 @@ public class HomeActivity extends AppCompatActivity {
 
             e.printStackTrace();
         }
+
+        nitrogen.calculateBottomTime("15:43", "16:30");
+        nitrogen.calculateSurfaceInterval("16:30", "26-01-2017");
+        nitrogen.calculateNitrogen("17", "47");
 
     }
 
