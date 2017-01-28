@@ -16,6 +16,7 @@ import android.widget.ImageView;
 
 import java.util.ArrayList;
 
+import jstam.programmeerproject_scubascan.Activities.DiveLogDetailsActivity;
 import jstam.programmeerproject_scubascan.Activities.NewDiveActivity;
 import jstam.programmeerproject_scubascan.Fragments.DisplayFragments.FinishedFragments.ThirdNewDiveFragmentFinished;
 import jstam.programmeerproject_scubascan.R;
@@ -69,6 +70,8 @@ public class ThirdNewDiveFragment extends Fragment implements View.OnClickListen
     public void onAttach(Context context) {
         super.onAttach(context);
         if (context instanceof NewDiveActivity){
+            this.listener = (FragmentActivity) context;
+        } else if (context instanceof DiveLogDetailsActivity) {
             this.listener = (FragmentActivity) context;
         }
 

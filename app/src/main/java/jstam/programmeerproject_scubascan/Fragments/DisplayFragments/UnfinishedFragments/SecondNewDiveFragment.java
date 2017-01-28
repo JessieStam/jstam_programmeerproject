@@ -14,6 +14,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import jstam.programmeerproject_scubascan.Activities.DiveLogDetailsActivity;
 import jstam.programmeerproject_scubascan.Activities.NewDiveActivity;
 import jstam.programmeerproject_scubascan.Fragments.DisplayFragments.FinishedFragments.SecondNewDiveFragmentFinished;
 import jstam.programmeerproject_scubascan.R;
@@ -64,6 +65,8 @@ public class SecondNewDiveFragment extends Fragment implements View.OnClickListe
     public void onAttach(Context context) {
         super.onAttach(context);
         if (context instanceof NewDiveActivity){
+            this.listener = (FragmentActivity) context;
+        } else if (context instanceof DiveLogDetailsActivity) {
             this.listener = (FragmentActivity) context;
         }
 

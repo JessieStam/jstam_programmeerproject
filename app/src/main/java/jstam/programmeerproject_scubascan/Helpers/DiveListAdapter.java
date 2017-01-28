@@ -1,6 +1,7 @@
 package jstam.programmeerproject_scubascan.Helpers;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import jstam.programmeerproject_scubascan.Activities.DiveLogDetailsActivity;
 import jstam.programmeerproject_scubascan.R;
 
 /**
@@ -58,14 +60,14 @@ public class DiveListAdapter extends RecyclerView.Adapter<DiveListAdapter.ViewHo
         @Override
         public void onClick(View view) {
 
-//            // get title of clicked item
-//            TextView titleview = (TextView) view.findViewById(R.id.titles_row);
-//            title = titleview.getText().toString();
-//
-//            // start new activity, add title
-//            Intent bookDetails = new Intent(context, BookDetailsActivity.class);
-//            bookDetails.putExtra("clicked_book", title);
-//            context.startActivity(bookDetails);
+            // get title of clicked item
+            TextView dive_number_view = (TextView) view.findViewById(R.id.dive_num_row);
+            String dive_number = dive_number_view.getText().toString();
+
+            // start new activity, add title
+            Intent viewDive = new Intent(context, DiveLogDetailsActivity.class);
+            viewDive.putExtra("clicked_dive", dive_number);
+            context.startActivity(viewDive);
 
         }
     };

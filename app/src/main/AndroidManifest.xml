@@ -20,8 +20,9 @@
         <activity android:name=".Activities.MenuActivity"/>
         <activity android:name=".Activities.NewDiveActivity"/>
         <activity android:name=".Activities.DiveLogActivity"/>
+        <activity android:name=".Activities.DiveLogDetailsActivity"/>
         <activity android:name=".Activities.StatisticsActivity"/>
-        <activity android:name=".Activities.FishLogActivity"/>
+        <activity android:name=".Activities.FishLogActivity"/>s
 
     </application>
 

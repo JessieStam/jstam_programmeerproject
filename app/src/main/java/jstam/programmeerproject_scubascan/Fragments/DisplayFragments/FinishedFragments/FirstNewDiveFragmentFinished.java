@@ -1,5 +1,6 @@
 package jstam.programmeerproject_scubascan.Fragments.DisplayFragments.FinishedFragments;
 
+import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
@@ -17,6 +18,8 @@ import android.widget.TextView;
 import java.io.InputStream;
 import java.util.ArrayList;
 
+import jstam.programmeerproject_scubascan.Activities.DiveLogDetailsActivity;
+import jstam.programmeerproject_scubascan.Activities.NewDiveActivity;
 import jstam.programmeerproject_scubascan.Fragments.DisplayFragments.UnfinishedFragments.FirstNewDiveFragment;
 import jstam.programmeerproject_scubascan.Helpers.FinishedDiveDisplayManager;
 import jstam.programmeerproject_scubascan.R;
@@ -27,12 +30,18 @@ import jstam.programmeerproject_scubascan.R;
 
 public class FirstNewDiveFragmentFinished extends Fragment {
 
-    FragmentActivity listener;
     String date, country, dive_spot, buddy;
     ArrayList<String> general_data;
     TextView text;
     InputStream displaytext;
     FinishedDiveDisplayManager display_manager;
+
+//    //ThingsAdapter adapter;
+    FragmentActivity listener;
+//
+//    FirstNewDiveFragmentFinished.FirstNewDiveFragmentListener activityCommander;
+//
+//    FirstNewDiveFragment.FirstNewDiveFragmentListener activityCommander;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -47,6 +56,23 @@ public class FirstNewDiveFragmentFinished extends Fragment {
 
         }
     }
+
+//    @Override
+//    public void onAttach(Context context) {
+//        super.onAttach(context);
+//        if (context instanceof NewDiveActivity){
+//            this.listener = (FragmentActivity) context;
+//        } else if (context instanceof DiveLogDetailsActivity) {
+//            this.listener = (FragmentActivity) context;
+//        }
+//
+//        try{
+//            activityCommander = (FirstNewDiveFragment.FirstNewDiveFragmentListener) context;
+//        }catch (ClassCastException e) {
+//            throw new ClassCastException(context.toString());
+//        }
+//
+//    }
 
     @RequiresApi(api = Build.VERSION_CODES.HONEYCOMB_MR1)
     @Override
@@ -79,7 +105,7 @@ public class FirstNewDiveFragmentFinished extends Fragment {
 
         if (getArguments() != null) {
 
-            Log.d("test", "finished firstnewdive getarguments are null :(");
+            Log.d("test", "finished firstnewdive getarguments");
 
             date = getArguments().getString("date");
             country = getArguments().getString("country");

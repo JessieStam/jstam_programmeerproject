@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import jstam.programmeerproject_scubascan.Activities.DiveLogDetailsActivity;
 import jstam.programmeerproject_scubascan.Activities.NewDiveActivity;
 import jstam.programmeerproject_scubascan.Fragments.DisplayFragments.FinishedFragments.FifthNewDiveFragmentFinished;
 import jstam.programmeerproject_scubascan.Fragments.DisplayFragments.FinishedFragments.FourthNewDiveFragmentFinished;
@@ -60,6 +61,8 @@ public class FifthNewDiveFragment extends Fragment {
     public void onAttach(Context context) {
         super.onAttach(context);
         if (context instanceof NewDiveActivity){
+            this.listener = (FragmentActivity) context;
+        } else if (context instanceof DiveLogDetailsActivity) {
             this.listener = (FragmentActivity) context;
         }
 
