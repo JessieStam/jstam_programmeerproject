@@ -23,6 +23,9 @@ public class RootFirstDetailsFragment extends Fragment {
     private static final String TAG = "RootFragment";
 
     public static final String ARG_PAGE = "ARG_PAGE";
+    public static final String ARG_NUMBER = "ARG_NUMBER";
+
+    private String dive_number;
 
     private int mPage;
 
@@ -30,10 +33,11 @@ public class RootFirstDetailsFragment extends Fragment {
     //int cur_check_pos = 0;
 
 
-    public static RootFirstDetailsFragment newInstance(int page) {
+    public static RootFirstDetailsFragment newInstance(int page, String dive_number) {
 
         Bundle args = new Bundle();
         args.putInt(ARG_PAGE, page);
+        args.putString(ARG_NUMBER, dive_number);
         RootFirstDetailsFragment fragment = new RootFirstDetailsFragment();
         fragment.setArguments(args);
         return fragment;
@@ -46,6 +50,7 @@ public class RootFirstDetailsFragment extends Fragment {
         //ArrayList<Thing> things = new ArrayList<Thing>();
         //adapter = new ThingsAdapter(getActivity(), things);
         mPage = getArguments().getInt(ARG_PAGE);
+        dive_number = getArguments().getString(ARG_NUMBER);
 
 //        if (savedInstanceState == null) {
 //            Log.d("test", "oncreate root instance is null");
@@ -72,7 +77,16 @@ public class RootFirstDetailsFragment extends Fragment {
 		 * When this container fragment is created, we fill it with our first
 		 * "real" fragment
 		 */
-        transaction.replace(R.id.root_frame, new FirstNewDiveFragmentFinished());
+
+        Log.d("test6", "dive numer in rootfirstdetailsfragment: " + dive_number);
+
+        Bundle dive_number_bundle = new Bundle();
+        dive_number_bundle.putString("dive_number", dive_number);
+        // set Fragmentclass Arguments
+        FirstNewDiveFragmentFinished new_frag = new FirstNewDiveFragmentFinished();
+        new_frag.setArguments(dive_number_bundle);
+
+        transaction.replace(R.id.root_frame, new_frag);
 
         transaction.commit();
 

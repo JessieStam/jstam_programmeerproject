@@ -51,17 +51,6 @@ public class DiveLogDetailsActivity extends AppCompatActivity implements FirstNe
 
         //dive_manager = DiveManager.getOurInstance();
 
-        // Get the ViewPager and set it's PagerAdapter so that it can display items
-        ViewPager view_pager = (ViewPager) findViewById(R.id.viewpager);
-        view_pager.setAdapter(new DiveLogFragmentPageAdapter(getSupportFragmentManager(),
-                DiveLogDetailsActivity.this));
-
-        view_pager.setOffscreenPageLimit(50);
-
-        // Give the TabLayout the ViewPager
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.sliding_tabs);
-        tabLayout.setupWithViewPager(view_pager);
-
         // construct toolbar
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -76,6 +65,17 @@ public class DiveLogDetailsActivity extends AppCompatActivity implements FirstNe
             dive_number = extras.getString("clicked_dive");
             dive_title.setText(dive_number);
         }
+
+        // Get the ViewPager and set it's PagerAdapter so that it can display items
+        ViewPager view_pager = (ViewPager) findViewById(R.id.viewpager);
+        view_pager.setAdapter(new DiveLogFragmentPageAdapter(getSupportFragmentManager(),
+                DiveLogDetailsActivity.this, dive_number));
+
+        view_pager.setOffscreenPageLimit(50);
+
+        // Give the TabLayout the ViewPager
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.sliding_tabs);
+        tabLayout.setupWithViewPager(view_pager);
 
     }
 

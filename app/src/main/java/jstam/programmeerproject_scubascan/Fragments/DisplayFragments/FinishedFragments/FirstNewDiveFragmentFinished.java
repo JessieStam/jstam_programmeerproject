@@ -3,6 +3,7 @@ package jstam.programmeerproject_scubascan.Fragments.DisplayFragments.FinishedFr
 import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -21,7 +22,9 @@ import java.util.ArrayList;
 import jstam.programmeerproject_scubascan.Activities.DiveLogDetailsActivity;
 import jstam.programmeerproject_scubascan.Activities.NewDiveActivity;
 import jstam.programmeerproject_scubascan.Fragments.DisplayFragments.UnfinishedFragments.FirstNewDiveFragment;
+import jstam.programmeerproject_scubascan.Helpers.DiveManager;
 import jstam.programmeerproject_scubascan.Helpers.FinishedDiveDisplayManager;
+import jstam.programmeerproject_scubascan.Items.DiveItem;
 import jstam.programmeerproject_scubascan.R;
 
 /**
@@ -30,18 +33,17 @@ import jstam.programmeerproject_scubascan.R;
 
 public class FirstNewDiveFragmentFinished extends Fragment {
 
-    String date, country, dive_spot, buddy;
+    String date, country, dive_spot, buddy, dive_number;
     ArrayList<String> general_data;
     TextView text;
     InputStream displaytext;
     FinishedDiveDisplayManager display_manager;
+    DiveManager dive_manager;
+
+    DiveItem dive;
 
 //    //ThingsAdapter adapter;
     FragmentActivity listener;
-//
-//    FirstNewDiveFragmentFinished.FirstNewDiveFragmentListener activityCommander;
-//
-//    FirstNewDiveFragment.FirstNewDiveFragmentListener activityCommander;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -57,23 +59,6 @@ public class FirstNewDiveFragmentFinished extends Fragment {
         }
     }
 
-//    @Override
-//    public void onAttach(Context context) {
-//        super.onAttach(context);
-//        if (context instanceof NewDiveActivity){
-//            this.listener = (FragmentActivity) context;
-//        } else if (context instanceof DiveLogDetailsActivity) {
-//            this.listener = (FragmentActivity) context;
-//        }
-//
-//        try{
-//            activityCommander = (FirstNewDiveFragment.FirstNewDiveFragmentListener) context;
-//        }catch (ClassCastException e) {
-//            throw new ClassCastException(context.toString());
-//        }
-//
-//    }
-
     @RequiresApi(api = Build.VERSION_CODES.HONEYCOMB_MR1)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -83,6 +68,10 @@ public class FirstNewDiveFragmentFinished extends Fragment {
                 .inflate(R.layout.fragment_firstnewdivefinished, container, false);
 
         displaytext = getResources().openRawResource(R.raw.finisheddive_page1);
+
+        dive_manager = DiveManager.getOurInstance();
+
+        DiveItem dive = new DiveItem();
 
         // if savedInstanceState is empty, create new manager object
         if (savedInstanceState == null) {
@@ -105,18 +94,49 @@ public class FirstNewDiveFragmentFinished extends Fragment {
 
         if (getArguments() != null) {
 
-            Log.d("test", "finished firstnewdive getarguments");
+            Log.d("test6", "finished firstnewdive getarguments");
 
-            date = getArguments().getString("date");
-            country = getArguments().getString("country");
-            dive_spot = getArguments().getString("dive_spot");
-            buddy = getArguments().getString("buddy");
+            if (getArguments().getString("dive_number") == null){
+                date = getArguments().getString("date");
+                country = getArguments().getString("country");
+                dive_spot = getArguments().getString("dive_spot");
+                buddy = getArguments().getString("buddy");
+            } else {
+                dive_number = getArguments().getString("dive_number");
+
+                Log.d("test6", "dive number is " + dive_number);
+
+                dive = dive_manager.getDiveInfo(dive_number);
+
+//                Handler handler = new Handler();
+//
+//                handler.postDelayed(new Runnable() {
+//                    public void run() {
+//                        waitForFirebase();
+//                    }
+//                }, 5000);
+
+                date = dive.getDate();
+                country = dive.getCountry();
+                dive_spot = dive.getDiveSpot();
+                buddy = dive.getBuddy();
+
+                Log.d("test6", "date is " + date);
+
+            }
+        } else {
+            Log.d("test6", "getarguments is null");
         }
 
-        general_data.add(date);
-        general_data.add(buddy);
-        general_data.add(country);
-        general_data.add(dive_spot);
+//        general_data.add(date);
+//        general_data.add(buddy);
+//        general_data.add(country);
+//        general_data.add(dive_spot);
+
+        general_data.add("yolo");
+        general_data.add("yolo");
+        general_data.add("yolo");
+        general_data.add("yolo");
 
         text = (TextView) view.findViewById(R.id.finished_text);
         Button btn = (Button) view.findViewById(R.id.edit_firstnewdive_button);

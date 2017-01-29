@@ -6,6 +6,7 @@ import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.util.Log;
 
 import jstam.programmeerproject_scubascan.Fragments.RootFragments.RootFifthNewDiveFragment;
 import jstam.programmeerproject_scubascan.Fragments.RootFragments.RootFirstDetailsFragment;
@@ -23,10 +24,12 @@ public class DiveLogFragmentPageAdapter extends FragmentPagerAdapter {
     final int PAGE_COUNT = 2;
     private String tabTitles[] = new String[] { "One", "Two" }; //, "Three", "Four", "Five" };
     private Context context;
+    private String dive_number;
 
-    public DiveLogFragmentPageAdapter(FragmentManager frag_manager, Context context) {
+    public DiveLogFragmentPageAdapter(FragmentManager frag_manager, Context context, String dive_number) {
         super(frag_manager);
         this.context = context;
+        this.dive_number = dive_number;
     }
 
     @Override
@@ -38,9 +41,11 @@ public class DiveLogFragmentPageAdapter extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
 
+        Log.d("test6", "dive numer in divelogfragmentpageadapter: " + dive_number);
+
         switch (position) {
             case 0:
-                return RootFirstDetailsFragment.newInstance(position + 1);
+                return RootFirstDetailsFragment.newInstance(position + 1, dive_number);
             case 1:
                 return RootSecondNewDiveFragment.newInstance(position + 1);
 //            case 2:

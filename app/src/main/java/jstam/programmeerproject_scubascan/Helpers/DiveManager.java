@@ -1,5 +1,6 @@
 package jstam.programmeerproject_scubascan.Helpers;
 
+import android.os.Handler;
 import android.util.Log;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -21,9 +22,15 @@ import jstam.programmeerproject_scubascan.Items.DiveItem;
 public class DiveManager {
 
     private DatabaseReference my_database;
+    private DatabaseReference my_database2;
 
     int dive_number = 1;
+    int finished = 0;
     String dive_name;
+
+    DiveItem dive_item;
+
+    boolean running;
 
     // define instance
     private static DiveManager ourInstance = null;
@@ -37,6 +44,8 @@ public class DiveManager {
         if (ourInstance == null) {
             ourInstance = new DiveManager();
         }
+
+        Log.d("test6", "in the dive manager");
         return ourInstance;
     }
 
@@ -94,12 +103,13 @@ public class DiveManager {
         FirebaseUser firebase_user = mAuth.getCurrentUser();
         String user_id = firebase_user.getUid();
 
-
         Log.d("test4", "in getDiveNumber");
         my_database = FirebaseDatabase.getInstance().getReference();
         my_database.child("users").child(user_id).child("dive_log").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+
+                // hier gaat iest asynchroon mis
 
                 Log.d("test4", "in onDataChange");
 
@@ -148,4 +158,56 @@ public class DiveManager {
         return dive_number;
     }
 
+    public DiveItem getDiveInfo(final String dive_name) {
+
+        FirebaseAuth mAuth;
+        mAuth = FirebaseAuth.getInstance();
+        FirebaseUser firebase_user = mAuth.getCurrentUser();
+        String user_id = firebase_user.getUid();
+
+        running = true;
+
+        dive_item = new DiveItem();
+
+        Log.d("test6", "in getDiveInfo");
+        my_database = FirebaseDatabase.getInstance().getReference();
+        my_database.child("users").child(user_id).child("dive_log").child(dive_name).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                Log.d("test6", "in onDataChange");
+
+                dive_item = dataSnapshot.getValue(DiveItem.class);
+
+                Log.d("test6", "dive item date is: " + dive_item.getDate());
+
+                }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+//        DiveItem final_dive = new DiveItem();
+//        boolean finished;
+//
+//        Handler handler = new Handler();
+//
+//        handler.postDelayed(new Runnable() {
+//            public void run() {
+//                Log.d("test6", "handler");
+//                final_dive = getDiveItem();
+//            }
+//        }, 5000);
+
+        Log.d("test6", "final_dive is returned");
+        return dive_item;
+    }
+
+    public DiveItem getDiveItem() {
+
+        Log.d("test6", "getDiveItem");
+        return dive_item;
+    }
 }
