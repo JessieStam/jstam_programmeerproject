@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="jstam.programmeerproject_scubascan">
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="com.android.alarm.permission.SET_ALARM"/>
 
     <application
         android:allowBackup="true"
@@ -22,7 +23,7 @@
         <activity android:name=".Activities.DiveLogActivity"/>
         <activity android:name=".Activities.DiveLogDetailsActivity"/>
         <activity android:name=".Activities.StatisticsActivity"/>
-        <activity android:name=".Activities.FishLogActivity"/>s
+        <activity android:name=".Activities.NitroTimerActivity"/>s
 
     </application>
 

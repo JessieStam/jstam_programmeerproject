@@ -5,7 +5,7 @@ import android.content.Intent;
 import android.view.MenuItem;
 
 import jstam.programmeerproject_scubascan.Activities.DiveLogActivity;
-import jstam.programmeerproject_scubascan.Activities.FishLogActivity;
+import jstam.programmeerproject_scubascan.Activities.NitroTimerActivity;
 import jstam.programmeerproject_scubascan.Activities.LoginActivity;
 import jstam.programmeerproject_scubascan.Activities.NewDiveActivity;
 import jstam.programmeerproject_scubascan.Activities.StatisticsActivity;
@@ -78,7 +78,7 @@ public class ToolbarHelper {
             // if current list is clicked and user is logged in, take user to current list;
             case R.id.fish_log_toolbutton:
                 if (toast.equals("")) {
-                    Intent fish_log_activity = new Intent (context, FishLogActivity.class);
+                    Intent fish_log_activity = new Intent (context, NitroTimerActivity.class);
                     toast = "Opening aquarium...";
 
                     context.startActivity(fish_log_activity);

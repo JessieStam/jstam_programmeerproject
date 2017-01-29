@@ -16,6 +16,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.io.InputStream;
 import java.util.ArrayList;
 
@@ -71,7 +75,21 @@ public class FirstNewDiveFragmentFinished extends Fragment {
 
         dive_manager = DiveManager.getOurInstance();
 
-        DiveItem dive = new DiveItem();
+        text = (TextView) view.findViewById(R.id.finished_text);
+        Button btn = (Button) view.findViewById(R.id.edit_firstnewdive_button);
+
+        btn.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                FragmentTransaction trans = getFragmentManager()
+                        .beginTransaction();
+                trans.replace(R.id.root_frame, new FirstNewDiveFragment());
+                trans.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                trans.addToBackStack(null);
+                trans.commit();
+            }
+        });
 
         // if savedInstanceState is empty, create new manager object
         if (savedInstanceState == null) {
@@ -106,53 +124,37 @@ public class FirstNewDiveFragmentFinished extends Fragment {
 
                 Log.d("test6", "dive number is " + dive_number);
 
-                dive = dive_manager.getDiveInfo(dive_number);
+                dive_manager.getDiveInfo(dive_number);
 
-//                Handler handler = new Handler();
-//
-//                handler.postDelayed(new Runnable() {
-//                    public void run() {
-//                        waitForFirebase();
-//                    }
-//                }, 5000);
+                Handler handler = new Handler();
 
-                date = dive.getDate();
-                country = dive.getCountry();
-                dive_spot = dive.getDiveSpot();
-                buddy = dive.getBuddy();
+                handler.postDelayed(new Runnable() {
+                    public void run() {
+                        final DiveItem dive = dive_manager.getDiveItem();
 
-                Log.d("test6", "date is " + date);
+                        date = dive.getDate();
+                        country = dive.getCountry();
+                        dive_spot = dive.getDiveSpot();
+                        buddy = dive.getBuddy();
 
+                        Log.d("test6", "date is " + date);
+
+                    }
+                }, 5000);
             }
         } else {
             Log.d("test6", "getarguments is null");
         }
 
-//        general_data.add(date);
-//        general_data.add(buddy);
-//        general_data.add(country);
-//        general_data.add(dive_spot);
-
-        general_data.add("yolo");
-        general_data.add("yolo");
-        general_data.add("yolo");
-        general_data.add("yolo");
-
-        text = (TextView) view.findViewById(R.id.finished_text);
-        Button btn = (Button) view.findViewById(R.id.edit_firstnewdive_button);
-
-        btn.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                FragmentTransaction trans = getFragmentManager()
-                        .beginTransaction();
-                trans.replace(R.id.root_frame, new FirstNewDiveFragment());
-                trans.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-                trans.addToBackStack(null);
-                trans.commit();
-            }
-        });
+        general_data.add(date);
+        general_data.add(buddy);
+        general_data.add(country);
+        general_data.add(dive_spot);
+//
+//        general_data.add("yolo");
+//        general_data.add("yolo");
+//        general_data.add("yolo");
+//        general_data.add("yolo");
 
         return view;
     }

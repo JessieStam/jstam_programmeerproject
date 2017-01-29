@@ -1,15 +1,21 @@
 package jstam.programmeerproject_scubascan.Activities;
 
-import android.app.Activity;
+import android.app.AlarmManager;
 import android.app.Dialog;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.app.TaskStackBuilder;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
-import android.preference.DialogPreference;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.NotificationCompat;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -26,11 +32,13 @@ import com.google.firebase.auth.FirebaseUser;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
 
 import jstam.programmeerproject_scubascan.Fragments.DisplayFragments.UnfinishedFragments.FifthNewDiveFragment;
 import jstam.programmeerproject_scubascan.Fragments.DisplayFragments.UnfinishedFragments.FirstNewDiveFragment;
 import jstam.programmeerproject_scubascan.Fragments.DisplayFragments.UnfinishedFragments.FourthNewDiveFragment;
 import jstam.programmeerproject_scubascan.Fragments.DisplayFragments.UnfinishedFragments.ThirdNewDiveFragment;
+import jstam.programmeerproject_scubascan.Helpers.AlertReceiver;
 import jstam.programmeerproject_scubascan.Helpers.DiveManager;
 import jstam.programmeerproject_scubascan.Helpers.NewDiveFragmentPageAdapter;
 import jstam.programmeerproject_scubascan.Fragments.DisplayFragments.UnfinishedFragments.SecondNewDiveFragment;
@@ -64,6 +72,12 @@ public class NewDiveActivity extends AppCompatActivity implements FirstNewDiveFr
     DiveManager dive_manager;
 
     NitrogenCalculator nitrogen;
+
+    NotificationManager notify_manager;
+
+    int notific_id = 100;
+
+    boolean is_notif_active;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -261,10 +275,13 @@ public class NewDiveActivity extends AppCompatActivity implements FirstNewDiveFr
         Button yesbutton = (Button) dialog.findViewById(R.id.dialog_newdive_yesbutton);
         // if button is clicked, close the custom dialog
         yesbutton.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
             @Override
             public void onClick(View v) {
                 showToast("Timer was set!");
-                backToMenu();
+                //showNotification();
+
+                //setAlarm();
 
                 dialog.dismiss();
             }
@@ -297,6 +314,48 @@ public class NewDiveActivity extends AppCompatActivity implements FirstNewDiveFr
 
         finish();
     }
+
+    public void setAlarm() {
+
+        Long alert_time = new GregorianCalendar().getTimeInMillis()+5*1000;
+
+        Intent alert_intent = new Intent (this, AlertReceiver.class);
+
+        AlarmManager alarm_manager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+
+        alarm_manager.set(AlarmManager.RTC_WAKEUP, alert_time,
+                PendingIntent.getBroadcast(this, 1, alert_intent,
+                        PendingIntent.FLAG_UPDATE_CURRENT));
+
+    }
+
+//    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
+//    public void showNotification() {
+//
+//        NotificationCompat.Builder notify_builder = (NotificationCompat.Builder) new NotificationCompat.Builder(this)
+//                .setContentTitle("ScubaScan").setContentText("Nitrogen-free!")
+//                .setTicker("Nitrogen-level changed").setSmallIcon(R.drawable.droogpak);
+//
+//        Intent timer_intent = new Intent(this, NitroTimerActivity.class);
+//
+//        TaskStackBuilder stackbuilder = TaskStackBuilder.create(this);
+//
+//        stackbuilder.addParentStack(NitroTimerActivity.class);
+//        stackbuilder.addNextIntent(timer_intent);
+//
+//        PendingIntent pending_intent = stackbuilder.getPendingIntent
+//                (0, PendingIntent.FLAG_UPDATE_CURRENT);
+//
+//        notify_builder.setContentIntent(pending_intent);
+//
+//        notify_manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+//
+//        notify_manager.notify(notific_id, notify_builder.build());
+//
+//        is_notif_active = true;
+//
+//
+//    }
 
     @Override
     public void onBackPressed() {

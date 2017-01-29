@@ -1,5 +1,6 @@
 package jstam.programmeerproject_scubascan.Activities;
 
+import android.app.NotificationManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -15,7 +16,7 @@ import jstam.programmeerproject_scubascan.Helpers.ToolbarHelper;
  * Created by Jessie on 12/01/2017.
  */
 
-public class FishLogActivity extends AppCompatActivity {
+public class NitroTimerActivity extends AppCompatActivity {
 
     private Toolbar toolbar;
     ToolbarHelper toolbar_helper;
@@ -23,12 +24,16 @@ public class FishLogActivity extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_fish_log);
+        setContentView(R.layout.activity_nitrotimer);
 
         // construct toolbar
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar_helper = new ToolbarHelper();
+
+        NotificationManager notify_manager;
+
+        int notific_id = 100;
 
     }
 
@@ -48,5 +53,8 @@ public class FishLogActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(toolbar);
     }
+
+
+
 
 }

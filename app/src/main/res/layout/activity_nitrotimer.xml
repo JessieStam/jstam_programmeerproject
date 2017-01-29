@@ -9,11 +9,21 @@
         layout="@layout/toolbar"/>
 
     <TextView
-        android:text="Your Aquarium"
+        android:text="Current nitrogen level"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/fish_log_title"
+        android:id="@+id/nitrogen_title"
         android:textSize="30sp"
+        android:textColor="#000000"
+        android:gravity="center"
+        android:padding="10dp" />
+
+    <TextView
+        android:text="Info over de levels"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/nitrogen_text"
+        android:textSize="20sp"
         android:textColor="#000000"
         android:gravity="center"
         android:padding="10dp" />

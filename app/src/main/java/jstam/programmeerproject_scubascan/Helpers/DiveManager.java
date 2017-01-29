@@ -158,7 +158,7 @@ public class DiveManager {
         return dive_number;
     }
 
-    public DiveItem getDiveInfo(final String dive_name) {
+    public void getDiveInfo(final String dive_name) {
 
         FirebaseAuth mAuth;
         mAuth = FirebaseAuth.getInstance();
@@ -181,6 +181,8 @@ public class DiveManager {
 
                 Log.d("test6", "dive item date is: " + dive_item.getDate());
 
+                //getDiveItem();
+
                 }
 
             @Override
@@ -201,13 +203,15 @@ public class DiveManager {
 //            }
 //        }, 5000);
 
-        Log.d("test6", "final_dive is returned");
-        return dive_item;
+//        Log.d("test6", "final_dive is returned");
+//        return dive_item;
     }
 
     public DiveItem getDiveItem() {
 
         Log.d("test6", "getDiveItem");
+
+        Log.d("test6", "dive item date is: " + dive_item.getDate());
         return dive_item;
     }
 }
