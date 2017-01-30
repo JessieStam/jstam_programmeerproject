@@ -260,8 +260,9 @@ public class NewDiveActivity extends AppCompatActivity implements FirstNewDiveFr
         long bottomtime = nitrogen.calculateBottomTime(time_in, time_out);
         //long totalbottomtime = nitrogen.calculateTotalTime(total_time, bottomtime);
 
-        //nitrogen.calculateSurfaceInterval(time_out, date);
         String nitrogen_level = nitrogen.calculateNitrogen(depth, String.valueOf(bottomtime));
+        long interval = nitrogen.calculateSurfaceInterval(time_out, date);
+        String interval_level = nitrogen.calculateCurrent(nitrogen_level, interval);
 
         // custom dialog
         final Dialog dialog = new Dialog(this);
@@ -279,9 +280,11 @@ public class NewDiveActivity extends AppCompatActivity implements FirstNewDiveFr
             @Override
             public void onClick(View v) {
                 showToast("Timer was set!");
-                //showNotification();
+//                showNotification();
 
                 //setAlarm();
+
+                timerActivity("set_timer");
 
                 dialog.dismiss();
             }
@@ -315,47 +318,16 @@ public class NewDiveActivity extends AppCompatActivity implements FirstNewDiveFr
         finish();
     }
 
-    public void setAlarm() {
+    public void timerActivity(String set_timer) {
 
-        Long alert_time = new GregorianCalendar().getTimeInMillis()+5*1000;
+        Intent timer_activity = new Intent(this, NitroTimerActivity.class);
 
-        Intent alert_intent = new Intent (this, AlertReceiver.class);
+        timer_activity.putExtra(set_timer, set_timer);
 
-        AlarmManager alarm_manager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        startActivity(timer_activity);
 
-        alarm_manager.set(AlarmManager.RTC_WAKEUP, alert_time,
-                PendingIntent.getBroadcast(this, 1, alert_intent,
-                        PendingIntent.FLAG_UPDATE_CURRENT));
-
+        finish();
     }
-
-//    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
-//    public void showNotification() {
-//
-//        NotificationCompat.Builder notify_builder = (NotificationCompat.Builder) new NotificationCompat.Builder(this)
-//                .setContentTitle("ScubaScan").setContentText("Nitrogen-free!")
-//                .setTicker("Nitrogen-level changed").setSmallIcon(R.drawable.droogpak);
-//
-//        Intent timer_intent = new Intent(this, NitroTimerActivity.class);
-//
-//        TaskStackBuilder stackbuilder = TaskStackBuilder.create(this);
-//
-//        stackbuilder.addParentStack(NitroTimerActivity.class);
-//        stackbuilder.addNextIntent(timer_intent);
-//
-//        PendingIntent pending_intent = stackbuilder.getPendingIntent
-//                (0, PendingIntent.FLAG_UPDATE_CURRENT);
-//
-//        notify_builder.setContentIntent(pending_intent);
-//
-//        notify_manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-//
-//        notify_manager.notify(notific_id, notify_builder.build());
-//
-//        is_notif_active = true;
-//
-//
-//    }
 
     @Override
     public void onBackPressed() {

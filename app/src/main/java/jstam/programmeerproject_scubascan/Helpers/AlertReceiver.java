@@ -6,6 +6,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.NotificationCompat;
+import android.util.Log;
 
 import jstam.programmeerproject_scubascan.Activities.NitroTimerActivity;
 import jstam.programmeerproject_scubascan.R;
@@ -19,11 +20,15 @@ public class AlertReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
 
+        Log.d("test7", "in AlertReceiver");
+
         createNotification(context, "Scuba Scan", "Nitrogen level is...", "Nitrogen update!");
 
     }
 
     private void createNotification(Context context, String message, String text, String alert) {
+
+        Log.d("test7", "in Create notification");
 
         PendingIntent pending_intent = PendingIntent.getActivity(context, 0, new Intent(context,
                 NitroTimerActivity.class), 0);

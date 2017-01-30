@@ -138,6 +138,7 @@ public class NitrogenCalculator implements Serializable {
 
             while (time_not_found) {
 
+                // hier zit nog een bug
                 letter = nitrogen_first.get(depth).get(bottomtime);
 
                 if (letter != null) {
@@ -164,9 +165,43 @@ public class NitrogenCalculator implements Serializable {
 
     }
 
+    public String calculateCurrent (String letter, long interval) {
+
+        String current_letter = "";
+
+        // calculate highest key
+        if (nitrogen_second != null) {
+
+            current_letter = nitrogen_second.get(letter).get(interval);
+
+        } else {
+            Log.d("test7", "nitrogentable is null");
+        }
+
+        return current_letter;
+
+    }
+
+    public long calculateAddedTime (String letter, String depth) {
+
+        long added_time = 0;
+
+        // calculate highest key
+        if (nitrogen_third != null) {
+
+            String time = nitrogen_second.get(letter).get(depth);
+            added_time = Integer.valueOf(time);
+
+        } else {
+            Log.d("test7", "nitrogentable is null");
+        }
+
+        return added_time;
+    }
+
     public long calculateBottomTime(String time_in, String time_out) {
 
-        long totalbottomtime = 0;
+        long bottomtime = 0;
 
 //        String time1 = "16:25";
 //        String time2 = "18:12";
@@ -189,15 +224,15 @@ public class NitrogenCalculator implements Serializable {
             Log.d("test7", "hours: " + diff_hours);
             Log.d("test7", "minutes: " + diff_minutes);
 
-            totalbottomtime = (diff_hours * 60) + diff_minutes;
+            bottomtime = (diff_hours * 60) + diff_minutes;
 
-            Log.d("test7", "totalbottomtime: " + totalbottomtime);
+            Log.d("test7", "bottomtime: " + bottomtime);
 
         } catch (ParseException e) {
             e.printStackTrace();
         }
 
-        return totalbottomtime;
+        return bottomtime;
     }
 
     public long calculateTotalTime(long total_time, long bottom_time) {

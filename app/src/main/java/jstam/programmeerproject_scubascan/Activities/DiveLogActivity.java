@@ -81,11 +81,11 @@ public class DiveLogActivity extends AppCompatActivity {
         // haal shit van firebase
         getLogFromFirebase();
 
-        // create new BooksAdapter object and set to RecyclerView
-        adapter = new DiveListAdapter(this, dive_number_list, location_list, date_list);
-        dive_list.setAdapter(adapter);
-
-        adapter.notifyDataSetChanged();
+//        // create new BooksAdapter object and set to RecyclerView
+//        adapter = new DiveListAdapter(this, dive_number_list, location_list, date_list);
+//        dive_list.setAdapter(adapter);
+//
+//        adapter.notifyDataSetChanged();
 
     }
 
@@ -128,6 +128,12 @@ public class DiveLogActivity extends AppCompatActivity {
                     Log.d("test5", "dive_number_list = " + String.valueOf(dive_number_list.size()));
 
                 }
+
+                // create new BooksAdapter object and set to RecyclerView
+                adapter = new DiveListAdapter(DiveLogActivity.this, dive_number_list, location_list, date_list);
+                dive_list.setAdapter(adapter);
+
+                adapter.notifyDataSetChanged();
             }
 
             @Override

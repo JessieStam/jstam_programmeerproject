@@ -23,7 +23,15 @@
         <activity android:name=".Activities.DiveLogActivity"/>
         <activity android:name=".Activities.DiveLogDetailsActivity"/>
         <activity android:name=".Activities.StatisticsActivity"/>
-        <activity android:name=".Activities.NitroTimerActivity"/>s
+        <activity android:name=".Activities.NitroTimerActivity"/>
+
+        <receiver
+            android:name=".Helpers.AlertReceiver"
+            android:exported="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.NOTIFY" />
+            </intent-filter>
+        </receiver>
 
     </application>
 
