@@ -11,7 +11,7 @@ public class DiveItem {
     // fields for email and username
     private String date, country, dive_spot, buddy, air_temp, surface_temp, bottom_temp, visibility,
             water_type, dive_type, lead, time_in, time_out, pressure_in, pressure_out, depth,
-            safetystop, notes;
+            safetystop, notes, previous_level, nitrogen_level, interval_level;
 
     private ArrayList<String> clothing_list;
 
@@ -26,7 +26,7 @@ public class DiveItem {
                     String dive_type, String lead, ArrayList<String> clothing_list,
                     String time_in, String time_out, String pressure_in,
                     String pressure_out, String depth, String safetystop,
-                    String notes) {
+                    String notes, String previous_level, String nitrogen_level, String interval_level) {
 
         this.dive_number = dive_number;
         this.date = date;
@@ -48,6 +48,9 @@ public class DiveItem {
         this.depth = depth;
         this.safetystop = safetystop;
         this.notes = notes;
+        this.previous_level = previous_level;
+        this.nitrogen_level = nitrogen_level;
+        this.interval_level = interval_level;
 
     }
 
@@ -130,5 +133,17 @@ public class DiveItem {
     // methods for notes
     public String getNotes() { return notes; }
     public void setNotes(String new_notes) { notes = new_notes; }
+
+    // methods for previous_level
+    public String getPreviousLevel() { return previous_level; }
+    public void setPreviousLevel(String new_previous_level) { previous_level = new_previous_level; }
+
+    // methods for previous_level
+    public String getNitrogenLevel() { return nitrogen_level; }
+    public void setNitrogenLevel(String new_nitrogen_level) { nitrogen_level = new_nitrogen_level; }
+
+    // methods for previous_level
+    public String getIntervalLevel() { return interval_level; }
+    public void setIntervalLevel(String new_interval_level) { previous_level = new_interval_level; }
 
 }

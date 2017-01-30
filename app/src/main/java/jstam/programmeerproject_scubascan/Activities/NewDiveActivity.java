@@ -28,6 +28,11 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -43,6 +48,7 @@ import jstam.programmeerproject_scubascan.Helpers.DiveManager;
 import jstam.programmeerproject_scubascan.Helpers.NewDiveFragmentPageAdapter;
 import jstam.programmeerproject_scubascan.Fragments.DisplayFragments.UnfinishedFragments.SecondNewDiveFragment;
 import jstam.programmeerproject_scubascan.Helpers.NitrogenCalculator;
+import jstam.programmeerproject_scubascan.Items.LastDive;
 import jstam.programmeerproject_scubascan.R;
 import jstam.programmeerproject_scubascan.Helpers.ToolbarHelper;
 
@@ -63,6 +69,18 @@ public class NewDiveActivity extends AppCompatActivity implements FirstNewDiveFr
             water_type, dive_type, lead, time_in, time_out, pressure_in, pressure_out, depth,
             safetystop, notes;
 
+    String last_date, last_time_out, last_letter;
+
+    String nitrogen_level, interval_level;
+    long interval;
+
+    String previous_level;
+    long last_totaltime;
+
+    long bottomtime, totalbottomtime;
+
+    long interval_last_now, added_time;
+
     Button final_save_button;
 
     ArrayList<String> clothing_list;
@@ -72,6 +90,8 @@ public class NewDiveActivity extends AppCompatActivity implements FirstNewDiveFr
     DiveManager dive_manager;
 
     NitrogenCalculator nitrogen;
+
+    DatabaseReference my_database;
 
     NotificationManager notify_manager;
 
@@ -236,33 +256,15 @@ public class NewDiveActivity extends AppCompatActivity implements FirstNewDiveFr
         FirebaseUser firebase_user = mAuth.getCurrentUser();
         String user_id = firebase_user.getUid();
 
+        calculateLevels();
+
         dive_manager.create_dive(user_id, date, country, dive_spot, buddy, air_temp, surface_temp,
                 bottom_temp, visibility, water_type, dive_type, lead, clothing_list, time_in,
-                time_out, pressure_in, pressure_out, depth, safetystop, notes);
+                time_out, pressure_in, pressure_out, depth, safetystop, notes, previous_level,
+                nitrogen_level, interval_level);
 
-        //calculate all the things
-        InputStream input_stream_first = getResources().openRawResource(R.raw.nitrogen_first);
-        InputStream input_stream_second = getResources().openRawResource(R.raw.nitrogen_second);
-        InputStream input_stream_third = getResources().openRawResource(R.raw.nitrogen_third);
-
-        nitrogen = new NitrogenCalculator();
-
-        try {
-            nitrogen.readToHashMap("first", input_stream_first);
-            nitrogen.readToHashMap("second", input_stream_second);
-            nitrogen.readToHashMap("third", input_stream_third);
-        } catch (IOException e) {
-            Log.d("test6", "HomeActivity throws exception");
-
-            e.printStackTrace();
-        }
-
-        long bottomtime = nitrogen.calculateBottomTime(time_in, time_out);
-        //long totalbottomtime = nitrogen.calculateTotalTime(total_time, bottomtime);
-
-        String nitrogen_level = nitrogen.calculateNitrogen(depth, String.valueOf(bottomtime));
-        long interval = nitrogen.calculateSurfaceInterval(time_out, date);
-        String interval_level = nitrogen.calculateCurrent(nitrogen_level, interval);
+        // finally update last dive
+        dive_manager.updateLastDive(user_id, date, time_out, interval_level, totalbottomtime);
 
         // custom dialog
         final Dialog dialog = new Dialog(this);
@@ -271,7 +273,8 @@ public class NewDiveActivity extends AppCompatActivity implements FirstNewDiveFr
 
         // set the custom dialog components - text, image and button
         TextView info = (TextView) dialog.findViewById(R.id.dialog_newdive_info);
-        info.setText("Dived for " + bottomtime + " minutes. Nitrogen level is " + nitrogen_level + ".");
+        info.setText("Dived for " + bottomtime + " minutes. Nitrogen level upon resurfacing: " + nitrogen_level + "." +
+                " Nitrogen level now: " + interval_level);
 
         Button yesbutton = (Button) dialog.findViewById(R.id.dialog_newdive_yesbutton);
         // if button is clicked, close the custom dialog
@@ -316,6 +319,104 @@ public class NewDiveActivity extends AppCompatActivity implements FirstNewDiveFr
         startActivity(menu_activity);
 
         finish();
+    }
+
+    public void calculateLevels() {
+
+        //calculate all the things
+        InputStream input_stream_first = getResources().openRawResource(R.raw.nitrogen_first);
+        InputStream input_stream_second = getResources().openRawResource(R.raw.nitrogen_second);
+        InputStream input_stream_third = getResources().openRawResource(R.raw.nitrogen_third);
+
+        nitrogen = new NitrogenCalculator();
+
+        try {
+            nitrogen.readToHashMap("first", input_stream_first);
+            nitrogen.readToHashMap("second", input_stream_second);
+            nitrogen.readToHashMap("third", input_stream_third);
+        } catch (IOException e) {
+            Log.d("test6", "throws exception");
+
+            e.printStackTrace();
+        }
+
+//        bottomtime = nitrogen.calculateBottomTime(time_in, time_out);
+//        totalbottomtime = nitrogen.calculateTotalTime(total_time, bottomtime);
+
+        // check of al een letter
+        last_letter = "";
+        last_totaltime = 0;
+        added_time = 0;
+
+        // check previous dive info
+        FirebaseAuth mAuth;
+        mAuth = FirebaseAuth.getInstance();
+        FirebaseUser firebase_user = mAuth.getCurrentUser();
+        String user_id = firebase_user.getUid();
+
+        my_database = FirebaseDatabase.getInstance().getReference();
+        my_database.child("users").child(user_id).child("last_dive").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                if (dataSnapshot != null) {
+                    Log.d("test8", "datasnapshot is NOT null");
+
+                    LastDive last_dive = dataSnapshot.getValue(LastDive.class);
+                    last_date = last_dive.getDate();
+                    last_time_out = last_dive.getTimeOut();
+                    last_letter = last_dive.getLetter();
+                    last_totaltime = last_dive.getTotaltime();
+
+                    Log.d("test8", "last total time is: " + last_totaltime);
+                }
+                else {
+
+                    Log.d("test8", "datasnapshot is null");
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.d("test8", "in onCancelled");
+            }
+        });
+
+        bottomtime = nitrogen.calculateBottomTime(time_in, time_out);
+        totalbottomtime = nitrogen.calculateTotalTime(last_totaltime, bottomtime);
+
+        // caculate current letter from previous dive
+
+        // if last dive excists
+        if (last_time_out != null && last_date != null) {
+            interval_last_now = nitrogen.calculateSurfaceInterval(time_in, date, last_time_out, last_date);
+
+            // if last letter is not "" (no nitrogen residue) calculate level after interval
+            if (!last_letter.equals("")) {
+                previous_level = nitrogen.calculateCurrentLevel(last_letter, interval_last_now);
+
+                if (!previous_level.equals("")) {
+
+                    added_time = nitrogen.calculateAddedTime(previous_level, depth);
+
+                }
+            }
+        }
+
+        // calculate letter --> haal letter van firebase --> calculate interval --> calculate interval level
+        // user-info last dive date, last dive letter, last dive time out,
+
+        nitrogen_level = nitrogen.calculateNitrogen(depth, String.valueOf(bottomtime), added_time);
+        interval = nitrogen.calculateSurfaceInterval(time_out, date, "", "");
+        interval_level = nitrogen.calculateCurrentLevel(nitrogen_level, interval);
+
+        Log.d("test8", "bottomtime: " + bottomtime);
+        Log.d("test8", "totalbottomtime: " + totalbottomtime);
+        Log.d("test8", "previouslevel: " + previous_level);
+        Log.d("test8", "added_time: " + added_time);
+        Log.d("test8", "nitrogen: " + nitrogen_level);
+        Log.d("test8", "interval_level: " + interval_level);
+
     }
 
     public void timerActivity(String set_timer) {

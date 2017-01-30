@@ -106,7 +106,7 @@ public class NitrogenCalculator implements Serializable {
         }
     }
 
-    public String calculateNitrogen(String depth, String bottomtime) {
+    public String calculateNitrogen(String depth, String bottomtime, long added_time) {
 
         String letter = "";
 
@@ -165,14 +165,40 @@ public class NitrogenCalculator implements Serializable {
 
     }
 
-    public String calculateCurrent (String letter, long interval) {
+    public String calculateCurrentLevel (String letter, long interval) {
 
         String current_letter = "";
 
         // calculate highest key
         if (nitrogen_second != null) {
 
-            current_letter = nitrogen_second.get(letter).get(interval);
+            boolean interval_not_found = true;
+
+            while (interval_not_found) {
+
+                current_letter = nitrogen_second.get(letter).get(String.valueOf(interval));
+
+                if (current_letter != null) {
+
+                    Log.d("test8", "letter is: " + letter);
+                    interval_not_found = false;
+
+                } else {
+                    interval += 1;
+
+                    Log.d("test7", "current_letter, new interval is " + interval);
+
+                    if (interval > 360) {
+
+                        //time is over, nitrogen free
+
+                        interval_not_found = false;
+
+                    }
+
+                    // if bottomtime_int is increased more than 5 times or so, warn diver, because probably Z
+                }
+            }
 
         } else {
             Log.d("test7", "nitrogentable is null");
@@ -185,16 +211,39 @@ public class NitrogenCalculator implements Serializable {
     public long calculateAddedTime (String letter, String depth) {
 
         long added_time = 0;
+        String time = "";
 
         // calculate highest key
         if (nitrogen_third != null) {
 
-            String time = nitrogen_second.get(letter).get(depth);
+            // ding voor depth
+
+            boolean depth_not_found = true;
+
+            while (depth_not_found) {
+
+                time = nitrogen_second.get(letter).get(depth);
+
+                if (time != null) {
+                    depth_not_found = false;
+
+                    Log.d("test8", "depth is: " + depth);
+
+                } else {
+                    int depth_int = Integer.parseInt(depth) + 1;
+                    depth = String.valueOf(depth_int);
+
+                    Log.d("test7", "depth is empty, new depth is " + depth);
+                }
+            }
+
             added_time = Integer.valueOf(time);
 
         } else {
             Log.d("test7", "nitrogentable is null");
         }
+
+        Log.d("test8", "added time = " + added_time);
 
         return added_time;
     }
@@ -239,7 +288,7 @@ public class NitrogenCalculator implements Serializable {
         return total_time + bottom_time;
     }
 
-    public long calculateSurfaceInterval(String time_out, String date) {
+    public long calculateSurfaceInterval(String time_out, String date, String last_time_out, String last_date) {
 
         long surface_interval = 0;
 
@@ -249,8 +298,21 @@ public class NitrogenCalculator implements Serializable {
 //        String dateStart = "14-01-2012 09:29:58";
 //        String dateStop = "15-01-2012 10:31:48";
 
-        String date_start = date + " " + time_out;
-        String date_stop = format.format(new Date());
+        String date_start;
+        String date_stop;
+
+        if (last_time_out.equals("") && last_date.equals("")){
+            date_start = date + " " + time_out;
+            date_stop = format.format(new Date());
+        } else {
+
+            date_start = last_date + " " + last_time_out;
+            date_stop = time_out + " " + date;
+
+        }
+
+//        String date_start = date + " " + time_out;
+//        String date_stop = format.format(new Date());
 
         Log.d("test7", "date_start: " + date_start);
         Log.d("test7", "date_stop: " + date_stop);

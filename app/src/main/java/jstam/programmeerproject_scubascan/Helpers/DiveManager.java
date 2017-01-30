@@ -14,6 +14,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 import jstam.programmeerproject_scubascan.Items.DiveItem;
+import jstam.programmeerproject_scubascan.Items.LastDive;
 
 /**
  * Created by Jessie on 18/01/2017.
@@ -22,7 +23,6 @@ import jstam.programmeerproject_scubascan.Items.DiveItem;
 public class DiveManager {
 
     private DatabaseReference my_database;
-    private DatabaseReference my_database2;
 
     int dive_number = 1;
     int finished = 0;
@@ -57,7 +57,8 @@ public class DiveManager {
                             String visibility, String water_type, String dive_type, String lead,
                             ArrayList<String> clothes_list, String time_in, String time_out,
                             String pressure_in, String pressure_out, String depth,
-                            String safetystop, String notes) {
+                            String safetystop, String notes, String previous_level,
+                            String nitrogen_level, String interval_level) {
 
         my_database = FirebaseDatabase.getInstance().getReference();
 
@@ -85,8 +86,9 @@ public class DiveManager {
         new_dive.setDepth(depth);
         new_dive.setSafetystop(safetystop);
         new_dive.setNotes(notes);
-
-        Log.d("test4", "hardcoded number is: " + new_dive.getDiveNumber());
+        new_dive.setPreviousLevel(previous_level);
+        new_dive.setNitrogenLevel(nitrogen_level);
+        new_dive.setIntervalLevel(interval_level);
 
         dive_list.add(new_dive);
 
@@ -95,6 +97,48 @@ public class DiveManager {
         my_database.child("users").child(user).child("dive_log").child(dive_name).setValue(new_dive);
 
     }
+
+    public void updateLastDive (String user, String date, String time_out,
+                                String letter, long totaltime) {
+
+        Log.d("test8", "in update laste dive");
+
+        my_database = FirebaseDatabase.getInstance().getReference();
+
+        LastDive last_dive = new LastDive();
+
+        last_dive.setDate(date);
+        last_dive.setTimeOut(time_out);
+        last_dive.setLetter(letter);
+        last_dive.setTotaltime(totaltime);
+
+        my_database.child("users").child(user).child("last_dive").setValue(last_dive);
+
+    }
+
+//    public void getLastDive() {
+//
+//        FirebaseAuth mAuth;
+//        mAuth = FirebaseAuth.getInstance();
+//        FirebaseUser firebase_user = mAuth.getCurrentUser();
+//        String user_id = firebase_user.getUid();
+//
+//        my_database = FirebaseDatabase.getInstance().getReference();
+//        my_database.child("users").child(user_id).child("last_dive").addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//
+//                LastDive last_dive = dataSnapshot.getValue(LastDive.class);
+//
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//                Log.d("test4", "in onCancelled");
+//            }
+//        });
+//
+//    }
 
     public int getDiveNumber() {
 
