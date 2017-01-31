@@ -18,11 +18,29 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import org.w3c.dom.Text;
+
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.GregorianCalendar;
 
 import jstam.programmeerproject_scubascan.Helpers.AlertReceiver;
+import jstam.programmeerproject_scubascan.Helpers.DiveManager;
+import jstam.programmeerproject_scubascan.Helpers.NitrogenCalculator;
+import jstam.programmeerproject_scubascan.Items.DiveItem;
+import jstam.programmeerproject_scubascan.Items.LastDive;
 import jstam.programmeerproject_scubascan.R;
 import jstam.programmeerproject_scubascan.Helpers.ToolbarHelper;
 
@@ -34,6 +52,31 @@ public class NitroTimerActivity extends AppCompatActivity {
 
     private Toolbar toolbar;
     ToolbarHelper toolbar_helper;
+
+    String nitrogen_level, interval_level, current_level;
+    long interval;
+
+    TextView nitro_data;
+    TextView intro_text;
+
+    NitrogenCalculator calculator;
+
+
+    DatabaseReference my_database;
+
+    private FirebaseAuth mAuth;
+    FirebaseUser firebase_user;
+    String user_id;
+
+    String last_date, last_time_out, last_letter;
+
+    long last_totaltime;
+
+    final DiveItem new_dive = new DiveItem();
+
+    LastDive last_dive = new LastDive();
+
+    DiveManager dive_manager;
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @Override
@@ -48,20 +91,59 @@ public class NitroTimerActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         toolbar_helper = new ToolbarHelper();
 
+        intro_text = (TextView) findViewById(R.id.nitrogen_text);
+        nitro_data = (TextView) findViewById(R.id.nitrogen_letter);
+
+        mAuth = FirebaseAuth.getInstance();
+
+        my_database = FirebaseDatabase.getInstance().getReference();
+        firebase_user = mAuth.getCurrentUser();
+        user_id = firebase_user.getUid();
+
+        calculator = new NitrogenCalculator();
+
+        dive_manager = DiveManager.getOurInstance();
+
+        //calculate all the things
+        InputStream input_stream_first = getResources().openRawResource(R.raw.nitrogen_first);
+        InputStream input_stream_second = getResources().openRawResource(R.raw.nitrogen_second);
+        InputStream input_stream_third = getResources().openRawResource(R.raw.nitrogen_third);
+
+        try {
+            calculator.readToHashMap("first", input_stream_first);
+            calculator.readToHashMap("second", input_stream_second);
+            calculator.readToHashMap("third", input_stream_third);
+        } catch (IOException e) {
+            Log.d("test6", "throws exception");
+            e.printStackTrace();
+        }
+
         NotificationManager notify_manager;
 
         int notific_id = 100;
+
+
+        // get interval level, zoveel minuten voor de dialog showed
+
+        // wanneer geopend bereken current level
 
         Bundle bundle = getIntent().getExtras();
 
         if (bundle != null) {
             if (bundle.getString("set_timer") != null) {
-                setAlarm();
+
+                nitrogen_level = bundle.getString("nitrogen_level");
+                interval_level = bundle.getString("interval_level");
+
+                setAlarm(interval_level);
                 //showNotification();
             }
         } else {
             Log.d("test7", "bundle is null");
         }
+
+        // set info
+        setLevel();
 
     }
 
@@ -82,11 +164,14 @@ public class NitroTimerActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(toolbar);
     }
 
-    public void setAlarm() {
+    public void setAlarm(String current_letter) {
 
         Log.d("test7", "in setAlarm");
 
-        Long alert_time = new GregorianCalendar().getTimeInMillis()+5*1000;
+        // calculate minutes
+        long minutes = calculator.timeToNitroFree(current_letter);
+
+        long alert_time = new GregorianCalendar().getTimeInMillis() + minutes * 60 * 1000;
 
         Intent alert_intent = new Intent (this, AlertReceiver.class);
 
@@ -96,35 +181,91 @@ public class NitroTimerActivity extends AppCompatActivity {
                 PendingIntent.getBroadcast(this, 1, alert_intent,
                         PendingIntent.FLAG_UPDATE_CURRENT));
 
+
+        Toast.makeText(this, "Nitrogen-free in " + minutes + " minutes!", Toast.LENGTH_SHORT).show();
+
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
-    public void showNotification() {
+    public void setLevel() {
 
-        NotificationCompat.Builder notify_builder = (NotificationCompat.Builder) new NotificationCompat.Builder(this)
-                .setContentTitle("ScubaScan").setContentText("Nitrogen-free!")
-                .setTicker("Nitrogen-level changed").setSmallIcon(R.drawable.droogpak);
+        // haal dingen van firebase
+        my_database.child("users").child(user_id).child("last_dive").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
 
-        Intent timer_intent = new Intent(this, NitroTimerActivity.class);
+                if (dataSnapshot != null) {
+                    Log.d("test8", "datasnapshot is NOT null");
 
-        TaskStackBuilder stackbuilder = TaskStackBuilder.create(this);
+                    LastDive last_dive = dataSnapshot.getValue(LastDive.class);
 
-        stackbuilder.addParentStack(NitroTimerActivity.class);
-        stackbuilder.addNextIntent(timer_intent);
+                    if (last_dive != null) {
+                        last_letter = last_dive.getLetter();
+                        nitro_data.setText(last_letter);
+                    }
 
-        PendingIntent pending_intent = stackbuilder.getPendingIntent
-                (0, PendingIntent.FLAG_UPDATE_CURRENT);
+                } else {
 
-        notify_builder.setContentIntent(pending_intent);
+                    Log.d("test8", "datasnapshot is null");
+                }
 
-        NotificationManager notify_manager;
+            }
 
-        notify_manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.d("test4", "in onCancelled");
+            }
+        });
 
-        notify_manager.notify(100, notify_builder.build());
 
-        //is_notif_active = true;
+    }
 
+    public void recalculate(View view){
+
+        last_date = "";
+        last_time_out = "";
+
+        // haal dingen van firebase
+        my_database.child("users").child(user_id).child("last_dive").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                if (dataSnapshot != null) {
+                    Log.d("test8", "datasnapshot is NOT null");
+
+                    LastDive last_dive = dataSnapshot.getValue(LastDive.class);
+
+                    if (last_dive != null) {
+                        last_date = last_dive.getDate();
+                        last_time_out = last_dive.getTimeOut();
+                        last_letter = last_dive.getLetter();
+                        last_totaltime = last_dive.getTotaltime();
+                    }
+
+                } else {
+
+                    Log.d("test8", "datasnapshot is null");
+                }
+
+                interval = calculator.calculateSurfaceInterval(last_time_out, last_date, "", "");
+
+                current_level = calculator.calculateCurrentLevel(last_letter, interval);
+
+                // set current level to text
+                if (current_level != null) {
+                    nitro_data.setText(current_level);
+                    intro_text.setText("Your current nitrogen level is...");
+                }
+
+                dive_manager.updateLastDive(user_id, last_date, last_time_out, current_level,
+                        last_totaltime);
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.d("test4", "in onCancelled");
+            }
+        });
 
     }
 

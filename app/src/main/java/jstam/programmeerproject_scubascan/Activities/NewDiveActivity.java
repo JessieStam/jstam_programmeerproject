@@ -463,6 +463,8 @@ public class NewDiveActivity extends AppCompatActivity implements FirstNewDiveFr
         Intent timer_activity = new Intent(this, NitroTimerActivity.class);
 
         timer_activity.putExtra(set_timer, set_timer);
+        timer_activity.putExtra("nitrogen_level", nitrogen_level);
+        timer_activity.putExtra("interval_level", interval_level);
 
         startActivity(timer_activity);
 

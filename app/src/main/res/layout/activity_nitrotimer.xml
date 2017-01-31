@@ -9,7 +9,7 @@
         layout="@layout/toolbar"/>
 
     <TextView
-        android:text="Current nitrogen level"
+        android:text="Nitrogen Information"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/nitrogen_title"
@@ -18,8 +18,13 @@
         android:gravity="center"
         android:padding="10dp" />
 
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.2"/>
+
     <TextView
-        android:text="Info over de levels"
+        android:text="Your last nitrogen level was..."
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/nitrogen_text"
@@ -27,5 +32,27 @@
         android:textColor="#000000"
         android:gravity="center"
         android:padding="10dp" />
+
+    <TextView
+        android:text="NONE"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/nitrogen_letter"
+        android:textSize="40sp"
+        android:textColor="#000000"
+        android:gravity="center"
+        android:padding="10dp" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"/>
+
+    <Button
+        android:text="Recalculate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/recalculate_button"
+        android:onClick="recalculate"/>
 
 </LinearLayout>

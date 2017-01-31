@@ -208,6 +208,23 @@ public class NitrogenCalculator implements Serializable {
 
     }
 
+    public long timeToNitroFree(String current_letter) {
+
+        String minutes = "";
+
+        // calculate highest key
+        if (nitrogen_second != null) {
+
+            minutes = nitrogen_second.get(current_letter).get("none");
+
+        } else {
+            Log.d("test7", "nitrogentable is null");
+        }
+
+        return Integer.valueOf(minutes);
+
+    }
+
     public long calculateAddedTime (String letter, String depth) {
 
         long added_time = 0;
