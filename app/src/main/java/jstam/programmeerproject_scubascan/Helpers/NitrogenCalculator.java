@@ -222,7 +222,7 @@ public class NitrogenCalculator implements Serializable {
 
             while (depth_not_found) {
 
-                time = nitrogen_second.get(letter).get(depth);
+                time = nitrogen_third.get(letter).get(depth);
 
                 if (time != null) {
                     depth_not_found = false;

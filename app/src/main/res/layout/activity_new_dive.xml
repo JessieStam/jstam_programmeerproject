@@ -21,7 +21,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/final_save_button"
             android:visibility="invisible"
-            android:onClick="saveNewDive"/>
+            android:onClick="importData"/>
 
         <TextView
             android:text="Logging a new Dive"

@@ -99,6 +99,9 @@ public class NewDiveActivity extends AppCompatActivity implements FirstNewDiveFr
 
     boolean is_notif_active;
 
+    FirebaseUser firebase_user;
+    String user_id;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -127,6 +130,9 @@ public class NewDiveActivity extends AppCompatActivity implements FirstNewDiveFr
         final_save_button = (Button) findViewById(R.id.final_save_button);
 
         clothing_list = new ArrayList<>();
+
+        firebase_user = mAuth.getCurrentUser();
+        user_id = firebase_user.getUid();
 
         // set booleans to false
         general_data = false;
@@ -251,12 +257,136 @@ public class NewDiveActivity extends AppCompatActivity implements FirstNewDiveFr
         }
     }
 
-    public void saveNewDive(View view) {
+    public void importData(View view) {
 
         FirebaseUser firebase_user = mAuth.getCurrentUser();
         String user_id = firebase_user.getUid();
 
-        calculateLevels();
+        //calculate all the things
+        InputStream input_stream_first = getResources().openRawResource(R.raw.nitrogen_first);
+        InputStream input_stream_second = getResources().openRawResource(R.raw.nitrogen_second);
+        InputStream input_stream_third = getResources().openRawResource(R.raw.nitrogen_third);
+
+        nitrogen = new NitrogenCalculator();
+
+        try {
+            nitrogen.readToHashMap("first", input_stream_first);
+            nitrogen.readToHashMap("second", input_stream_second);
+            nitrogen.readToHashMap("third", input_stream_third);
+        } catch (IOException e) {
+            Log.d("test6", "throws exception");
+
+            e.printStackTrace();
+        }
+
+//        bottomtime = nitrogen.calculateBottomTime(time_in, time_out);
+//        totalbottomtime = nitrogen.calculateTotalTime(total_time, bottomtime);
+
+        // check of al een letter
+        last_letter = "";
+        last_totaltime = 0;
+        added_time = 0;
+
+        // check previous dive info
+        my_database = FirebaseDatabase.getInstance().getReference();
+        my_database.child("users").child(user_id).child("last_dive").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                Log.d("test8", "in on data change");
+
+                if (dataSnapshot != null) {
+                    Log.d("test8", "datasnapshot is NOT null");
+
+                    LastDive last_dive = dataSnapshot.getValue(LastDive.class);
+
+                    if (last_dive != null) {
+                        last_date = last_dive.getDate();
+                        last_time_out = last_dive.getTimeOut();
+                        last_letter = last_dive.getLetter();
+                        last_totaltime = last_dive.getTotaltime();
+
+                        Log.d("test8", "last total time is: " + last_totaltime);
+                    }
+
+                } else {
+
+                    Log.d("test8", "datasnapshot is null");
+                }
+
+                Log.d("test8", "going to save new dive");
+                calculateValues();
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.d("test8", "in onCancelled");
+            }
+        });
+    }
+
+    public void calculateValues() {
+
+        Log.d("test8", "in calculate values");
+
+        bottomtime = nitrogen.calculateBottomTime(time_in, time_out);
+        totalbottomtime = nitrogen.calculateTotalTime(last_totaltime, bottomtime);
+
+
+        // if last dive excists
+        if (last_time_out != null && last_date != null) {
+
+            Log.d("test8", "last time out and date are not null: " + last_time_out + " " + last_date);
+
+            interval_last_now = nitrogen.calculateSurfaceInterval(time_in, date, last_time_out, last_date);
+
+            Log.d("test8", "interval between last and now: " + interval_last_now);
+
+            // if last letter is not "" (no nitrogen residue) calculate level after interval
+            if (last_letter != null) {
+
+                if (!last_letter.equals("")){
+                    Log.d("test8", "last letter is not empty, but: " + last_letter);
+
+                    previous_level = nitrogen.calculateCurrentLevel(last_letter, interval_last_now);
+
+                    Log.d("test8", "previous level is: " + previous_level);
+
+                    if (!previous_level.equals("")) {
+
+                        added_time = nitrogen.calculateAddedTime(previous_level, depth);
+
+                    }
+                }
+
+            }
+            else {
+                Log.d("test8", "last letter is null");
+            }
+        }
+
+
+        // calculate letter --> haal letter van firebase --> calculate interval --> calculate interval level
+        // user-info last dive date, last dive letter, last dive time out,
+
+        nitrogen_level = nitrogen.calculateNitrogen(depth, String.valueOf(bottomtime), added_time);
+        interval = nitrogen.calculateSurfaceInterval(time_out, date, "", "");
+        interval_level = nitrogen.calculateCurrentLevel(nitrogen_level, interval);
+
+        Log.d("test8", "bottomtime: " + bottomtime);
+        Log.d("test8", "totalbottomtime: " + totalbottomtime);
+        Log.d("test8", "previouslevel: " + previous_level);
+        Log.d("test8", "added_time: " + added_time);
+        Log.d("test8", "nitrogen: " + nitrogen_level);
+        Log.d("test8", "interval_level: " + interval_level);
+
+        saveNewDive();
+    }
+
+    public void saveNewDive() {
+
+        Log.d("test8", "back in save new dive");
 
         dive_manager.create_dive(user_id, date, country, dive_spot, buddy, air_temp, surface_temp,
                 bottom_temp, visibility, water_type, dive_type, lead, clothing_list, time_in,
@@ -319,104 +449,6 @@ public class NewDiveActivity extends AppCompatActivity implements FirstNewDiveFr
         startActivity(menu_activity);
 
         finish();
-    }
-
-    public void calculateLevels() {
-
-        //calculate all the things
-        InputStream input_stream_first = getResources().openRawResource(R.raw.nitrogen_first);
-        InputStream input_stream_second = getResources().openRawResource(R.raw.nitrogen_second);
-        InputStream input_stream_third = getResources().openRawResource(R.raw.nitrogen_third);
-
-        nitrogen = new NitrogenCalculator();
-
-        try {
-            nitrogen.readToHashMap("first", input_stream_first);
-            nitrogen.readToHashMap("second", input_stream_second);
-            nitrogen.readToHashMap("third", input_stream_third);
-        } catch (IOException e) {
-            Log.d("test6", "throws exception");
-
-            e.printStackTrace();
-        }
-
-//        bottomtime = nitrogen.calculateBottomTime(time_in, time_out);
-//        totalbottomtime = nitrogen.calculateTotalTime(total_time, bottomtime);
-
-        // check of al een letter
-        last_letter = "";
-        last_totaltime = 0;
-        added_time = 0;
-
-        // check previous dive info
-        FirebaseAuth mAuth;
-        mAuth = FirebaseAuth.getInstance();
-        FirebaseUser firebase_user = mAuth.getCurrentUser();
-        String user_id = firebase_user.getUid();
-
-        my_database = FirebaseDatabase.getInstance().getReference();
-        my_database.child("users").child(user_id).child("last_dive").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-
-                if (dataSnapshot != null) {
-                    Log.d("test8", "datasnapshot is NOT null");
-
-                    LastDive last_dive = dataSnapshot.getValue(LastDive.class);
-                    last_date = last_dive.getDate();
-                    last_time_out = last_dive.getTimeOut();
-                    last_letter = last_dive.getLetter();
-                    last_totaltime = last_dive.getTotaltime();
-
-                    Log.d("test8", "last total time is: " + last_totaltime);
-                }
-                else {
-
-                    Log.d("test8", "datasnapshot is null");
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Log.d("test8", "in onCancelled");
-            }
-        });
-
-        bottomtime = nitrogen.calculateBottomTime(time_in, time_out);
-        totalbottomtime = nitrogen.calculateTotalTime(last_totaltime, bottomtime);
-
-        // caculate current letter from previous dive
-
-        // if last dive excists
-        if (last_time_out != null && last_date != null) {
-            interval_last_now = nitrogen.calculateSurfaceInterval(time_in, date, last_time_out, last_date);
-
-            // if last letter is not "" (no nitrogen residue) calculate level after interval
-            if (!last_letter.equals("")) {
-                previous_level = nitrogen.calculateCurrentLevel(last_letter, interval_last_now);
-
-                if (!previous_level.equals("")) {
-
-                    added_time = nitrogen.calculateAddedTime(previous_level, depth);
-
-                }
-            }
-        }
-
-        // calculate letter --> haal letter van firebase --> calculate interval --> calculate interval level
-        // user-info last dive date, last dive letter, last dive time out,
-
-        nitrogen_level = nitrogen.calculateNitrogen(depth, String.valueOf(bottomtime), added_time);
-        interval = nitrogen.calculateSurfaceInterval(time_out, date, "", "");
-        interval_level = nitrogen.calculateCurrentLevel(nitrogen_level, interval);
-
-        Log.d("test8", "bottomtime: " + bottomtime);
-        Log.d("test8", "totalbottomtime: " + totalbottomtime);
-        Log.d("test8", "previouslevel: " + previous_level);
-        Log.d("test8", "added_time: " + added_time);
-        Log.d("test8", "nitrogen: " + nitrogen_level);
-        Log.d("test8", "interval_level: " + interval_level);
-
     }
 
     public void timerActivity(String set_timer) {
