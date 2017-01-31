@@ -14,6 +14,7 @@ import jstam.programmeerproject_scubascan.Fragments.RootFragments.RootFirstNewDi
 import jstam.programmeerproject_scubascan.Fragments.RootFragments.RootFourthNewDiveFragment;
 import jstam.programmeerproject_scubascan.Fragments.RootFragments.RootSecondNewDiveFragment;
 import jstam.programmeerproject_scubascan.Fragments.RootFragments.RootThirdNewDiveFragment;
+import jstam.programmeerproject_scubascan.Items.DiveItem;
 
 /**
  * Created by Jessie on 28/01/2017.
@@ -25,11 +26,13 @@ public class DiveLogFragmentPageAdapter extends FragmentPagerAdapter {
     private String tabTitles[] = new String[] { "One", "Two" }; //, "Three", "Four", "Five" };
     private Context context;
     private String dive_number;
+    private DiveItem dive_item;
 
-    public DiveLogFragmentPageAdapter(FragmentManager frag_manager, Context context, String dive_number) {
+    public DiveLogFragmentPageAdapter(FragmentManager frag_manager, Context context, String dive_number, DiveItem dive_item) {
         super(frag_manager);
         this.context = context;
         this.dive_number = dive_number;
+        this.dive_item = dive_item;
     }
 
     @Override
@@ -45,7 +48,7 @@ public class DiveLogFragmentPageAdapter extends FragmentPagerAdapter {
 
         switch (position) {
             case 0:
-                return RootFirstDetailsFragment.newInstance(position + 1, dive_number);
+                return RootFirstDetailsFragment.newInstance(position + 1, dive_number, dive_item);
             case 1:
                 return RootSecondNewDiveFragment.newInstance(position + 1);
 //            case 2:

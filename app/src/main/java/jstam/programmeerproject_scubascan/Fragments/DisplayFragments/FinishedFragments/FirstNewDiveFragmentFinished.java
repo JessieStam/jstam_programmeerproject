@@ -44,7 +44,7 @@ public class FirstNewDiveFragmentFinished extends Fragment {
     FinishedDiveDisplayManager display_manager;
     DiveManager dive_manager;
 
-    DiveItem dive;
+    DiveItem dive_item;
 
 //    //ThingsAdapter adapter;
     FragmentActivity listener;
@@ -114,6 +114,8 @@ public class FirstNewDiveFragmentFinished extends Fragment {
 
             Log.d("test6", "finished firstnewdive getarguments");
 
+            //btn.setVisibility(View.INVISIBLE);
+
             if (getArguments().getString("dive_number") == null){
                 date = getArguments().getString("date");
                 country = getArguments().getString("country");
@@ -121,26 +123,15 @@ public class FirstNewDiveFragmentFinished extends Fragment {
                 buddy = getArguments().getString("buddy");
             } else {
                 dive_number = getArguments().getString("dive_number");
+                dive_item = getArguments().getParcelable("dive_item");
 
                 Log.d("test6", "dive number is " + dive_number);
+                //Log.d("test6", "dive item is " + dive_item);
 
-                dive_manager.getDiveInfo(dive_number);
-
-                Handler handler = new Handler();
-
-                handler.postDelayed(new Runnable() {
-                    public void run() {
-                        final DiveItem dive = dive_manager.getDiveItem();
-
-                        date = dive.getDate();
-                        country = dive.getCountry();
-                        dive_spot = dive.getDiveSpot();
-                        buddy = dive.getBuddy();
-
-                        Log.d("test6", "date is " + date);
-
-                    }
-                }, 5000);
+                date = dive_item.getDate();
+                buddy = dive_item.getBuddy();
+                country = dive_item.getCountry();
+                dive_spot = dive_item.getDiveSpot();
             }
         } else {
             Log.d("test6", "getarguments is null");

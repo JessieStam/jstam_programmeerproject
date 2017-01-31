@@ -98,6 +98,23 @@ public class DiveManager {
 
     }
 
+    public DiveItem editDiveGeneral(String dive_name, String user, DiveItem dive, String date,
+                                    String country, String dive_spot, String buddy) {
+
+        my_database = FirebaseDatabase.getInstance().getReference();
+
+//        DiveItem edited_dive = new DiveItem();
+
+        dive.setDate(date);
+        dive.setCountry(country);
+        dive.setDiveSpot(dive_spot);
+        dive.setBuddy(buddy);
+
+        my_database.child("users").child(user).child("dive_log").child(dive_name).setValue(dive);
+
+        return dive;
+    }
+
     public void updateLastDive (String user, String date, String time_out,
                                 String letter, long totaltime) {
 

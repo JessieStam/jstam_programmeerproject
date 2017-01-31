@@ -403,8 +403,15 @@ public class NewDiveActivity extends AppCompatActivity implements FirstNewDiveFr
 
         // set the custom dialog components - text, image and button
         TextView info = (TextView) dialog.findViewById(R.id.dialog_newdive_info);
-        info.setText("Dived for " + bottomtime + " minutes. Nitrogen level upon resurfacing: " + nitrogen_level + "." +
-                " Nitrogen level now: " + interval_level);
+
+        if (previous_level == null) {
+            info.setText("Dived for " + bottomtime + " minutes. Nitrogen level upon resurfacing was " + nitrogen_level + "." +
+                    " Nitrogen level now is " + interval_level + ".");
+        } else {
+            info.setText("Dived for " + bottomtime + " minutes. Nitrogen level upon entering the water was "
+                    + previous_level + ". Nitrogen level upon resurfacing was " + nitrogen_level + "." +
+                    " Nitrogen level now is " + interval_level + ".");
+        }
 
         Button yesbutton = (Button) dialog.findViewById(R.id.dialog_newdive_yesbutton);
         // if button is clicked, close the custom dialog

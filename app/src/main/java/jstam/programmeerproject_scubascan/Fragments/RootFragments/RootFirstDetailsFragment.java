@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 
 import jstam.programmeerproject_scubascan.Fragments.DisplayFragments.FinishedFragments.FirstNewDiveFragmentFinished;
 import jstam.programmeerproject_scubascan.Fragments.DisplayFragments.UnfinishedFragments.FirstNewDiveFragment;
+import jstam.programmeerproject_scubascan.Items.DiveItem;
 import jstam.programmeerproject_scubascan.R;
 
 /**
@@ -24,8 +25,10 @@ public class RootFirstDetailsFragment extends Fragment {
 
     public static final String ARG_PAGE = "ARG_PAGE";
     public static final String ARG_NUMBER = "ARG_NUMBER";
+    public static final String ARG_DIVEITEM = "ARG_DIVEITEM";
 
     private String dive_number;
+    private DiveItem dive_item;
 
     private int mPage;
 
@@ -33,11 +36,12 @@ public class RootFirstDetailsFragment extends Fragment {
     //int cur_check_pos = 0;
 
 
-    public static RootFirstDetailsFragment newInstance(int page, String dive_number) {
+    public static RootFirstDetailsFragment newInstance(int page, String dive_number, DiveItem dive_item) {
 
         Bundle args = new Bundle();
         args.putInt(ARG_PAGE, page);
         args.putString(ARG_NUMBER, dive_number);
+        args.putParcelable(ARG_DIVEITEM, dive_item);
         RootFirstDetailsFragment fragment = new RootFirstDetailsFragment();
         fragment.setArguments(args);
         return fragment;
@@ -51,6 +55,7 @@ public class RootFirstDetailsFragment extends Fragment {
         //adapter = new ThingsAdapter(getActivity(), things);
         mPage = getArguments().getInt(ARG_PAGE);
         dive_number = getArguments().getString(ARG_NUMBER);
+        dive_item = getArguments().getParcelable(ARG_DIVEITEM);
 
 //        if (savedInstanceState == null) {
 //            Log.d("test", "oncreate root instance is null");
@@ -80,11 +85,13 @@ public class RootFirstDetailsFragment extends Fragment {
 
         Log.d("test6", "dive numer in rootfirstdetailsfragment: " + dive_number);
 
-        Bundle dive_number_bundle = new Bundle();
-        dive_number_bundle.putString("dive_number", dive_number);
+        Bundle dive_bundle = new Bundle();
+        dive_bundle.putString("dive_number", dive_number);
+        dive_bundle.putParcelable("dive_item", dive_item);
+
         // set Fragmentclass Arguments
         FirstNewDiveFragmentFinished new_frag = new FirstNewDiveFragmentFinished();
-        new_frag.setArguments(dive_number_bundle);
+        new_frag.setArguments(dive_bundle);
 
         transaction.replace(R.id.root_frame, new_frag);
 

@@ -1,12 +1,15 @@
 package jstam.programmeerproject_scubascan.Items;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.ArrayList;
 
 /**
  * Created by Jessie on 18/01/2017.
  */
 
-public class DiveItem {
+public class DiveItem implements Parcelable {
 
     // fields for email and username
     private String date, country, dive_spot, buddy, air_temp, surface_temp, bottom_temp, visibility,
@@ -145,5 +148,73 @@ public class DiveItem {
     // methods for previous_level
     public String getIntervalLevel() { return interval_level; }
     public void setIntervalLevel(String new_interval_level) { previous_level = new_interval_level; }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel out, int flags) {
+        out.writeInt(dive_number);
+        out.writeString(date);
+        out.writeString(country);
+        out.writeString(dive_spot);
+        out.writeString(buddy);
+        out.writeString(air_temp);
+        out.writeString(surface_temp);
+        out.writeString(bottom_temp);
+        out.writeString(visibility);
+        out.writeString(water_type);
+        out.writeString(dive_type);
+        out.writeString(lead);
+        out.writeString(time_in);
+        out.writeString(time_out);
+        out.writeString(pressure_in);
+        out.writeString(pressure_out);
+        out.writeString(depth);
+        out.writeString(safetystop);
+        out.writeString(notes);
+        out.writeString(previous_level);
+        out.writeString(nitrogen_level);
+        out.writeString(interval_level);
+    }
+
+    public static final Parcelable.Creator<DiveItem> CREATOR
+            = new Parcelable.Creator<DiveItem>() {
+        public DiveItem createFromParcel(Parcel in) {
+            return new DiveItem(in);
+        }
+
+        public DiveItem[] newArray(int size) {
+            return new DiveItem[size];
+        }
+    };
+
+    private DiveItem(Parcel in) {
+        dive_number = in.readInt();
+        date = in.readString();
+        country = in.readString();
+        dive_spot = in.readString();
+        buddy = in.readString();
+        air_temp = in.readString();
+        surface_temp = in.readString();
+        bottom_temp = in.readString();
+        visibility = in.readString();
+        water_type = in.readString();
+        dive_type = in.readString();
+        lead = in.readString();
+        time_in = in.readString();
+        time_out = in.readString();
+        pressure_in = in.readString();
+        pressure_out = in.readString();
+        depth = in.readString();
+        safetystop = in.readString();
+        notes = in.readString();
+        previous_level = in.readString();
+        nitrogen_level = in.readString();
+        interval_level = in.readString();
+
+    }
 
 }
