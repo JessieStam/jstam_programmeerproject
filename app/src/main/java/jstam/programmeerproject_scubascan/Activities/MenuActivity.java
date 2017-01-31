@@ -76,17 +76,17 @@ public class MenuActivity extends LoginActivity implements View.OnClickListener 
 
         } else if (i == R.id.statistics_button) {
 
-            Intent statistics_activity = new Intent(this, NewDiveActivity.class);
+            Intent statistics_activity = new Intent(this, StatisticsActivity.class);
             Toast.makeText(this, "Showing statistics...", Toast.LENGTH_SHORT).show();
 
             startActivity(statistics_activity);
 
         } else if (i == R.id.fish_log_button) {
 
-            Intent fish_log_activity = new Intent(this, NewDiveActivity.class);
-            Toast.makeText(this, "Opening aquarium...", Toast.LENGTH_SHORT).show();
+            Intent nitro_activity = new Intent(this, NitroTimerActivity.class);
+            Toast.makeText(this, "Showing nitrogren levels...", Toast.LENGTH_SHORT).show();
 
-            startActivity(fish_log_activity);
+            startActivity(nitro_activity);
         }
     }
 }

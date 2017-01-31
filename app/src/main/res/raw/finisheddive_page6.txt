@@ -1,0 +1,2 @@
+Upon entering the water, my nitrogen level was <previous_level> . When I resurfaced my nitrogen level was <nitrogen_level> .
+When I logged this dive, my nitrogen level had gone down to <interval_level> .

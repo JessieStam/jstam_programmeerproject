@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import java.io.InputStream;
@@ -18,6 +19,7 @@ import java.util.ArrayList;
 
 import jstam.programmeerproject_scubascan.Fragments.DisplayFragments.UnfinishedFragments.FourthNewDiveFragment;
 import jstam.programmeerproject_scubascan.Helpers.FinishedDiveDisplayManager;
+import jstam.programmeerproject_scubascan.Items.DiveItem;
 import jstam.programmeerproject_scubascan.R;
 
 /**
@@ -31,6 +33,10 @@ public class FourthNewDiveFragmentFinished extends android.support.v4.app.Fragme
     TextView text;
     InputStream displaytext;
     FinishedDiveDisplayManager display_manager;
+
+    String time_in, time_out, pressure_in, pressure_out, depth, safetystop, dive_number;
+
+    DiveItem dive_item;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -77,8 +83,33 @@ public class FourthNewDiveFragmentFinished extends android.support.v4.app.Fragme
 
         if (getArguments() != null) {
 
-            Log.d("test", "finished fourthnewdive getarguments are NOT null");
-            technicaldata_list = getArguments().getStringArrayList("technicaldata");
+            if (getArguments().getString("dive_number") == null){
+
+                Log.d("test", "finished fourthnewdive getarguments are NOT null");
+                technicaldata_list = getArguments().getStringArrayList("technicaldata");
+
+            } else {
+
+                dive_number = getArguments().getString("dive_number");
+                dive_item = getArguments().getParcelable("dive_item");
+
+                time_in = dive_item.getTimeIn();
+                time_out = dive_item.getTimeOut();
+                pressure_in = dive_item.getPressureIn();
+                pressure_out = dive_item.getPressureOut();
+                depth = dive_item.getDepth();
+                safetystop = dive_item.getSafetystop();
+
+                technicaldata_list.add(time_in);
+                technicaldata_list.add(time_out);
+                technicaldata_list.add(pressure_in);
+                technicaldata_list.add(pressure_out);
+                technicaldata_list.add(depth);
+                technicaldata_list.add(safetystop);
+
+            }
+
+
 
         } else {
             Log.d("test", "finished fourthnewdive getarguments are null");

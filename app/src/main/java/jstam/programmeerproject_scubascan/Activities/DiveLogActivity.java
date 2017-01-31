@@ -112,6 +112,10 @@ public class DiveLogActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
+                dive_number_list.clear();
+                location_list.clear();
+                date_list.clear();
+
                 Iterable<DataSnapshot> dive_log = dataSnapshot.getChildren();
 
                 for (DataSnapshot dive : dive_log) {

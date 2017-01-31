@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import jstam.programmeerproject_scubascan.Fragments.DisplayFragments.UnfinishedFragments.FirstNewDiveFragment;
 import jstam.programmeerproject_scubascan.Fragments.DisplayFragments.UnfinishedFragments.SecondNewDiveFragment;
 import jstam.programmeerproject_scubascan.Helpers.FinishedDiveDisplayManager;
+import jstam.programmeerproject_scubascan.Items.DiveItem;
 import jstam.programmeerproject_scubascan.R;
 
 /**
@@ -29,11 +30,13 @@ import jstam.programmeerproject_scubascan.R;
 public class SecondNewDiveFragmentFinished extends Fragment {
 
     FragmentActivity listener;
-    String air_temp, surface_temp, bottom_temp, water_type, visibility, dive_type;
+    String air_temp, surface_temp, bottom_temp, water_type, visibility, dive_type, dive_number;
     ArrayList<String> circumstances_data;
     TextView text;
     InputStream displaytext;
     FinishedDiveDisplayManager display_manager;
+
+    DiveItem dive_item;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -82,12 +85,29 @@ public class SecondNewDiveFragmentFinished extends Fragment {
 
             Log.d("test", "finished secondnewdive getarguments are NOT null");
 
-            air_temp = getArguments().getString("air_temp");
-            surface_temp = getArguments().getString("surface_temp");
-            bottom_temp = getArguments().getString("bottom_temp");
-            visibility = getArguments().getString("visibility");
-            water_type = getArguments().getString("water_type");
-            dive_type = getArguments().getString("dive_type");
+            if (getArguments().getString("dive_number") == null){
+
+                air_temp = getArguments().getString("air_temp");
+                surface_temp = getArguments().getString("surface_temp");
+                bottom_temp = getArguments().getString("bottom_temp");
+                visibility = getArguments().getString("visibility");
+                water_type = getArguments().getString("water_type");
+                dive_type = getArguments().getString("dive_type");
+
+            } else {
+
+                dive_number = getArguments().getString("dive_number");
+                dive_item = getArguments().getParcelable("dive_item");
+
+                air_temp = dive_item.getAirTemp();
+                surface_temp = dive_item.getSurfaceTemp();
+                bottom_temp = dive_item.getBottomTemp();
+                visibility = dive_item.getVisibility();
+                water_type = dive_item.getWaterType();
+                dive_type = dive_item.getDiveType();
+
+            }
+
 
         } else {
             Log.d("test", "finished secondnewdive getarguments are null");

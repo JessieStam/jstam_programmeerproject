@@ -16,38 +16,59 @@ import android.widget.TextView;
 import java.io.InputStream;
 import java.util.ArrayList;
 
-import jstam.programmeerproject_scubascan.Fragments.DisplayFragments.UnfinishedFragments.FifthNewDiveFragment;
+import jstam.programmeerproject_scubascan.Fragments.DisplayFragments.UnfinishedFragments.FourthNewDiveFragment;
+import jstam.programmeerproject_scubascan.Fragments.RootFragments.RootFirstDetailsFragment;
 import jstam.programmeerproject_scubascan.Helpers.FinishedDiveDisplayManager;
 import jstam.programmeerproject_scubascan.Items.DiveItem;
 import jstam.programmeerproject_scubascan.R;
 
 /**
- * Created by Jessie on 23/01/2017.
+ * Created by Jessie on 31/01/2017.
  */
 
-public class FifthNewDiveFragmentFinished extends android.support.v4.app.Fragment {
+public class SixthFragmentFinished extends android.support.v4.app.Fragment {
+
+    public static final String ARG_PAGE = "ARG_PAGE";
+    public static final String ARG_NUMBER = "ARG_NUMBER";
+    public static final String ARG_DIVEITEM = "ARG_DIVEITEM";
+
+    private int mPage;
 
     FragmentActivity listener;
-    String notes, dive_number;
+    ArrayList<String> nitrogen_data;
     TextView text;
     InputStream displaytext;
     FinishedDiveDisplayManager display_manager;
 
+    String previous_level, nitrogen_level, interval_level, dive_number;
+
     DiveItem dive_item;
 
+    public static SixthFragmentFinished newInstance(int page, String dive_number, DiveItem dive_item) {
+
+        Bundle args = new Bundle();
+        args.putInt(ARG_PAGE, page);
+        args.putString(ARG_NUMBER, dive_number);
+        args.putParcelable(ARG_DIVEITEM, dive_item);
+        SixthFragmentFinished fragment = new SixthFragmentFinished();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.HONEYCOMB_MR1)
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //ArrayList<Thing> things = new ArrayList<Thing>();
+        //adapter = new ThingsAdapter(getActivity(), things);
+        mPage = getArguments().getInt(ARG_PAGE);
+        dive_number = getArguments().getString(ARG_NUMBER);
+        dive_item = getArguments().getParcelable(ARG_DIVEITEM);
 
-//        if (savedInstanceState != null) {
-//
-////            date = savedInstanceState.getString("date");
-////            country = savedInstanceState.getString("country");
-////            dive_spot = savedInstanceState.getString("dive_spot");
-////            buddy = savedInstanceState.getString("buddy");
-//
-//        }
+        nitrogen_data = new ArrayList<>();
+
     }
+
 
     @RequiresApi(api = Build.VERSION_CODES.HONEYCOMB_MR1)
     @Override
@@ -55,15 +76,18 @@ public class FifthNewDiveFragmentFinished extends android.support.v4.app.Fragmen
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater
-                .inflate(R.layout.fragment_fifthnewdivefinished, container, false);
+                .inflate(R.layout.fragment_sixthfinished, container, false);
 
-        displaytext = getResources().openRawResource(R.raw.finisheddive_page5);
+        displaytext = getResources().openRawResource(R.raw.finisheddive_page6);
+
+        text = (TextView) view.findViewById(R.id.finished_text_sixth);
 
         // if savedInstanceState is empty, create new manager object
         if (savedInstanceState == null) {
 
             display_manager = new FinishedDiveDisplayManager(displaytext);
             display_manager.read(displaytext);
+
 
         } else {
 
@@ -78,38 +102,26 @@ public class FifthNewDiveFragmentFinished extends android.support.v4.app.Fragmen
 
         if (getArguments() != null) {
 
-            if (getArguments().getString("dive_number") == null){
-                Log.d("test", "finished fifthnewdive getarguments are NOT null");
-                notes = getArguments().getString("notes");
-            } else {
+            previous_level = dive_item.getPreviousLevel();
+            nitrogen_level = dive_item.getNitrogenLevel();
+            interval_level = dive_item.getIntervalLevel();
 
-                dive_number = getArguments().getString("dive_number");
-                dive_item = getArguments().getParcelable("dive_item");
 
-                notes = dive_item.getNotes();
-
+            if (previous_level == null) {
+                previous_level = "none";
             }
 
+            if (interval_level == null) {
+                interval_level = "none";
+            }
 
         } else {
-            Log.d("test", "finished fifthnewdive getarguments are null");
+            Log.d("test", "finished fourthnewdive getarguments are null");
         }
 
-        text = (TextView) view.findViewById(R.id.finished_text_fifth);
-        Button btn = (Button) view.findViewById(R.id.edit_fifthnewdive_button);
-
-        btn.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                FragmentTransaction trans = getFragmentManager()
-                        .beginTransaction();
-                trans.replace(R.id.root_frame_fifth, new FifthNewDiveFragment());
-                trans.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-                trans.addToBackStack(null);
-                trans.commit();
-            }
-        });
+        nitrogen_data.add(previous_level);
+        nitrogen_data.add(nitrogen_level);
+        nitrogen_data.add(interval_level);
 
         return view;
     }
@@ -117,15 +129,21 @@ public class FifthNewDiveFragmentFinished extends android.support.v4.app.Fragmen
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
 
-        if (notes != null) {
+        Log.d("test2", "onviewcreated");
 
-            display_manager.fillInPlaceholder(notes);
+        if (nitrogen_data != null) {
 
+            for (String detail : nitrogen_data) {
+
+                Log.d("test", "detail is " + detail);
+
+                display_manager.fillInPlaceholder(detail);
+            }
 
             // create boolean to check if isFilledIn function returns true
             boolean filledIn = display_manager.isFilledIn();
 
-            // when everything is filled in, move on to fifth Activity to print story
+            // when everything is filled in, move on to Third Activity to print story
             if (filledIn) {
 
                 String final_display = display_manager.toString();
@@ -136,7 +154,6 @@ public class FifthNewDiveFragmentFinished extends android.support.v4.app.Fragmen
                     text.setText(Html.fromHtml(final_display));
                 }
             }
-
         }
     }
 

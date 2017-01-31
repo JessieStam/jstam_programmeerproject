@@ -56,6 +56,7 @@ public class DiveLogDetailsActivity extends AppCompatActivity implements FirstNe
     String user_id;
     DatabaseReference my_database;
 
+    DiveItem edited_dive;
     DiveItem dive_item;
     DiveManager dive_manager;
 
@@ -69,6 +70,7 @@ public class DiveLogDetailsActivity extends AppCompatActivity implements FirstNe
         firebase_user = mAuth.getCurrentUser();
         user_id = firebase_user.getUid();
 
+        edited_dive = new DiveItem();
         dive_item = new DiveItem();
         dive_manager = DiveManager.getOurInstance();
 
@@ -153,7 +155,7 @@ public class DiveLogDetailsActivity extends AppCompatActivity implements FirstNe
 
         Toast.makeText(DiveLogDetailsActivity.this, "Edited data!", Toast.LENGTH_SHORT).show();
 
-        DiveItem edited_dive = dive_manager.editDiveGeneral(dive_number, user_id, dive_item, date_input, country_input,
+        edited_dive = dive_manager.editDiveGeneral(dive_number, user_id, dive_item, date_input, country_input,
                 dive_spot_input, buddy_input);
 
         dive_item = edited_dive;
@@ -161,22 +163,52 @@ public class DiveLogDetailsActivity extends AppCompatActivity implements FirstNe
     }
 
     @Override
-    public void saveCircumstancesData(String air_temp, String surface_temp, String bottom_temp, String visibility, String water_type, String dive_type) {
+    public void saveCircumstancesData(String air_temp_input, String surface_temp_input, String bottom_temp_input,
+                                      String visibility_input, String water_type_input, String dive_type_input) {
+
+        Toast.makeText(DiveLogDetailsActivity.this, "Edited data!", Toast.LENGTH_SHORT).show();
+
+        edited_dive = dive_manager.editDiveCircumstances(dive_number, user_id, dive_item, air_temp_input,
+                surface_temp_input, bottom_temp_input, visibility_input, water_type_input, dive_type_input);
+
+        dive_item = edited_dive;
 
     }
 
     @Override
-    public void saveExtraData(String notes) {
+    public void saveEquipmentData(String lead_input, ArrayList<String> clothes_input) {
+
+        Toast.makeText(DiveLogDetailsActivity.this, "Edited data!", Toast.LENGTH_SHORT).show();
+
+        edited_dive = dive_manager.editDiveEquipment(dive_number, user_id, dive_item, lead_input, clothes_input);
+
+        dive_item = edited_dive;
+    }
+
+    @Override
+    public void saveTechnicalData(String time_in_input, String time_out_input,
+                                  String pressure_in_input, String pressure_out_input,
+                                  String depth_input, String safetystop_input){
+
+        Toast.makeText(DiveLogDetailsActivity.this, "Edited data!", Toast.LENGTH_SHORT).show();
+
+        edited_dive = dive_manager.editTechnicalData(dive_number, user_id, dive_item, time_in_input,
+                time_out_input, pressure_in_input, pressure_out_input, depth_input,
+                safetystop_input);
+
+        dive_item = edited_dive;
 
     }
 
     @Override
-    public void saveTechnicalData(String time_in, String time_out, String pressure_in, String pressure_out, String depth, String safetystop) {
+    public void saveExtraData(String notes_input) {
+
+        Toast.makeText(DiveLogDetailsActivity.this, "Edited data!", Toast.LENGTH_SHORT).show();
+
+        edited_dive = dive_manager.editExtraData(dive_number, user_id, dive_item, notes_input);
+
+        dive_item = edited_dive;
 
     }
 
-    @Override
-    public void saveEquipmentData(String lead, ArrayList<String> clothes) {
-
-    }
 }

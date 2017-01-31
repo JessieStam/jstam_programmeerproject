@@ -20,7 +20,7 @@ import jstam.programmeerproject_scubascan.Fragments.RootFragments.RootThirdNewDi
 public class NewDiveFragmentPageAdapter extends FragmentPagerAdapter {
 
     final int PAGE_COUNT = 5;
-    private String tabTitles[] = new String[] { "One", "Two", "Three", "Four", "Five" };
+    private String tabTitles[] = new String[] { "1", "2", "3", "4", "5" };
     private Context context;
 
     public NewDiveFragmentPageAdapter(FragmentManager frag_manager, Context context) {

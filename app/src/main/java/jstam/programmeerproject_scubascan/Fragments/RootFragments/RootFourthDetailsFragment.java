@@ -10,17 +10,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import jstam.programmeerproject_scubascan.Fragments.DisplayFragments.FinishedFragments.FirstNewDiveFragmentFinished;
-import jstam.programmeerproject_scubascan.Fragments.DisplayFragments.FinishedFragments.SecondNewDiveFragmentFinished;
-import jstam.programmeerproject_scubascan.Fragments.DisplayFragments.UnfinishedFragments.FirstNewDiveFragment;
+import jstam.programmeerproject_scubascan.Fragments.DisplayFragments.FinishedFragments.FourthNewDiveFragmentFinished;
 import jstam.programmeerproject_scubascan.Items.DiveItem;
 import jstam.programmeerproject_scubascan.R;
 
 /**
- * Created by Jessie on 28/01/2017.
+ * Created by Jessie on 31/01/2017.
  */
 
-public class RootSecondDetailsFragment extends Fragment {
+public class RootFourthDetailsFragment extends Fragment {
 
     private static final String TAG = "RootFragment";
 
@@ -37,13 +35,13 @@ public class RootSecondDetailsFragment extends Fragment {
     //int cur_check_pos = 0;
 
 
-    public static RootSecondDetailsFragment newInstance(int page, String dive_number, DiveItem dive_item) {
+    public static RootFourthDetailsFragment newInstance(int page, String dive_number, DiveItem dive_item) {
 
         Bundle args = new Bundle();
         args.putInt(ARG_PAGE, page);
         args.putString(ARG_NUMBER, dive_number);
         args.putParcelable(ARG_DIVEITEM, dive_item);
-        RootSecondDetailsFragment fragment = new RootSecondDetailsFragment();
+        RootFourthDetailsFragment fragment = new RootFourthDetailsFragment();
         fragment.setArguments(args);
         return fragment;
     }
@@ -75,7 +73,7 @@ public class RootSecondDetailsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 		/* Inflate the layout for this fragment */
-        View view = inflater.inflate(R.layout.fragment_root_second, container, false);
+        View view = inflater.inflate(R.layout.fragment_root_fourth, container, false);
 
         FragmentTransaction transaction = getFragmentManager()
                 .beginTransaction();
@@ -89,10 +87,10 @@ public class RootSecondDetailsFragment extends Fragment {
         dive_bundle.putParcelable("dive_item", dive_item);
 
         // set Fragmentclass Arguments
-        SecondNewDiveFragmentFinished new_frag = new SecondNewDiveFragmentFinished();
+        FourthNewDiveFragmentFinished new_frag = new FourthNewDiveFragmentFinished();
         new_frag.setArguments(dive_bundle);
 
-        transaction.replace(R.id.root_frame_second, new_frag);
+        transaction.replace(R.id.root_frame_fourth, new_frag);
 
         transaction.commit();
 

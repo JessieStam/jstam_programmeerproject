@@ -52,49 +52,98 @@ public class DiveManager {
     /**
      * Create dive and add dive to dive list.
      */
-    public void create_dive(String user, String date, String country, String dive_spot,
-                            String buddy, String air_temp, String surface_temp, String bottom_temp,
-                            String visibility, String water_type, String dive_type, String lead,
-                            ArrayList<String> clothes_list, String time_in, String time_out,
-                            String pressure_in, String pressure_out, String depth,
-                            String safetystop, String notes, String previous_level,
-                            String nitrogen_level, String interval_level) {
+    public void create_dive(final String user, final String date, final String country, final String dive_spot,
+                            final String buddy, final String air_temp, final String surface_temp, final String bottom_temp,
+                            final String visibility, final String water_type, final String dive_type, final String lead,
+                            final ArrayList<String> clothes_list, final String time_in, final String time_out,
+                            final String pressure_in, final String pressure_out, final String depth,
+                            final String safetystop, final String notes, final String previous_level,
+                            final String nitrogen_level, final String interval_level) {
+
+        final DiveItem new_dive = new DiveItem();
 
         my_database = FirebaseDatabase.getInstance().getReference();
 
-        DiveItem new_dive = new DiveItem();
+        my_database.child("users").child(user).child("dive_log").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
 
-        dive_number = getDiveNumber();
+                // hier gaat iest asynchroon mis
 
-        new_dive.setDiveNumber(dive_number);
-        new_dive.setDate(date);
-        new_dive.setCountry(country);
-        new_dive.setDiveSpot(dive_spot);
-        new_dive.setBuddy(buddy);
-        new_dive.setAirTemp(air_temp);
-        new_dive.setSurfaceTemp(surface_temp);
-        new_dive.setBottomTemp(bottom_temp);
-        new_dive.setVisibility(visibility);
-        new_dive.setWaterType(water_type);
-        new_dive.setDiveType(dive_type);
-        new_dive.setLead(lead);
-        new_dive.setClothingList(clothes_list);
-        new_dive.setTimeIn(time_in);
-        new_dive.setTimeOut(time_out);
-        new_dive.setPressureIn(pressure_in);
-        new_dive.setPressureOut(pressure_out);
-        new_dive.setDepth(depth);
-        new_dive.setSafetystop(safetystop);
-        new_dive.setNotes(notes);
-        new_dive.setPreviousLevel(previous_level);
-        new_dive.setNitrogenLevel(nitrogen_level);
-        new_dive.setIntervalLevel(interval_level);
+                Log.d("test4", "in onDataChange");
 
-        dive_list.add(new_dive);
+                Iterable<DataSnapshot> dive_log = dataSnapshot.getChildren();
 
-        dive_name = "Dive " + String.valueOf(dive_number);
+                // shake hands with each of them.'
+                for (DataSnapshot dive : dive_log) {
 
-        my_database.child("users").child(user).child("dive_log").child(dive_name).setValue(new_dive);
+                    Log.d("test4", "in dive log list");
+
+                    DiveItem dive_item = dive.getValue(DiveItem.class);
+                    firebase_dive_list.add(dive_item);
+                }
+
+                if (firebase_dive_list.size() == 0) {
+                    dive_number = 1;
+
+                    Log.d("test4", "firebase_dive_list is 0");
+
+                } else {
+                    Log.d("test4", "firebase_dive_list is NOT 0");
+
+                    int highest = 0;
+
+                    for (DiveItem dive : firebase_dive_list) {
+                        Log.d("test4", "dive number: " + dive.getDiveNumber());
+                        Log.d("test4", "buddy: " + dive.getBuddy());
+
+                        if (highest < dive.getDiveNumber()) {
+                            highest = dive.getDiveNumber();
+
+                            dive_number = highest + 1;
+
+                            Log.d("test4", "dive number = " + dive_number);
+                        }
+                    }
+                }
+
+                new_dive.setDiveNumber(dive_number);
+                new_dive.setDate(date);
+                new_dive.setCountry(country);
+                new_dive.setDiveSpot(dive_spot);
+                new_dive.setBuddy(buddy);
+                new_dive.setAirTemp(air_temp);
+                new_dive.setSurfaceTemp(surface_temp);
+                new_dive.setBottomTemp(bottom_temp);
+                new_dive.setVisibility(visibility);
+                new_dive.setWaterType(water_type);
+                new_dive.setDiveType(dive_type);
+                new_dive.setLead(lead);
+                new_dive.setClothingList(clothes_list);
+                new_dive.setTimeIn(time_in);
+                new_dive.setTimeOut(time_out);
+                new_dive.setPressureIn(pressure_in);
+                new_dive.setPressureOut(pressure_out);
+                new_dive.setDepth(depth);
+                new_dive.setSafetystop(safetystop);
+                new_dive.setNotes(notes);
+                new_dive.setPreviousLevel(previous_level);
+                new_dive.setNitrogenLevel(nitrogen_level);
+                new_dive.setIntervalLevel(interval_level);
+
+                dive_list.add(new_dive);
+
+                dive_name = "Dive " + String.valueOf(dive_number);
+
+                my_database.child("users").child(user).child("dive_log").child(dive_name).setValue(new_dive);
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.d("test4", "in onCancelled");
+            }
+        });
 
     }
 
@@ -113,6 +162,70 @@ public class DiveManager {
         my_database.child("users").child(user).child("dive_log").child(dive_name).setValue(dive);
 
         return dive;
+    }
+
+    public DiveItem editDiveCircumstances(String dive_name, String user, DiveItem dive,
+                                          String air_temp, String surface_temp, String bottom_temp,
+                                          String visibility, String water_type, String dive_type) {
+
+        my_database = FirebaseDatabase.getInstance().getReference();
+
+//        DiveItem edited_dive = new DiveItem();
+
+        dive.setAirTemp(air_temp);
+        dive.setSurfaceTemp(surface_temp);
+        dive.setBottomTemp(bottom_temp);
+        dive.setVisibility(visibility);
+        dive.setWaterType(water_type);
+        dive.setDiveType(dive_type);
+
+        my_database.child("users").child(user).child("dive_log").child(dive_name).setValue(dive);
+
+        return dive;
+    }
+
+    public DiveItem editDiveEquipment(String dive_name, String user, DiveItem dive, String lead,
+                                          ArrayList<String> clothes) {
+
+        my_database = FirebaseDatabase.getInstance().getReference();
+
+        dive.setLead(lead);
+        dive.setClothingList(clothes);
+
+        my_database.child("users").child(user).child("dive_log").child(dive_name).setValue(dive);
+
+        return dive;
+    }
+
+    public DiveItem editTechnicalData(String dive_name, String user, DiveItem dive, String time_in,
+                                      String time_out, String pressure_in, String pressure_out,
+                                      String depth, String safetystop) {
+
+        my_database = FirebaseDatabase.getInstance().getReference();
+
+        dive.setTimeIn(time_in);
+        dive.setTimeOut(time_out);
+        dive.setPressureIn(pressure_in);
+        dive.setPressureOut(pressure_out);
+        dive.setDepth(depth);
+        dive.setSafetystop(safetystop);
+
+        my_database.child("users").child(user).child("dive_log").child(dive_name).setValue(dive);
+
+        return dive;
+
+    }
+
+    public DiveItem editExtraData(String dive_name, String user, DiveItem dive, String notes) {
+
+        my_database = FirebaseDatabase.getInstance().getReference();
+
+        dive.setNotes(notes);
+
+        my_database.child("users").child(user).child("dive_log").child(dive_name).setValue(dive);
+
+        return dive;
+
     }
 
     public void updateLastDive (String user, String date, String time_out,

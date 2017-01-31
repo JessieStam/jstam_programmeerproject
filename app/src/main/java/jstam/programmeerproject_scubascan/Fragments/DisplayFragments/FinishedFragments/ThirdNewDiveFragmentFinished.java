@@ -20,6 +20,7 @@ import java.util.ArrayList;
 
 import jstam.programmeerproject_scubascan.Fragments.DisplayFragments.UnfinishedFragments.ThirdNewDiveFragment;
 import jstam.programmeerproject_scubascan.Helpers.FinishedDiveDisplayManager;
+import jstam.programmeerproject_scubascan.Items.DiveItem;
 import jstam.programmeerproject_scubascan.R;
 
 /**
@@ -29,11 +30,13 @@ import jstam.programmeerproject_scubascan.R;
 public class ThirdNewDiveFragmentFinished extends android.support.v4.app.Fragment {
 
     FragmentActivity listener;
-    String lead;
+    String lead, dive_number;
     ArrayList<String> clothes;
     TextView text;
     InputStream displaytext;
     FinishedDiveDisplayManager display_manager;
+
+    DiveItem dive_item;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -82,8 +85,21 @@ public class ThirdNewDiveFragmentFinished extends android.support.v4.app.Fragmen
 
             Log.d("test", "finished thirdnewdive getarguments are NOT null");
 
-            clothes = getArguments().getStringArrayList("clothes_strings");
-            lead = getArguments().getString("lead");
+            if (getArguments().getString("dive_number") == null) {
+
+                clothes = getArguments().getStringArrayList("clothes_strings");
+                lead = getArguments().getString("lead");
+
+            } else {
+
+                dive_number = getArguments().getString("dive_number");
+                dive_item = getArguments().getParcelable("dive_item");
+
+                clothes = dive_item.getClothingList();
+                lead = dive_item.getLead();
+
+            }
+
 
             for (String item : clothes) {
                 Log.d("test", "clothes item: " + item);
