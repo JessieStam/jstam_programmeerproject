@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -173,7 +174,7 @@ public class ThirdNewDiveFragment extends Fragment implements View.OnClickListen
 
             lead = lead_input.getText().toString();
 
-            if (!lead.equals("")) {
+            if (validateForm()) {
 
                 if (saved_image.getVisibility() == View.INVISIBLE) {
                     saved_image.setVisibility(View.VISIBLE);
@@ -195,10 +196,6 @@ public class ThirdNewDiveFragment extends Fragment implements View.OnClickListen
 
                 data_input.putStringArrayList("clothes_strings", clothes);
 
-//                for (String item : clothes) {
-//                    String tag = item;
-//                    data_input.putString(tag, item);
-//                }
 
                 new_frag.setArguments(data_input);
 
@@ -236,5 +233,19 @@ public class ThirdNewDiveFragment extends Fragment implements View.OnClickListen
         } else {
             clothes.add(item_name);
         }
+    }
+
+    /* Validate user's data. */
+    private boolean validateForm() {
+        boolean valid = true;
+
+        if (TextUtils.isEmpty(lead)) {
+            lead_input.setError("Required.");
+            valid = false;
+        } else {
+            lead_input.setError(null);
+        }
+
+        return valid;
     }
 }

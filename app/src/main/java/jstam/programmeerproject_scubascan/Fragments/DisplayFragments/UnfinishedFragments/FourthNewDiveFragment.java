@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -60,6 +61,7 @@ public class FourthNewDiveFragment extends Fragment implements View.OnClickListe
     public interface FourthNewDiveFragmentListener {
         public void saveTechnicalData(String time_in, String time_out, String pressure_in,
                                       String pressure_out, String depth, String safetystop);
+        public void showFragmentToast(String toast);
     }
 
     // This event fires 1st, before creation of fragment or any views
@@ -176,8 +178,7 @@ public class FourthNewDiveFragment extends Fragment implements View.OnClickListe
             technicaldata_list.add(pressure_out);
             technicaldata_list.add(depth);
 
-            if (time_in != null && time_out != null && pressure_in != null && pressure_out != null
-                    && depth != null && !safetystop.equals("")) {
+            if (validateForm()) {
 
                 technicaldata_list.add(safetystop);
 
@@ -210,6 +211,76 @@ public class FourthNewDiveFragment extends Fragment implements View.OnClickListe
                 Log.d("Test", "Parameters incomplete...");
             }
         }
+    }
+
+    /* Validate user's data. */
+    private boolean validateForm() {
+        boolean valid = true;
+
+        if (TextUtils.isEmpty(time_in)) {
+            time_in_input.setError("Required.");
+            valid = false;
+        } else {
+            time_in_input.setError(null);
+
+            if (time_in.length() != 5) {
+                activityCommander.showFragmentToast("Invalid time.");
+                valid = false;
+            } else if (time_in.charAt(2) != ':') {
+                activityCommander.showFragmentToast("Invalid time.");
+                valid = false;
+            }
+        }
+
+        if (TextUtils.isEmpty(time_out)) {
+            time_out_input.setError("Required.");
+            valid = false;
+        } else {
+            time_out_input.setError(null);
+
+            if (time_out.length() != 5) {
+                activityCommander.showFragmentToast("Invalid time.");
+                valid = false;
+            } else if (time_out.charAt(2) != ':') {
+                activityCommander.showFragmentToast("Invalid time.");
+                valid = false;
+            }
+        }
+
+        if (TextUtils.isEmpty(pressure_in)) {
+            pressure_in_input.setError("Required.");
+            valid = false;
+        } else {
+            pressure_in_input.setError(null);
+        }
+
+        if (TextUtils.isEmpty(pressure_out)) {
+            pressure_out_input.setError("Required.");
+            valid = false;
+        } else {
+            pressure_out_input.setError(null);
+        }
+
+        if (TextUtils.isEmpty(depth)) {
+            depth_input.setError("Required.");
+            valid = false;
+        } else {
+            depth_input.setError(null);
+
+            int depth_int = Integer.valueOf(depth);
+
+            if (depth_int > 40) {
+                activityCommander.showFragmentToast("Maximum depth is 40 meter");
+                valid = false;
+            }
+        }
+
+        if (safetystop.equals("")) {
+            activityCommander.showFragmentToast("Fill in safetystop!");
+            valid = false;
+        }
+
+        return valid;
     }
 
     @Override

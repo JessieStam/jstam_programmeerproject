@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -86,6 +87,11 @@ public class StatisticsActivity extends AppCompatActivity {
                     if (user_item != null) {
 
                         username = user_item.getUsername();
+
+                        if (username.length() > 8) {
+                            username_view.setTextSize(TypedValue.COMPLEX_UNIT_SP,20);
+                        }
+
                         username_view.setText(username);
                     }
 

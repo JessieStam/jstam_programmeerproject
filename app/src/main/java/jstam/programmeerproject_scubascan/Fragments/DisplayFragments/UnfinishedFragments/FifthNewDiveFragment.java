@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -142,7 +143,7 @@ public class FifthNewDiveFragment extends Fragment {
 
         notes = notes_input.getText().toString();
 
-        if (!notes.equals("")) {
+        if (validateForm()) {
 
             if (saved_image.getVisibility() == View.INVISIBLE) {
                 saved_image.setVisibility(View.VISIBLE);
@@ -171,6 +172,20 @@ public class FifthNewDiveFragment extends Fragment {
             Log.d("Test", "Parameters incomplete...");
         }
 
+    }
+
+    /* Validate user's data. */
+    private boolean validateForm() {
+        boolean valid = true;
+
+        if (TextUtils.isEmpty(notes)) {
+            notes_input.setError("Required.");
+            valid = false;
+        } else {
+            notes_input.setError(null);
+        }
+
+        return valid;
     }
 
     @Override

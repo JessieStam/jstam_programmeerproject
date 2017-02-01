@@ -47,19 +47,20 @@ public class ToolbarHelper {
                 logout_helper.signOut();
 
                 Intent logOut = new Intent(context, HomeActivity.class);
-                toast = "Logged out";
+                logOut.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                logOut.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                logOut.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
 
                 context.startActivity(logOut);
-
                 break;
 
             case R.id.new_dive_toolbutton:
-                if (toast.equals("")) {
+                //if (toast.equals("")) {
                     Intent new_dive_activity = new Intent(context, NewDiveActivity.class);
                     toast = "Logging a new dive...";
 
                     context.startActivity(new_dive_activity);
-                }
+//                }
                 break;
 
             // if favorite list is clicked and user in logged in, take user to favorite

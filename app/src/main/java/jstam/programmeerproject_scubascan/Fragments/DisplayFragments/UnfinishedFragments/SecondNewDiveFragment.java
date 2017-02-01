@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -56,6 +57,7 @@ public class SecondNewDiveFragment extends Fragment implements View.OnClickListe
     public interface SecondNewDiveFragmentListener {
         public void saveCircumstancesData(String air_temp, String surface_temp, String bottom_temp,
                                          String visibility, String water_type, String dive_type);
+        public void showFragmentToast(String toast);
     }
 
     // This event fires 1st, before creation of fragment or any views
@@ -169,8 +171,7 @@ public class SecondNewDiveFragment extends Fragment implements View.OnClickListe
             bottom_temp = bottom_temp_input.getText().toString();
             visibility = visibility_input.getText().toString();
 
-            if (!air_temp.equals("") && !surface_temp.equals("") && !bottom_temp.equals("")
-                    && !visibility.equals("")) {
+            if (validateForm()) {
 
                 if (saved_image.getVisibility() == View.INVISIBLE) {
                     saved_image.setVisibility(View.VISIBLE);
@@ -181,7 +182,8 @@ public class SecondNewDiveFragment extends Fragment implements View.OnClickListe
                     save_button.setText("Save");
                 }
 
-                activityCommander.saveCircumstancesData(air_temp, surface_temp, bottom_temp, visibility, water_type, dive_type);
+                activityCommander.saveCircumstancesData(air_temp, surface_temp, bottom_temp,
+                        visibility, water_type, dive_type);
 
                 Fragment new_frag = new SecondNewDiveFragmentFinished();
 
@@ -205,5 +207,45 @@ public class SecondNewDiveFragment extends Fragment implements View.OnClickListe
                 Log.d("Test", "Parameters incomplete...");
             }
         }
+    }
+
+    /* Validate user's data. */
+    private boolean validateForm() {
+        boolean valid = true;
+
+        if (TextUtils.isEmpty(air_temp)) {
+            air_temp_input.setError("Required.");
+            valid = false;
+        } else {
+            air_temp_input.setError(null);
+        }
+
+        if (TextUtils.isEmpty(surface_temp)) {
+            surface_temp_input.setError("Required.");
+            valid = false;
+        } else {
+            surface_temp_input.setError(null);
+        }
+
+        if (TextUtils.isEmpty(bottom_temp)) {
+            bottom_temp_input.setError("Required.");
+            valid = false;
+        } else {
+            bottom_temp_input.setError(null);
+        }
+
+        if (TextUtils.isEmpty(visibility)) {
+            visibility_input.setError("Required.");
+            valid = false;
+        } else {
+            visibility_input.setError(null);
+        }
+
+        if (water_type.equals("") || dive_type.equals("")) {
+            activityCommander.showFragmentToast("Don't forget the checkboxes!.");
+            valid = false;
+        }
+
+        return valid;
     }
 }

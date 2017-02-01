@@ -1,16 +1,21 @@
 package jstam.programmeerproject_scubascan.Activities;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Handler;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Transaction;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -20,18 +25,15 @@ import jstam.programmeerproject_scubascan.R;
 
 public class HomeActivity extends AppCompatActivity {
 
+    private boolean exit;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-    }
+        exit = false;
 
-    public void moveToMenu() {
-        Intent goToMenu = new Intent(this, MenuActivity.class);
-        startActivity(goToMenu);
-
-        finish();
     }
 
     public void signUpUser(View view) {
@@ -47,6 +49,7 @@ public class HomeActivity extends AppCompatActivity {
         signUpUser.putExtra("pass_confirm", pass_confirm);
 
         startActivity(signUpUser);
+        finish();
     }
 
     public void logInUser(View view) {
@@ -62,5 +65,23 @@ public class HomeActivity extends AppCompatActivity {
         logInUser.putExtra("pass_confirm", pass_confirm);
 
         startActivity(logInUser);
+        finish();
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (exit) {
+            finish(); // finish activity
+        } else {
+            Toast.makeText(this, "Press Back again to Exit.",
+                    Toast.LENGTH_SHORT).show();
+            exit = true;
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    exit = false;
+                }
+            }, 3 * 1000);
+        }
     }
 }

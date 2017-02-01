@@ -4,7 +4,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF">
+    android:background="@mipmap/background">
 
     <include
         android:id="@+id/toolbar"
@@ -51,7 +51,7 @@
         android:layout_width="match_parent"
         android:layout_height="0px"
         android:layout_weight="1"
-        android:background="@android:color/white" />
+        android:background="@mipmap/background" />
 
     <!--<FrameLayout-->
     <!--android:id="@+id/fragment_placeholder"-->

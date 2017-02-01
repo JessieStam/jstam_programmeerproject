@@ -255,18 +255,21 @@ public class FirstNewDiveFragment extends Fragment {
 
         if (TextUtils.isEmpty(country)) {
             country_input.setError("Required.");
+            valid = false;
         } else {
             country_input.setError(null);
         }
 
         if (TextUtils.isEmpty(dive_spot)) {
             dive_spot_input.setError("Required.");
+            valid = false;
         } else {
             dive_spot_input.setError(null);
         }
 
         if (TextUtils.isEmpty(buddy)) {
             buddy_input.setError("Required.");
+            valid = false;
         } else {
             buddy_input.setError(null);
         }

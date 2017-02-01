@@ -117,6 +117,7 @@ public class LoginActivity extends HomeActivity implements View.OnClickListener 
                 if (user != null) {
                     // User is signed in
                     Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
+                    instr_text.setText("Still logged in! Swim on...");
 
                 } else {
                     // User is signed out
@@ -261,6 +262,12 @@ public class LoginActivity extends HomeActivity implements View.OnClickListener 
                 valid = false;
             } else {
                 mUsernameField.setError(null);
+
+                if (username.length() > 15) {
+                    Toast.makeText(this, "Maximum of 15 characters", Toast.LENGTH_SHORT).show();
+                    valid = false;
+
+                }
             }
 
             String password_confirm = mPasswordConfirmField.getText().toString();
