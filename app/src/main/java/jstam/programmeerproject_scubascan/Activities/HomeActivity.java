@@ -20,29 +20,6 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-
-//        Log.d("test6", "HomeActivity calls nitrogen calculator");
-//
-//        InputStream input_stream_first = getResources().openRawResource(R.raw.nitrogen_first);
-//        InputStream input_stream_second = getResources().openRawResource(R.raw.nitrogen_second);
-//        InputStream input_stream_third = getResources().openRawResource(R.raw.nitrogen_third);
-//
-//        nitrogen = new NitrogenCalculator();
-//
-//        try {
-//            nitrogen.readToHashMap("first", input_stream_first);
-//            nitrogen.readToHashMap("second", input_stream_second);
-//            nitrogen.readToHashMap("third", input_stream_third);
-//        } catch (IOException e) {
-//            Log.d("test6", "HomeActivity throws exception");
-//
-//            e.printStackTrace();
-//        }
-//
-//        nitrogen.calculateBottomTime("15:43", "16:30");
-//        nitrogen.calculateSurfaceInterval("16:30", "26-01-2017");
-//        nitrogen.calculateNitrogen("17", "47");
-
     }
 
     public void signUpUser(View view) {

@@ -23,6 +23,14 @@ import jstam.programmeerproject_scubascan.Items.UserItem;
 import jstam.programmeerproject_scubascan.R;
 import jstam.programmeerproject_scubascan.Helpers.UserManager;
 
+/**
+ * Scuba Scan - LoginActivity
+ *
+ * Jessie Stam
+ * 10560599
+ *
+ * Uses Google Firebase to let users create accounts and log in on those accounts.
+ */
 public class LoginActivity extends HomeActivity implements View.OnClickListener {
 
     private static final String TAG = "EmailPassword";
@@ -44,13 +52,8 @@ public class LoginActivity extends HomeActivity implements View.OnClickListener 
 
     UserManager user_manager;
 
-    // [START declare_auth]
     private FirebaseAuth mAuth;
-    // [END declare_auth]
-
-    // [START declare_auth_listener]
     private FirebaseAuth.AuthStateListener mAuthListener;
-    // [END declare_auth_listener]
 
     private DatabaseReference my_database;
 
@@ -61,7 +64,6 @@ public class LoginActivity extends HomeActivity implements View.OnClickListener 
 
         user_manager = UserManager.getOurInstance();
 
-        // Views
         status = (TextView) findViewById(R.id.status);
         detail = (TextView) findViewById(R.id.detail);
 
@@ -73,8 +75,7 @@ public class LoginActivity extends HomeActivity implements View.OnClickListener 
         title_text = (TextView) findViewById(R.id.signup_title);
         instr_text = (TextView) findViewById(R.id.signup_instr);
 
-
-        // get extras from MainActivity
+        // extras determine logging in of signing up
         Bundle extras = getIntent().getExtras();
 
         if (extras != null) {
@@ -94,7 +95,7 @@ public class LoginActivity extends HomeActivity implements View.OnClickListener 
         title_text.setText(title);
         instr_text.setText(instr);
 
-        // display edittext for password confirmation in case of signing up
+        // display EditText for password confirmation in case of signing up
         if (confirm_pass != null) {
             if (confirm_pass.equals("visible")) {
                 mUsernameField.setVisibility(View.VISIBLE);
@@ -106,11 +107,9 @@ public class LoginActivity extends HomeActivity implements View.OnClickListener 
             }
         }
 
-        // [START initialize_auth]
+        // listener for auth state
         mAuth = FirebaseAuth.getInstance();
-        // [END initialize_auth]
 
-        // [START auth_state_listener]
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
@@ -122,25 +121,19 @@ public class LoginActivity extends HomeActivity implements View.OnClickListener 
                     // User is signed out
                     Log.d(TAG, "onAuthStateChanged:signed_out");
                 }
-                // [START_EXCLUDE]
                 updateUI(user);
-                // [END_EXCLUDE]
             }
         };
-        // [END auth_state_listener]
 
         my_database = FirebaseDatabase.getInstance().getReference();
     }
 
-    // [START on_start_add_listener]
     @Override
     public void onStart() {
         super.onStart();
         mAuth.addAuthStateListener(mAuthListener);
     }
-    // [END on_start_add_listener]
 
-    // [START on_stop_remove_listener]
     @Override
     public void onStop() {
         super.onStop();
@@ -148,17 +141,18 @@ public class LoginActivity extends HomeActivity implements View.OnClickListener 
             mAuth.removeAuthStateListener(mAuthListener);
         }
     }
-    // [END on_stop_remove_listener]
 
+    /* Create new user account. */
     private void createAccount(String email, String password) {
+
+        final String new_instr = "Logged in succesfully!";
+
         Log.d(TAG, "createAccount:" + email);
         if (!validateForm()) {
             return;
         }
 
-        //showProgressDialog();
-
-        // [START create_user_with_email]
+        // create user with e-mail
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -171,28 +165,28 @@ public class LoginActivity extends HomeActivity implements View.OnClickListener 
                         if (!task.isSuccessful()) {
                             Toast.makeText(LoginActivity.this, R.string.auth_failed,
                                     Toast.LENGTH_SHORT).show();
+
+                            instr_text.setText(new_instr);
+
                         }
                         else {
                             saveUserInformation();
                         }
-
-                        // [START_EXCLUDE]
-                        // hideProgressDialog();
-                        // [END_EXCLUDE]
                     }
                 });
-        // [END create_user_with_email]
     }
 
+    /* Sign user in with existing account. */
     private void signIn(String email, String password) {
+
+        final String new_instr = "Signed in succesfully!";
+
         Log.d(TAG, "signIn:" + email);
         if (!validateForm()) {
             return;
         }
 
-        // showProgressDialog();
-
-        // [START sign_in_with_email]
+        // sign in user with email
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -206,25 +200,27 @@ public class LoginActivity extends HomeActivity implements View.OnClickListener 
                             Log.w(TAG, "signInWithEmail:failed", task.getException());
                             Toast.makeText(LoginActivity.this, R.string.auth_failed,
                                     Toast.LENGTH_SHORT).show();
-                        }
 
-                        // [START_EXCLUDE]
-                        if (!task.isSuccessful()) {
                             status.setText(R.string.auth_failed);
+
+                        } else {
+
+                            instr_text.setText(new_instr);
+
                         }
 
-                        //hideProgressDialog();
-                        // [END_EXCLUDE]
+
                     }
                 });
-        // [END sign_in_with_email]
     }
 
+    /* Sign user out. */
     private void signOut() {
         mAuth.signOut();
         updateUI(null);
     }
 
+    /* Validate user's data. */
     private boolean validateForm() {
         boolean valid = true;
 
@@ -236,6 +232,13 @@ public class LoginActivity extends HomeActivity implements View.OnClickListener 
             mEmailField.setError(null);
         }
 
+        if (!email.contains("@") || !email.contains(".")) {
+            Toast.makeText(this, "Invalid e-mail!", Toast.LENGTH_SHORT).show();
+            valid = false;
+        }
+
+        int min_char = 6;
+
         String password = mPasswordField.getText().toString();
         if (TextUtils.isEmpty(password)) {
             mPasswordField.setError("Required.");
@@ -244,11 +247,39 @@ public class LoginActivity extends HomeActivity implements View.OnClickListener 
             mPasswordField.setError(null);
         }
 
+        if (password.length() < min_char) {
+            Toast.makeText(this, "Password must be 6 characters", Toast.LENGTH_SHORT).show();
+            valid = false;
+        }
+
+        if (mPasswordConfirmField.getVisibility() == View.VISIBLE ) {
+
+            String username = mUsernameField.getText().toString();
+            if (TextUtils.isEmpty(username)) {
+                mUsernameField.setError("Required.");
+                valid = false;
+            } else {
+                mUsernameField.setError(null);
+            }
+
+            String password_confirm = mPasswordConfirmField.getText().toString();
+            if (TextUtils.isEmpty(password_confirm)) {
+                mPasswordConfirmField.setError("Required.");
+                valid = false;
+            } else if (!password.equals(password_confirm)) {
+                Toast.makeText(this, "Passwords don't match!", Toast.LENGTH_SHORT).show();
+                valid = false;
+            } else {
+                mPasswordField.setError(null);
+            }
+        }
+
         return valid;
     }
 
+    /* Update interface after logging in. */
     private void updateUI(FirebaseUser user) {
-        //hideProgressDialog();
+
         if (user != null) {
             Button singup_login = (Button) findViewById(R.id.sign_up_button);
 
@@ -267,10 +298,6 @@ public class LoginActivity extends HomeActivity implements View.OnClickListener 
                 status.setText(R.string.signed_out);
                 detail.setText(null);
 
-                // findViewById(R.id.sign_up_button).setVisibility(View.VISIBLE);
-                // findViewById(R.id.sign_out_button).setVisibility(View.GONE);
-                // findViewById(R.id.go_menu_button).setVisibility(View.VISIBLE);
-
                 mUsernameField.setVisibility(View.VISIBLE);
                 mEmailField.setVisibility(View.VISIBLE);
                 mPasswordField.setVisibility(View.VISIBLE);
@@ -284,6 +311,7 @@ public class LoginActivity extends HomeActivity implements View.OnClickListener 
         }
     }
 
+    /* Save user information to Firebase upon signing up. */
     private void saveUserInformation() {
 
         String username = mUsernameField.getText().toString().trim();
@@ -298,43 +326,33 @@ public class LoginActivity extends HomeActivity implements View.OnClickListener 
 
     }
 
+    /* When button is clicked, do something. */
     @Override
     public void onClick (View v){
         int i = v.getId();
-        String new_instr = "Logged in succesfully!";
+        //String new_instr = "Logged in succesfully!";
 
         if (i == R.id.sign_up_button) {
 
             String username = "";
             String email = mEmailField.getText().toString();
             String password = mPasswordField.getText().toString();
-            String password_confirm = mPasswordConfirmField.getText().toString();
+            //String password_confirm = mPasswordConfirmField.getText().toString();
 
             if (title.equals("Signing up")) {
 
-                username = mUsernameField.getText().toString();
-                int min_char = 6;
+                if (validateForm()) {
 
-                if (!password.equals(password_confirm)) {
-                    Toast.makeText(this, "Passwords don't match!", Toast.LENGTH_SHORT).show();
-                } else if (email.equals("")) {
-                    Toast.makeText(this, "Fill in your e-mail!", Toast.LENGTH_SHORT).show();
-                } else if (!email.contains("@") && !email.contains(".")) {
-                    Toast.makeText(this, "Unvalid e-amil!!", Toast.LENGTH_SHORT).show();
-                } else if (password.length() < min_char) {
-                    Toast.makeText(this, "Password must be 6 characters", Toast.LENGTH_SHORT).show();
-                } else {
                     createAccount(email, password);
                     signIn(email, password);
-                    instr_text.setText(new_instr);
-                    user_manager.create_user(username, email);
+                    //user_manager.create_user(username, email);
+
                 }
 
             } else if (title.equals("Logging in")) {
 
-                user_manager.create_user(username, email);
                 signIn(email, password);
-                instr_text.setText(new_instr);
+                //user_manager.create_user(username, email);
             }
 
         } else if (i == R.id.sign_out_button) {
