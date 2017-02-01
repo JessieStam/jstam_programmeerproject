@@ -49,6 +49,17 @@
     <string name="thirdfinishedfragment_editbutton">Edit equipment data</string>
     <string name="fourthfinishedfragment_editbutton">Edit technical data</string>
     <string name="fifthfinishedfragment_editbutton">Edit personal data</string>
+    <string name="statistics_title_string">Your Statistics</string>
+    <string name="stats_username_string">Username</string>
+    <string name="stats_number_dives">0</string>
+    <string name="stats_diveamount_string">Dives made</string>
+    <string name="stats_dived_for_string">Dived for</string>
+    <string name="stats_days_string">0</string>
+    <string name="stats_days">Day(s)</string>
+    <string name="stats_hours_input_string">0</string>
+    <string name="stats_hours_string">Hour(s)</string>
+    <string name="stats_minutes_input_string">0</string>
+    <string name="stats_minutes_string">Minute(s)</string>
 
 
 </resources>

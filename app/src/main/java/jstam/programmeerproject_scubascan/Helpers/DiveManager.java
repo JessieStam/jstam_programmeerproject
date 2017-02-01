@@ -231,7 +231,7 @@ public class DiveManager {
     public void updateLastDive (String user, String date, String time_out,
                                 String letter, long totaltime) {
 
-        Log.d("test8", "in update laste dive");
+        Log.d("test8", "in update last dive");
 
         my_database = FirebaseDatabase.getInstance().getReference();
 

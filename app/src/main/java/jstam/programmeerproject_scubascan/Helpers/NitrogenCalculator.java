@@ -59,49 +59,12 @@ public class NitrogenCalculator implements Serializable {
         switch (table_name) {
             case "first":
                 nitrogen_first = nitrogen_table;
-
-//            for (HashMap.Entry<String, HashMap<String, String>> entry : nitrogen_first.entrySet()) {
-//                String key = entry.getKey();
-//                HashMap<String, String> value = entry.getValue();
-//
-//                for (HashMap.Entry<String, String> depth : value.entrySet()) {
-//                    String time_key = depth.getKey();
-//                    String time_value = depth.getValue();
-//
-//                    Log.d("test6", "Depth is: " + key + ". Time is: " + time_key + ". Letter is: " + time_value);
-//                }
-//            }
-
                 break;
             case "second":
                 nitrogen_second = nitrogen_table;
-
-//            for (HashMap.Entry<String, HashMap<String, String>> entry : nitrogen_second.entrySet()) {
-//                String key = entry.getKey();
-//                HashMap<String, String> value = entry.getValue();
-//
-//                for (HashMap.Entry<String, String> letter : value.entrySet()) {
-//                    String interval_key = letter.getKey();
-//                    String interval_value = letter.getValue();
-//
-//                    Log.d("test6", "Letter is: " + key + ". Time is: " + interval_key + ". Letter is: " + interval_value);
-//                }
-//            }
                 break;
             case "third":
                 nitrogen_third = nitrogen_table;
-
-//            for (HashMap.Entry<String, HashMap<String, String>> entry : nitrogen_third.entrySet()) {
-//                String key = entry.getKey();
-//                HashMap<String, String> value = entry.getValue();
-//
-//                for (HashMap.Entry<String, String> letter : value.entrySet()) {
-//                    String depth_key = letter.getKey();
-//                    String depth_value = letter.getValue();
-//
-//                    Log.d("test6", "Letter is: " + key + ". Depth is: " + depth_key + ". Time is: " + depth_value);
-//                }
-//            }
                 break;
         }
     }
@@ -169,35 +132,49 @@ public class NitrogenCalculator implements Serializable {
 
         String current_letter = "";
 
+        Log.d("test8", "in calculateCurrentLevel");
+
         // calculate highest key
         if (nitrogen_second != null) {
 
             boolean interval_not_found = true;
 
             while (interval_not_found) {
+                
+                if (!letter.equals("None")) {
+                    
+                    current_letter = nitrogen_second.get(letter).get(String.valueOf(interval));
 
-                current_letter = nitrogen_second.get(letter).get(String.valueOf(interval));
+                    if (current_letter != null) {
 
-                if (current_letter != null) {
-
-                    Log.d("test8", "letter is: " + letter);
-                    interval_not_found = false;
-
-                } else {
-                    interval += 1;
-
-                    Log.d("test7", "current_letter, new interval is " + interval);
-
-                    if (interval > 360) {
-
-                        //time is over, nitrogen free
-
+                        Log.d("test8", "letter is: " + letter);
                         interval_not_found = false;
 
+                    } else {
+                        interval += 1;
+
+                        Log.d("test8", "current_letter, new interval is " + interval);
+
+                        if (interval > 360) {
+
+                            //time is over, nitrogen free
+
+                            interval_not_found = false;
+
+                            current_letter = "None";
+
+                        }
                     }
+                } else {
+
+                    interval_not_found = false;
+
+                    Log.d("test8", "current_letter is " + current_letter);
+                    current_letter = "None";
+                }
+                
 
                     // if bottomtime_int is increased more than 5 times or so, warn diver, because probably Z
-                }
             }
 
         } else {
@@ -215,7 +192,13 @@ public class NitrogenCalculator implements Serializable {
         // calculate highest key
         if (nitrogen_second != null) {
 
-            minutes = nitrogen_second.get(current_letter).get("none");
+
+            if (!current_letter.equals("None")) {
+                minutes = nitrogen_second.get(current_letter).get("None");
+            } else {
+                minutes = "0";
+            }
+
 
         } else {
             Log.d("test7", "nitrogentable is null");
@@ -228,29 +211,38 @@ public class NitrogenCalculator implements Serializable {
     public long calculateAddedTime (String letter, String depth) {
 
         long added_time = 0;
-        String time = "";
+        String time = "0";
 
         // calculate highest key
         if (nitrogen_third != null) {
 
             // ding voor depth
 
+            Log.d("test8", "nitrogen_thid != null");
+
             boolean depth_not_found = true;
 
             while (depth_not_found) {
 
-                time = nitrogen_third.get(letter).get(depth);
+                if (!letter.equals("None")) {
+                    time = nitrogen_third.get(letter).get(depth);
 
-                if (time != null) {
+                    if (time != null) {
+                        depth_not_found = false;
+
+                        Log.d("test8", "depth is: " + depth);
+
+                    } else {
+                        int depth_int = Integer.parseInt(depth) + 1;
+                        depth = String.valueOf(depth_int);
+
+                        Log.d("test7", "depth is empty, new depth is " + depth);
+                    }
+                }
+                else {
+                    Log.d("test8", "letter is none");
+
                     depth_not_found = false;
-
-                    Log.d("test8", "depth is: " + depth);
-
-                } else {
-                    int depth_int = Integer.parseInt(depth) + 1;
-                    depth = String.valueOf(depth_int);
-
-                    Log.d("test7", "depth is empty, new depth is " + depth);
                 }
             }
 

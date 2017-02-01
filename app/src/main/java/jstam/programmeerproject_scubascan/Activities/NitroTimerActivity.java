@@ -70,7 +70,7 @@ public class NitroTimerActivity extends AppCompatActivity {
 
     String last_date, last_time_out, last_letter;
 
-    long last_totaltime;
+    long last_totaltime = 0;
 
     final DiveItem new_dive = new DiveItem();
 
@@ -200,7 +200,13 @@ public class NitroTimerActivity extends AppCompatActivity {
 
                     if (last_dive != null) {
                         last_letter = last_dive.getLetter();
+
+                        if (last_letter == null) {
+                            last_letter = "None";
+
+                        }
                         nitro_data.setText(last_letter);
+
                     }
 
                 } else {
@@ -235,10 +241,19 @@ public class NitroTimerActivity extends AppCompatActivity {
                     LastDive last_dive = dataSnapshot.getValue(LastDive.class);
 
                     if (last_dive != null) {
+
+                        Log.d("test8", "last_dive NOT null");
                         last_date = last_dive.getDate();
                         last_time_out = last_dive.getTimeOut();
-                        last_letter = last_dive.getLetter();
+                        //last_letter = last_dive.getLetter();
                         last_totaltime = last_dive.getTotaltime();
+
+                        if (last_letter == null) {
+                            Log.d("test8", "last_letter is null");
+
+                            last_letter = "None";
+                            Log.d("test8", "changing last_letter to: " + last_letter);
+                        }
                     }
 
                 } else {
@@ -248,16 +263,33 @@ public class NitroTimerActivity extends AppCompatActivity {
 
                 interval = calculator.calculateSurfaceInterval(last_time_out, last_date, "", "");
 
+                Log.d("test8", "inteval in change: " + interval);
+
                 current_level = calculator.calculateCurrentLevel(last_letter, interval);
+
+                Log.d("test8", "current_level in change: " + current_level);
 
                 // set current level to text
                 if (current_level != null) {
                     nitro_data.setText(current_level);
                     intro_text.setText("Your current nitrogen level is...");
+                } else {
+                    current_level = "None";
+                    nitro_data.setText(current_level);
+                    intro_text.setText("Your current nitrogen level is...");
                 }
 
-                dive_manager.updateLastDive(user_id, last_date, last_time_out, current_level,
-                        last_totaltime);
+                Log.d("test8", "updateLastDive with user: " + user_id + ", last_date: " + last_date +
+                        ", last_time_out: " + last_time_out + ", current_level " + current_level +
+                        " and " + last_totaltime);
+
+                if (user_id != null && last_date != null && last_time_out != null
+                        && last_totaltime != 0) {
+
+                    dive_manager.updateLastDive(user_id, last_date, last_time_out, current_level,
+                            last_totaltime);
+
+                }
 
             }
 
@@ -266,6 +298,8 @@ public class NitroTimerActivity extends AppCompatActivity {
                 Log.d("test4", "in onCancelled");
             }
         });
+
+        Toast.makeText(this, "Recalculated level!", Toast.LENGTH_SHORT).show();
 
     }
 

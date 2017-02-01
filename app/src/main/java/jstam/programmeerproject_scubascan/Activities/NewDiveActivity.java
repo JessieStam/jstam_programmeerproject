@@ -333,7 +333,6 @@ public class NewDiveActivity extends AppCompatActivity implements FirstNewDiveFr
         bottomtime = nitrogen.calculateBottomTime(time_in, time_out);
         totalbottomtime = nitrogen.calculateTotalTime(last_totaltime, bottomtime);
 
-
         // if last dive excists
         if (last_time_out != null && last_date != null) {
 
@@ -379,6 +378,7 @@ public class NewDiveActivity extends AppCompatActivity implements FirstNewDiveFr
         Log.d("test8", "previouslevel: " + previous_level);
         Log.d("test8", "added_time: " + added_time);
         Log.d("test8", "nitrogen: " + nitrogen_level);
+        Log.d("test8", "interval is: " + interval);
         Log.d("test8", "interval_level: " + interval_level);
 
         saveNewDive();
@@ -404,7 +404,7 @@ public class NewDiveActivity extends AppCompatActivity implements FirstNewDiveFr
         // set the custom dialog components - text, image and button
         TextView info = (TextView) dialog.findViewById(R.id.dialog_newdive_info);
 
-        if (previous_level == null) {
+        if (previous_level == null || previous_level.equals("None")) {
             info.setText("Dived for " + bottomtime + " minutes. Nitrogen level upon resurfacing was " + nitrogen_level + "." +
                     " Nitrogen level now is " + interval_level + ".");
         } else {
