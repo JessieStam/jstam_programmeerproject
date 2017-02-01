@@ -147,7 +147,7 @@ public class DiveItem implements Parcelable {
 
     // methods for previous_level
     public String getIntervalLevel() { return interval_level; }
-    public void setIntervalLevel(String new_interval_level) { previous_level = new_interval_level; }
+    public void setIntervalLevel(String new_interval_level) { interval_level = new_interval_level; }
 
     @Override
     public int describeContents() {

@@ -187,17 +187,18 @@ public class NitrogenCalculator implements Serializable {
 
     public long timeToNitroFree(String current_letter) {
 
-        String minutes = "";
+        String minutes = "0";
 
         // calculate highest key
         if (nitrogen_second != null) {
 
-
             if (!current_letter.equals("None")) {
-                minutes = nitrogen_second.get(current_letter).get("None");
+                minutes = nitrogen_second.get(current_letter).get("none");
             } else {
                 minutes = "0";
             }
+
+            Log.d("test7", "minutes is " + minutes);
 
 
         } else {

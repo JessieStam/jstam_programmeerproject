@@ -138,7 +138,9 @@ public class ThirdNewDiveFragmentFinished extends android.support.v4.app.Fragmen
 
             for (String item : clothes) {
 
-                if (clothes.indexOf(item) != (clothes.size() -1)) {
+                if (clothes.size() == 1) {
+                    placeholder_string += "</b>a <b>" + item + ".";
+                } else if (clothes.indexOf(item) != (clothes.size() -1)) {
                     placeholder_string += "</b>a <b>" + item + ", ";
                 } else {
                     placeholder_string += "</b>and a <b>" + item + ".";

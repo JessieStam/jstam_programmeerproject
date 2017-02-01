@@ -214,20 +214,26 @@ public class ThirdNewDiveFragment extends Fragment implements View.OnClickListen
 
     public void checkIfInList(String item_name) {
 
-        int item_count = 0;
-        Log.d("test", "checkIfInList: itemcount 1 is " + item_count);
+        boolean in_list = false;
+        String clothes_item = "";
 
         for (String item : clothes) {
             Log.d("test", "checkIfInList: clothes item " + item);
 
             if (item.equals(item_name)) {
-                item_count = 1;
-                clothes.remove(item);
+                //item_count = 1;
+
+                in_list = true;
+                clothes_item = item;
+
+                //clothes.remove(item);
                 Log.d("test", "checkIfInList: in_list is true");
             }
         }
 
-        if (item_count == 0) {
+        if (in_list) {
+            clothes.remove(clothes_item);
+        } else {
             clothes.add(item_name);
         }
     }
