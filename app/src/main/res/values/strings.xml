@@ -35,7 +35,7 @@
     <string name="frag_thirdnewdive_title">Equipment</string>
     <string name="thirdnewfrag_clothing_string">Clothing</string>
     <string name="frag_thirdtnewdive_lead_string">Amount of lead</string>
-    <string name="newdiveleadinput_hint">. . . kg</string>
+    <string name="lead_hint">. . . kg</string>
     <string name="frag_fourthnewdive_title">Technical Data</string>
     <string name="rag_fourthnewdive_timein_string">Time in:</string>
     <string name="rag_fourthnewdive_timeout_string">Time out:</string>
@@ -60,6 +60,15 @@
     <string name="stats_hours_string">Hour(s)</string>
     <string name="stats_minutes_input_string">0</string>
     <string name="stats_minutes_string">Minute(s)</string>
+    <string name="date_hint">dd-mm-yyyy</string>
+    <string name="country_hint">e.g. Australia</string>
+    <string name="dive_spot_hint">e.g. Great Barrier Reef</string>
+    <string name="buddy_hint">e.g. John</string>
+    <string name="temp_hint">. . . Celcius</string>
+    <string name="visability_hint">. . . meter</string>
+    <string name="time_hint">00:00</string>
+    <string name="pressure_hint">. . . bar</string>
+    <string name="notes_hint">Add your personal notes here...</string>
 
 
 </resources>

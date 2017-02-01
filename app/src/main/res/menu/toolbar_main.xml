@@ -4,12 +4,6 @@
     tools:context="jstam.programmeerproject_scubascan.Activities.HomeActivity">
 
     <item
-        android:id="@+id/action_settings"
-        android:title="Settings"
-        android:orderInCategory="100"
-        app:showAsAction="never"/>
-
-    <item
         android:id="@+id/action_pages"
         android:icon="@mipmap/ic_storage_white_24dp"
         app:showAsAction="always"

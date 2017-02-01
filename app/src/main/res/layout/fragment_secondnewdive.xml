@@ -75,6 +75,9 @@
                     android:layout_height="wrap_content"
                     android:inputType="numberDecimal"
                     android:ems="10"
+                    android:textSize="15sp"
+                    android:hint="@string/temp_hint"
+                    android:textColorHint="#00202E"
                     android:textColor="#000000"
                     android:id="@+id/newdive_temp_air_input" />
             </LinearLayout>
@@ -103,6 +106,9 @@
                     android:layout_height="wrap_content"
                     android:inputType="numberDecimal"
                     android:ems="10"
+                    android:textSize="15sp"
+                    android:hint="@string/temp_hint"
+                    android:textColorHint="#00202E"
                     android:textColor="#000000"
                     android:id="@+id/newdive_temp_surface_input" />
             </LinearLayout>
@@ -131,6 +137,9 @@
                     android:layout_height="wrap_content"
                     android:inputType="numberDecimal"
                     android:ems="10"
+                    android:textSize="15sp"
+                    android:hint="@string/temp_hint"
+                    android:textColorHint="#00202E"
                     android:textColor="#000000"
                     android:id="@+id/newdive_temp_bottom_input" />
             </LinearLayout>
@@ -158,6 +167,9 @@
                     android:layout_height="wrap_content"
                     android:inputType="numberDecimal"
                     android:ems="10"
+                    android:textSize="15sp"
+                    android:hint="@string/visability_hint"
+                    android:textColorHint="#00202E"
                     android:textColor="#000000"
                     android:id="@+id/newdive_visibility_input" />
 

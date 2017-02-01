@@ -341,10 +341,11 @@
                     android:layout_height="wrap_content"
                     android:inputType="text|numberDecimal"
                     android:ems="10"
+                    android:textSize="15sp"
                     android:textColor="#000000"
                     android:id="@+id/newdive_lead_input"
-                    android:hint="@string/newdiveleadinput_hint"
-                    android:textColorHint="#000000"/>
+                    android:hint="@string/lead_hint"
+                    android:textColorHint="#00202E"/>
             </LinearLayout>
 
             <Space

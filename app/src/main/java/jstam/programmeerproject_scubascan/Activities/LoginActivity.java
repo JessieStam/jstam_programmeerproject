@@ -33,7 +33,7 @@ import jstam.programmeerproject_scubascan.Helpers.UserManager;
  */
 public class LoginActivity extends HomeActivity implements View.OnClickListener {
 
-    private static final String TAG = "EmailPassword";
+    private static final String TAG = "LoginActivity";
 
     String title;
     String instr;
@@ -117,6 +117,7 @@ public class LoginActivity extends HomeActivity implements View.OnClickListener 
                 if (user != null) {
                     // User is signed in
                     Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
+
                 } else {
                     // User is signed out
                     Log.d(TAG, "onAuthStateChanged:signed_out");
@@ -209,7 +210,6 @@ public class LoginActivity extends HomeActivity implements View.OnClickListener 
 
                         }
 
-
                     }
                 });
     }
@@ -252,6 +252,7 @@ public class LoginActivity extends HomeActivity implements View.OnClickListener 
             valid = false;
         }
 
+        // if user is signing up, validate extra data
         if (mPasswordConfirmField.getVisibility() == View.VISIBLE ) {
 
             String username = mUsernameField.getText().toString();
@@ -326,33 +327,25 @@ public class LoginActivity extends HomeActivity implements View.OnClickListener 
 
     }
 
-    /* When button is clicked, do something. */
+    /* Listen for button click to determine the action. */
     @Override
     public void onClick (View v){
         int i = v.getId();
-        //String new_instr = "Logged in succesfully!";
 
         if (i == R.id.sign_up_button) {
 
-            String username = "";
             String email = mEmailField.getText().toString();
             String password = mPasswordField.getText().toString();
-            //String password_confirm = mPasswordConfirmField.getText().toString();
 
             if (title.equals("Signing up")) {
 
                 if (validateForm()) {
-
                     createAccount(email, password);
                     signIn(email, password);
-                    //user_manager.create_user(username, email);
-
                 }
 
             } else if (title.equals("Logging in")) {
-
                 signIn(email, password);
-                //user_manager.create_user(username, email);
             }
 
         } else if (i == R.id.sign_out_button) {
@@ -364,6 +357,8 @@ public class LoginActivity extends HomeActivity implements View.OnClickListener 
 
             Intent goToMenu = new Intent(this, MenuActivity.class);
             startActivity(goToMenu);
+
+            finish();
         }
     }
 }

@@ -49,7 +49,10 @@
                     android:layout_height="wrap_content"
                     android:inputType="time"
                     android:ems="5"
+                    android:hint="@string/time_hint"
+                    android:textColorHint="#00202E"
                     android:textColor="#000000"
+                    android:textSize="15sp"
                     android:id="@+id/newdive_timein_input" />
 
                 <Space
@@ -69,7 +72,10 @@
                     android:layout_height="wrap_content"
                     android:inputType="time"
                     android:ems="5"
+                    android:hint="@string/time_hint"
+                    android:textColorHint="#00202E"
                     android:textColor="#000000"
+                    android:textSize="15sp"
                     android:id="@+id/newdive_timeout_input" />
 
             </LinearLayout>
@@ -92,8 +98,9 @@
                     android:layout_height="wrap_content"
                     android:inputType="number"
                     android:ems="4"
-                    android:hint=". . . bar"
-                    android:textColorHint="#000000"
+                    android:hint="@string/pressure_hint"
+                    android:textColorHint="#00202E"
+                    android:textSize="15sp"
                     android:textColor="#000000"
                     android:id="@+id/newdive_pressurein_input" />
 
@@ -114,8 +121,9 @@
                     android:layout_height="wrap_content"
                     android:inputType="number"
                     android:ems="4"
-                    android:hint=". . . bar"
-                    android:textColorHint="#000000"
+                    android:hint="@string/pressure_hint"
+                    android:textColorHint="#00202E"
+                    android:textSize="15sp"
                     android:textColor="#000000"
                     android:id="@+id/newdive_pressureout_input" />
 
@@ -140,8 +148,9 @@
                     android:layout_height="wrap_content"
                     android:inputType="number"
                     android:ems="5"
-                    android:hint=". . . m"
-                    android:textColorHint="#000000"
+                    android:hint="@string/visability_hint"
+                    android:textColorHint="#00202E"
+                    android:textSize="15sp"
                     android:textColor="#000000"
                     android:id="@+id/newdive_depth_input" />
 

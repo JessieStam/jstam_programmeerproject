@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import jstam.programmeerproject_scubascan.Activities.DiveLogDetailsActivity;
 import jstam.programmeerproject_scubascan.Activities.NewDiveActivity;
@@ -52,6 +54,7 @@ public class FirstNewDiveFragment extends Fragment {
 
     FirstNewDiveFragmentListener activityCommander;
 
+
 //    public static FirstNewDiveFragment newInstance(int page) {
 //
 //        Bundle args = new Bundle();
@@ -63,6 +66,7 @@ public class FirstNewDiveFragment extends Fragment {
 
     public interface FirstNewDiveFragmentListener {
         public void saveGeneralData(String date, String country, String dive_spot, String buddy);
+        public void showFragmentToast(String toast);
     }
 
     // This event fires 1st, before creation of fragment or any views
@@ -193,7 +197,7 @@ public class FirstNewDiveFragment extends Fragment {
         dive_spot = dive_spot_input.getText().toString();
         buddy = buddy_input.getText().toString();
 
-        if (!date.equals("") && !country.equals("") && !dive_spot.equals("") && !buddy.equals("")) {
+        if (validateForm()) {
 
             if (saved_image.getVisibility() == View.INVISIBLE) {
                 saved_image.setVisibility(View.VISIBLE);
@@ -206,7 +210,7 @@ public class FirstNewDiveFragment extends Fragment {
 
             activityCommander.saveGeneralData(date, country, dive_spot, buddy);
 
-            current_fragment = 2;
+
 
             Fragment new_frag = new FirstNewDiveFragmentFinished();
 
@@ -228,6 +232,46 @@ public class FirstNewDiveFragment extends Fragment {
             Log.d("Test", "Parameters incomplete...");
         }
 
+    }
+
+    /* Validate user's data. */
+    private boolean validateForm() {
+        boolean valid = true;
+
+        if (TextUtils.isEmpty(date)) {
+            date_input.setError("Required.");
+            valid = false;
+        } else {
+            date_input.setError(null);
+
+            if (date.length() != 10) {
+                activityCommander.showFragmentToast("Invalid date.");
+                valid = false;
+            } else if (date.charAt(2) != '-' && date.charAt(5) != '-') {
+                activityCommander.showFragmentToast("Invalid date.");
+                valid = false;
+            }
+        }
+
+        if (TextUtils.isEmpty(country)) {
+            country_input.setError("Required.");
+        } else {
+            country_input.setError(null);
+        }
+
+        if (TextUtils.isEmpty(dive_spot)) {
+            dive_spot_input.setError("Required.");
+        } else {
+            dive_spot_input.setError(null);
+        }
+
+        if (TextUtils.isEmpty(buddy)) {
+            buddy_input.setError("Required.");
+        } else {
+            buddy_input.setError(null);
+        }
+
+        return valid;
     }
 
     @Override

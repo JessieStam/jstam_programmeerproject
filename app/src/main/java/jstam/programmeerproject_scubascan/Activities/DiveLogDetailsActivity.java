@@ -107,7 +107,12 @@ public class DiveLogDetailsActivity extends AppCompatActivity implements FirstNe
 
         // display toast for clicked toolbar item
         String clicked_item = toolbar_helper.getClickedMenuItem(toolbar, this);
-        Toast.makeText(this, clicked_item, Toast.LENGTH_SHORT).show();
+
+        if (!clicked_item.equals("")) {
+            Toast.makeText(this, clicked_item, Toast.LENGTH_SHORT).show();
+        }
+
+        finish();
 
         return super.onOptionsItemSelected(toolbar);
     }
@@ -208,6 +213,13 @@ public class DiveLogDetailsActivity extends AppCompatActivity implements FirstNe
         edited_dive = dive_manager.editExtraData(dive_number, user_id, dive_item, notes_input);
 
         dive_item = edited_dive;
+
+    }
+
+    @Override
+    public void showFragmentToast(String toast) {
+
+        Toast.makeText(this, toast, Toast.LENGTH_SHORT).show();
 
     }
 

@@ -101,7 +101,12 @@ public class DiveLogActivity extends AppCompatActivity {
 
         // display toast for clicked toolbar item
         String clicked_item = toolbar_helper.getClickedMenuItem(toolbar, this);
-        Toast.makeText(this, clicked_item, Toast.LENGTH_SHORT).show();
+
+        if (!clicked_item.equals("")) {
+            Toast.makeText(this, clicked_item, Toast.LENGTH_SHORT).show();
+        }
+
+        finish();
 
         return super.onOptionsItemSelected(toolbar);
     }

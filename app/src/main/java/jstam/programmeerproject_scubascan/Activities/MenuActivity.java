@@ -50,7 +50,12 @@ public class MenuActivity extends LoginActivity implements View.OnClickListener 
 
         // display toast for clicked toolbar item
         String clicked_item = toolbar_helper.getClickedMenuItem(toolbar, this);
-        Toast.makeText(this, clicked_item, Toast.LENGTH_SHORT).show();
+
+        if (!clicked_item.equals("")) {
+            Toast.makeText(this, clicked_item, Toast.LENGTH_SHORT).show();
+        }
+
+        finish();
 
         return super.onOptionsItemSelected(toolbar);
     }
@@ -66,6 +71,7 @@ public class MenuActivity extends LoginActivity implements View.OnClickListener 
             Toast.makeText(this, "Logging a new dive...", Toast.LENGTH_SHORT).show();
 
             startActivity(new_dive_activity);
+            finish();
 
         } else if (i == R.id.dive_log_button) {
 
@@ -73,6 +79,7 @@ public class MenuActivity extends LoginActivity implements View.OnClickListener 
             Toast.makeText(this, "Opening dive log...", Toast.LENGTH_SHORT).show();
 
             startActivity(dive_log_activity);
+            finish();
 
         } else if (i == R.id.statistics_button) {
 
@@ -80,6 +87,7 @@ public class MenuActivity extends LoginActivity implements View.OnClickListener 
             Toast.makeText(this, "Showing statistics...", Toast.LENGTH_SHORT).show();
 
             startActivity(statistics_activity);
+            finish();
 
         } else if (i == R.id.fish_log_button) {
 
@@ -87,6 +95,7 @@ public class MenuActivity extends LoginActivity implements View.OnClickListener 
             Toast.makeText(this, "Showing nitrogren levels...", Toast.LENGTH_SHORT).show();
 
             startActivity(nitro_activity);
+            finish();
         }
     }
 }

@@ -155,8 +155,13 @@ public class NewDiveActivity extends AppCompatActivity implements FirstNewDiveFr
     public boolean onOptionsItemSelected(MenuItem toolbar) {
 
         // display toast for clicked toolbar item
-        String clicked_item = toolbar_helper.getClickedMenuItem(toolbar, this);
-        Toast.makeText(this, clicked_item, Toast.LENGTH_SHORT).show();
+        final String clicked_item = toolbar_helper.getClickedMenuItem(toolbar, this);
+
+        if (!clicked_item.equals("")) {
+            Toast.makeText(this, clicked_item, Toast.LENGTH_SHORT).show();
+        }
+
+//        finish();
 
         return super.onOptionsItemSelected(toolbar);
     }
@@ -236,6 +241,13 @@ public class NewDiveActivity extends AppCompatActivity implements FirstNewDiveFr
         extra_data = true;
 
         checkIfDataComplete();
+    }
+
+    @Override
+    public void showFragmentToast(String toast) {
+
+        Toast.makeText(this, toast, Toast.LENGTH_SHORT).show();
+
     }
 
     public void checkIfDataComplete() {

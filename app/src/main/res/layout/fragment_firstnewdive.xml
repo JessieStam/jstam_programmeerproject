@@ -54,6 +54,9 @@
                     android:layout_height="wrap_content"
                     android:inputType="date"
                     android:ems="10"
+                    android:hint="@string/date_hint"
+                    android:textColorHint="#00202E"
+                    android:textSize="15sp"
                     android:textColor="#000000"
                     android:id="@+id/newdive_date_input" />
             </LinearLayout>
@@ -81,6 +84,9 @@
                     android:layout_height="wrap_content"
                     android:inputType="textPersonName"
                     android:ems="10"
+                    android:textSize="15sp"
+                    android:hint="@string/country_hint"
+                    android:textColorHint="#00202E"
                     android:textColor="#000000"
                     android:id="@+id/newdive_country_input" />
             </LinearLayout>
@@ -108,6 +114,9 @@
                     android:layout_height="wrap_content"
                     android:inputType="textPersonName"
                     android:ems="10"
+                    android:textSize="15sp"
+                    android:hint="@string/dive_spot_hint"
+                    android:textColorHint="#00202E"
                     android:textColor="#000000"
                     android:id="@+id/newdive_divespot_input" />
 
@@ -136,6 +145,9 @@
                     android:layout_height="wrap_content"
                     android:inputType="textPersonName"
                     android:ems="10"
+                    android:textSize="15sp"
+                    android:hint="@string/buddy_hint"
+                    android:textColorHint="#00202E"
                     android:textColor="#000000"
                     android:id="@+id/newdive_buddy_input" />
 

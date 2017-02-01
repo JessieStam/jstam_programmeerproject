@@ -9,7 +9,8 @@
         android:layout_height="wrap_content"
         android:id="@+id/finished_text"
         android:textColor="#000000"
-        android:textSize="20sp"/>
+        android:textSize="20sp"
+        android:layout_weight="1"/>
 
     <Button
         android:text="@string/firstfinishedfragment_editbutton"
