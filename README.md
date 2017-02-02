@@ -3,6 +3,10 @@
 **Jessie Stam** -
 *10560599*
 
+Een applicatie die duikers in staat stelt een logboek bij te houden. De stikstoflevels worden voor de duiker berekend. Meer informatie over de exacte werking van de app is te vinden in de het report. Onderstaande text bevat het oorspronkelijke plan.
+
+<img src="https://github.com/JessieStam/jstam_programmeerproject/blob/master/doc/titelscherm.png" width="600">
+
 Als duiker wordt je getracht een logboek bij te houden van alle duiken die je maakt. Niet alleen om bij te houden waar je bent geweest en hoeveel uren van je leven je in totaal op de bodem van de zee hebt doorgebracht, maar ook vooral voor het garanderen van je veiligheid. Een logboek is dus erg belangrijk om goed in te vullen. Bij het berekenen van de stikstofpercentages in je bloed is het echter eenvoudig om fouten te maken (zeker als dit percentage te hoog is en de duiker warriger wordt in zijn hoofd). Dit kan gevaarlijk zijn en om die reden wil ik een applicatie voorstellen waarin een duiklogboek bijgehouden kan worden waarin automatisch de stikstoflevels worden berekend. De applicatie kan de duiker dan waarschuwen als hij zich in een gevarenzone bevindt.
 
 De applicatie zal in de eerste plaats hetzelfde werken als een normaal logboek. Waar duikers bij een analoog logboek zelf moeten berekenen hoeveel stikstof ze in hun bloed hebben en hoelang het duurt voordat dit is verdwenen, zal de applicatie dit voor de duiker doen. Door de maximale diepte en de bodemtijd in te voeren kan de applicatie dit berekenen. Door middel van een timer kan de applicatie aangeven hoelang het nog duurt voor de duiker weer veilig onderwater kan gaan na de duik. Door middel van een pushbericht kan de applicatie de duiker een melding geven als de wachttijd om is.
