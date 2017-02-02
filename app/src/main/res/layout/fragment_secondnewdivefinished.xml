@@ -16,6 +16,7 @@
         android:text="@string/firstfinishedfragment_editbutton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/edit_secondnewdive_button" />
+        android:id="@+id/edit_secondnewdive_button"
+        android:background="#66238d5a"/>
 
 </LinearLayout>

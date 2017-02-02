@@ -16,7 +16,8 @@
         android:textSize="40sp"
         android:padding="20dp"
         android:textColor="#000000"
-        android:gravity="center"/>
+        android:gravity="center"
+        android:background="#CCFFFFFF"/>
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -42,7 +43,8 @@
                     android:id="@+id/new_dive_button"
                     android:layout_weight="0.6"
                     android:padding="5dp"
-                    android:background="#238d5a"/>
+                    android:background="#66238d5a"
+                    android:textColor="#000000"/>
 
                 <Button
                     android:text="Dive Log"
@@ -51,7 +53,8 @@
                     android:id="@+id/dive_log_button"
                     android:layout_weight="0.4"
                     android:padding="5dp"
-                    android:background="#29a77e"/>
+                    android:background="#6629a77e"
+                    android:textColor="#000000"/>
 
             </LinearLayout>
 
@@ -61,7 +64,8 @@
                 android:layout_height="match_parent"
                 android:weightSum="1"
                 android:layout_weight="0.6"
-                android:background="#FFFFFF">
+                android:background="#FFFFFF"
+                android:textColor="#000000">
 
                 <Button
                     android:text="Statistics"
@@ -70,16 +74,18 @@
                     android:id="@+id/statistics_button"
                     android:layout_weight="0.4"
                     android:padding="5dp"
-                    android:background="#2fc9ae"/>
+                    android:background="#662fc9ae"
+                    android:textColor="#000000"/>
 
                 <Button
-                    android:text="Fish Log"
+                    android:text="Nitrogen"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:id="@+id/fish_log_button"
                     android:layout_weight="0.6"
                     android:padding="5dp"
-                    android:background="#2ddbcd"/>
+                    android:background="#662ddbcd"
+                    android:textColor="#000000"/>
             </LinearLayout>
         </LinearLayout>
 

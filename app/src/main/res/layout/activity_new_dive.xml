@@ -31,7 +31,8 @@
             android:textSize="30sp"
             android:textColor="#000000"
             android:gravity="center"
-            android:padding="10dp" />
+            android:padding="10dp"
+            android:background="#CCFFFFFF"/>
     </FrameLayout>
 
 

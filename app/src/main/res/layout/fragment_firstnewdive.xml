@@ -162,7 +162,8 @@
                 android:text="Save"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/frag_firstnewdive_button" />
+                android:id="@+id/frag_firstnewdive_button"
+                android:background="#66238d5a"/>
 
         </LinearLayout>
 

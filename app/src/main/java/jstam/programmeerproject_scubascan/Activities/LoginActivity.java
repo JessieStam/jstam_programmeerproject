@@ -203,7 +203,7 @@ public class LoginActivity extends HomeActivity implements View.OnClickListener 
                             Toast.makeText(LoginActivity.this, R.string.auth_failed,
                                     Toast.LENGTH_SHORT).show();
 
-                            status.setText(R.string.auth_failed);
+                            //status.setText(R.string.auth_failed);
 
                         } else {
 
@@ -303,8 +303,8 @@ public class LoginActivity extends HomeActivity implements View.OnClickListener 
                     mPasswordConfirmField.setVisibility(View.GONE);
                 }
             } else {
-                status.setText(R.string.signed_out);
-                detail.setText(null);
+                //status.setText(R.string.signed_out);
+                //detail.setText(null);
 
                 mUsernameField.setVisibility(View.VISIBLE);
                 mEmailField.setVisibility(View.VISIBLE);
