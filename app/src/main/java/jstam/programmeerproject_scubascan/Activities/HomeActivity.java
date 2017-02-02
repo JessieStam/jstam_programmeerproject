@@ -49,7 +49,6 @@ public class HomeActivity extends AppCompatActivity {
         signUpUser.putExtra("pass_confirm", pass_confirm);
 
         startActivity(signUpUser);
-        finish();
     }
 
     public void logInUser(View view) {
@@ -65,7 +64,6 @@ public class HomeActivity extends AppCompatActivity {
         logInUser.putExtra("pass_confirm", pass_confirm);
 
         startActivity(logInUser);
-        finish();
     }
 
     @Override

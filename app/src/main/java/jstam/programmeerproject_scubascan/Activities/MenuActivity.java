@@ -94,4 +94,14 @@ public class MenuActivity extends LoginActivity implements View.OnClickListener 
             startActivity(nitro_activity);
         }
     }
+
+    @Override
+    public void onBackPressed() {
+
+        Intent back_to_home = new Intent(this, HomeActivity.class);
+        startActivity(back_to_home);
+
+        finish();
+
+    }
 }

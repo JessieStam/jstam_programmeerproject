@@ -98,6 +98,7 @@ public class NitrogenCalculator implements Serializable {
             }
 
             boolean time_not_found = true;
+            int counter = 0;
 
             while (time_not_found) {
 
@@ -110,13 +111,19 @@ public class NitrogenCalculator implements Serializable {
                     Log.d("test7", "letter is: " + letter);
 
                 } else {
+
+                    counter += 1;
+
                     int bottomtime_int = Integer.parseInt(bottomtime) + 1;
                     bottomtime = String.valueOf(bottomtime_int);
 
-                    Log.d("test7", "letter is empty, new bottomtime is " + bottomtime);
+                    Log.d("test7", "letter is empty, new bottomtime is " + bottomtime + "counter is " + counter);
 
+                    if (counter < 39) {
+                        letter = "Z";
+                        time_not_found = false;
+                    }
 
-                    // if bottomtime_int is increased more than 5 times or so, warn diver, because probably Z
                 }
             }
 

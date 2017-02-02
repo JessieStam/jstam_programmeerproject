@@ -313,9 +313,7 @@ public class NitroTimerActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
 
-        Intent back_to_menu = new Intent(this, MenuActivity.class);
-
-        startActivity(back_to_menu);
+        finish();
 
     }
 

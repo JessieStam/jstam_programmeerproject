@@ -1,5 +1,6 @@
 package jstam.programmeerproject_scubascan.Activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -221,6 +222,12 @@ public class DiveLogDetailsActivity extends AppCompatActivity implements FirstNe
 
         Toast.makeText(this, toast, Toast.LENGTH_SHORT).show();
 
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        finish();
     }
 
 }

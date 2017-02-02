@@ -1,5 +1,6 @@
 package jstam.programmeerproject_scubascan.Activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -205,4 +206,9 @@ public class StatisticsActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(toolbar);
     }
 
+    @Override
+    public void onBackPressed() {
+
+        finish();
+    }
 }

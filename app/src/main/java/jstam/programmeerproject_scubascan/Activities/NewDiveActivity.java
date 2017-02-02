@@ -417,12 +417,26 @@ public class NewDiveActivity extends AppCompatActivity implements FirstNewDiveFr
         TextView info = (TextView) dialog.findViewById(R.id.dialog_newdive_info);
 
         if (previous_level == null || previous_level.equals("None")) {
-            info.setText("Dived for " + bottomtime + " minutes. Nitrogen level upon resurfacing was " + nitrogen_level + "." +
-                    " Nitrogen level now is " + interval_level + ".");
-        } else {
-            info.setText("Dived for " + bottomtime + " minutes. Nitrogen level upon entering the water was "
-                    + previous_level + ". Nitrogen level upon resurfacing was " + nitrogen_level + "." +
-                    " Nitrogen level now is " + interval_level + ".");
+
+            if (nitrogen_level.equals("Z")) {
+                info.setText("Dived for " + bottomtime + " minutes. Nitrogen level upon resurfacing was " + nitrogen_level + "." +
+                        " Nitrogen level now is " + interval_level + ". Nitrogen level Z can be very dangerous! " +
+                        "Make sure you've made a safety stop and be wary of decompression sickness.");
+            } else {
+                info.setText("Dived for " + bottomtime + " minutes. Nitrogen level upon resurfacing was " + nitrogen_level + "." +
+                        " Nitrogen level now is " + interval_level + ".");
+            }
+        }  else {
+            if (nitrogen_level.equals("Z")) {
+                info.setText("Dived for " + bottomtime + " minutes. Nitrogen level upon entering the water was "
+                        + previous_level + ". Nitrogen level upon resurfacing was " + nitrogen_level + "." +
+                        " Nitrogen level now is " + interval_level + ". Nitrogen level Z can be very dangerous! " +
+                        "Make sure you've made a safety stop and be wary of decompression sickness.");
+            } else {
+                info.setText("Dived for " + bottomtime + " minutes. Nitrogen level upon entering the water was "
+                        + previous_level + ". Nitrogen level upon resurfacing was " + nitrogen_level + "." +
+                        " Nitrogen level now is " + interval_level + ".");
+            }
         }
 
         Button yesbutton = (Button) dialog.findViewById(R.id.dialog_newdive_yesbutton);

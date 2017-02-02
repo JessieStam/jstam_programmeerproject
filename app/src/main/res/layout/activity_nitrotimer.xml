@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@mipmap/background">
+    android:background="@mipmap/background3">
 
     <include
         android:id="@+id/toolbar"
@@ -16,7 +16,8 @@
         android:textSize="30sp"
         android:textColor="#000000"
         android:gravity="center"
-        android:padding="10dp" />
+        android:padding="10dp"
+        android:background="#CCFFFFFF"/>
 
     <Space
         android:layout_width="match_parent"
@@ -31,7 +32,8 @@
         android:textSize="20sp"
         android:textColor="#000000"
         android:gravity="center"
-        android:padding="10dp" />
+        android:padding="10dp"
+        android:background="#6029a77e"/>
 
     <TextView
         android:text="NONE"
@@ -53,6 +55,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/recalculate_button"
-        android:onClick="recalculate"/>
+        android:onClick="recalculate"
+        android:background="#66238d5a"
+        android:textColor="#000000"/>
 
 </LinearLayout>

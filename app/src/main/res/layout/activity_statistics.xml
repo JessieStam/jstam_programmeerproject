@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@mipmap/background">
+    android:background="@mipmap/background3">
 
     <include
         android:id="@+id/toolbar"
@@ -16,13 +16,15 @@
         android:textSize="30sp"
         android:textColor="#000000"
         android:gravity="center"
-        android:padding="10dp" />
+        android:padding="10dp"
+        android:background="#CCFFFFFF"/>
 
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="30dp">
+        android:paddingLeft="25dp"
+        android:paddingRight="30dp">
 
         <TextView
             android:text="@string/stats_username_string"
@@ -38,7 +40,9 @@
             android:orientation="vertical"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="0.5">
+            android:layout_weight="0.5"
+            android:background="#6629a77e"
+            android:padding="10dp">
 
             <TextView
                 android:text="@string/stats_number_dives"
@@ -67,12 +71,13 @@
     <TextView
         android:text="@string/stats_dived_for_string"
         android:layout_gravity="center_vertical"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/dived_for_text"
         android:textSize="20sp"
         android:textColor="#000000"
-        android:padding="30dp"/>
+        android:padding="20dp"
+        android:background="#60FFFFFF"/>
 
     <LinearLayout
         android:orientation="horizontal"
@@ -85,7 +90,9 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="0.33">
+            android:layout_weight="0.33"
+            android:background="#66238d5a"
+            android:padding="5dp">
 
             <TextView
                 android:text="@string/stats_days_string"
@@ -94,7 +101,8 @@
                 android:layout_gravity="center"
                 android:id="@+id/days_input_text"
                 android:textColor="#000000"
-                android:textSize="70sp" />
+                android:textSize="70sp"
+                />
 
             <TextView
                 android:text="@string/stats_days"
@@ -111,7 +119,9 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="0.33">
+            android:layout_weight="0.33"
+            android:background="#662fc9ae"
+            android:padding="5dp">
 
             <TextView
                 android:text="@string/stats_hours_input_string"
@@ -137,7 +147,9 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="0.33">
+            android:layout_weight="0.33"
+            android:background="#662ddbcd"
+            android:padding="5dp">
 
             <TextView
                 android:text="@string/stats_minutes_input_string"
