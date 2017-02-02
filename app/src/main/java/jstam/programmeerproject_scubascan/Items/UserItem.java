@@ -3,12 +3,15 @@ package jstam.programmeerproject_scubascan.Items;
 import java.util.ArrayList;
 
 /**
- * Created by Jessie on 12/01/2017.
+ * Scuba Scan - UserItem
+ *
+ * Jessie Stam
+ * 10560599
+ *
+ * Object that stores user information.
  */
-
 public class UserItem {
 
-    // fields for email and username
     private String username;
     private String email;
 
@@ -28,5 +31,4 @@ public class UserItem {
     // methods for e-mail
     public String getEmail() { return email; }
     public void setEmail(String new_email) { email = new_email; }
-
 }

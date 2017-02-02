@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:padding="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/finished_text_second"
+        android:textColor="#000000"
+        android:textSize="20sp"
+        android:layout_weight="1"/>
+
+    <Button
+        android:text="@string/firstfinishedfragment_editbutton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/edit_secondnewdive_button"
+        android:background="#66238d5a"/>
+
+</LinearLayout>

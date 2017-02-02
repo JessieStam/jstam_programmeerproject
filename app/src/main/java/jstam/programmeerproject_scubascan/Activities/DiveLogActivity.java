@@ -1,6 +1,5 @@
 package jstam.programmeerproject_scubascan.Activities;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -22,15 +21,20 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-import jstam.programmeerproject_scubascan.Helpers.DiveListAdapter;
+import jstam.programmeerproject_scubascan.Helpers.Adapters.DiveListAdapter;
 import jstam.programmeerproject_scubascan.Items.DiveItem;
 import jstam.programmeerproject_scubascan.R;
-import jstam.programmeerproject_scubascan.Helpers.ToolbarHelper;
+import jstam.programmeerproject_scubascan.Helpers.Helpers.ToolbarHelper;
 
 /**
- * Created by Jessie on 12/01/2017.
+ * Scuba Scan - DiveLogActivity
+ *
+ * Jessie Stam
+ * 10560599
+ *
+ * This activity show a list of all the dives a user has logged in a recyclerview. When a dive is
+ * clicked, the activity moves to LogDetailsActivity to display the details of that dive.
  */
-
 public class DiveLogActivity extends AppCompatActivity {
 
     private Toolbar toolbar;
@@ -44,12 +48,10 @@ public class DiveLogActivity extends AppCompatActivity {
     ArrayList<String> location_list;
     ArrayList<String> date_list;
 
-    ArrayList<DiveItem> firebase_dive_list;
-
     FirebaseDatabase my_database;
     DatabaseReference database_ref;
-
     FirebaseAuth mAuth;
+
     String user_id;
 
     @Override
@@ -65,7 +67,6 @@ public class DiveLogActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser firebase_user = mAuth.getCurrentUser();
         user_id = firebase_user.getUid();
-
         my_database = FirebaseDatabase.getInstance();
         database_ref = my_database.getReference();
 
@@ -79,15 +80,8 @@ public class DiveLogActivity extends AppCompatActivity {
         location_list = new ArrayList<>();
         date_list = new ArrayList<>();
 
-        // haal shit van firebase
+        // get dive log from firebase
         getLogFromFirebase();
-
-//        // create new BooksAdapter object and set to RecyclerView
-//        adapter = new DiveListAdapter(this, dive_number_list, location_list, date_list);
-//        dive_list.setAdapter(adapter);
-//
-//        adapter.notifyDataSetChanged();
-
     }
 
     @Override
@@ -100,60 +94,55 @@ public class DiveLogActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem toolbar) {
 
-        // display toast for clicked toolbar item
         String clicked_item = toolbar_helper.getClickedMenuItem(toolbar, this);
 
+        // display toast for clicked toolbar item
         if (!clicked_item.equals("")) {
             Toast.makeText(this, clicked_item, Toast.LENGTH_SHORT).show();
         }
-
         finish();
-
         return super.onOptionsItemSelected(toolbar);
     }
 
+    /* This function gets the dive log from Firebase. */
     public void getLogFromFirebase() {
 
-        database_ref.child("users").child(user_id).child("dive_log").addValueEventListener(new ValueEventListener() {
+        database_ref.child("users").child(user_id).child("dive_log").addValueEventListener
+                (new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
+                // clear lists to avoid duplicates
                 dive_number_list.clear();
                 location_list.clear();
                 date_list.clear();
 
+                // iterate over dive items in Firebase and add to list
                 Iterable<DataSnapshot> dive_log = dataSnapshot.getChildren();
-
                 for (DataSnapshot dive : dive_log) {
 
-                    Log.d("test5", "in dive");
-
                     DiveItem dive_item = dive.getValue(DiveItem.class);
-                    String dive_number = "Dive " + String.valueOf(dive_item.getDiveNumber());
+                    String dive_number = getString(R.string.dive) +
+                            String.valueOf(dive_item.getDiveNumber());
 
                     dive_number_list.add(dive_number);
                     location_list.add(dive_item.getCountry());
                     date_list.add(dive_item.getDate());
-
-                    Log.d("test5", "dive_number_list = " + String.valueOf(dive_number_list.size()));
-
                 }
 
-                // create new BooksAdapter object and set to RecyclerView
-                adapter = new DiveListAdapter(DiveLogActivity.this, dive_number_list, location_list, date_list);
+                // create new ListAdapter and add to Recyclerview
+                adapter = new DiveListAdapter(DiveLogActivity.this, dive_number_list, location_list,
+                        date_list);
                 dive_list.setAdapter(adapter);
-
                 adapter.notifyDataSetChanged();
             }
 
             @Override
-            public void onCancelled(DatabaseError databaseError) {
-                // cancelled
-            }
+            public void onCancelled(DatabaseError databaseError) {}
         });
-
     }
 
+    /* When back navigation is pressed, go back to MenuActivity. */
     @Override
     public void onBackPressed() {
         finish();

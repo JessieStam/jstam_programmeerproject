@@ -2,16 +2,18 @@ package jstam.programmeerproject_scubascan.Items;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-
 import java.util.ArrayList;
 
 /**
- * Created by Jessie on 18/01/2017.
+ * Scuba Scan - DiveItem
+ *
+ * Jessie Stam
+ * 10560599
+ *
+ * Parcelable object that stores all the data for a dive.
  */
-
 public class DiveItem implements Parcelable {
 
-    // fields for email and username
     private String date, country, dive_spot, buddy, air_temp, surface_temp, bottom_temp, visibility,
             water_type, dive_type, lead, time_in, time_out, pressure_in, pressure_out, depth,
             safetystop, notes, previous_level, nitrogen_level, interval_level;
@@ -21,7 +23,7 @@ public class DiveItem implements Parcelable {
     private int dive_number;
 
     public DiveItem() {
-        // Default constructor required for calls to DataSnapshot.getValue(User.class)
+        // Default constructor required for calls to DataSnapshot.getValue(DiveItem.class)
     }
 
     public DiveItem(int dive_number, String date, String country, String dive_spot, String buddy, String air_temp,
@@ -54,7 +56,6 @@ public class DiveItem implements Parcelable {
         this.previous_level = previous_level;
         this.nitrogen_level = nitrogen_level;
         this.interval_level = interval_level;
-
     }
 
     //methods for number
@@ -214,7 +215,5 @@ public class DiveItem implements Parcelable {
         previous_level = in.readString();
         nitrogen_level = in.readString();
         interval_level = in.readString();
-
     }
-
 }

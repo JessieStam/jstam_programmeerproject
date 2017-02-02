@@ -10,7 +10,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -18,10 +17,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
 import jstam.programmeerproject_scubascan.Items.UserItem;
 import jstam.programmeerproject_scubascan.R;
-import jstam.programmeerproject_scubascan.Helpers.UserManager;
 
 /**
  * Scuba Scan - LoginActivity
@@ -29,32 +26,23 @@ import jstam.programmeerproject_scubascan.Helpers.UserManager;
  * Jessie Stam
  * 10560599
  *
- * Uses Google Firebase to let users create accounts and log in on those accounts.
+ * The second activity the user sees. This activity uses Google Firebase to let users create
+ * accounts and log in on those accounts. Parameters from HomeActiviy, depending on logging in or
+ * signing up, determine the user interface. Logging in is required for moving on to the next
+ * activity.
+ *
+ * This code partially originates from Firebase and is added by me to fit the specific requirements.
  */
 public class LoginActivity extends HomeActivity implements View.OnClickListener {
 
     private static final String TAG = "LoginActivity";
 
-    String title;
-    String instr;
-    String confirm_pass;
-
-    TextView title_text;
-    TextView instr_text;
-
-    TextView status;
-    TextView detail;
-
-    EditText mUsernameField;
-    EditText mEmailField;
-    EditText mPasswordField;
-    EditText mPasswordConfirmField;
-
-    UserManager user_manager;
+    String title, instr, confirm_pass;
+    TextView title_text, instr_text;
+    EditText username_field, email_field, password_field, pass_confirm_field;
 
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
-
     private DatabaseReference my_database;
 
     @Override
@@ -62,52 +50,47 @@ public class LoginActivity extends HomeActivity implements View.OnClickListener 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        user_manager = UserManager.getOurInstance();
-
-        status = (TextView) findViewById(R.id.status);
-        detail = (TextView) findViewById(R.id.detail);
-
-        mUsernameField = (EditText) findViewById(R.id.username_input);
-        mEmailField = (EditText) findViewById(R.id.email_input);
-        mPasswordField = (EditText) findViewById(R.id.password_input);
-        mPasswordConfirmField = (EditText) findViewById(R.id.password_confirm_input);
+        // initialize views
+        username_field = (EditText) findViewById(R.id.username_input);
+        email_field = (EditText) findViewById(R.id.email_input);
+        password_field = (EditText) findViewById(R.id.password_input);
+        pass_confirm_field = (EditText) findViewById(R.id.password_confirm_input);
 
         title_text = (TextView) findViewById(R.id.signup_title);
         instr_text = (TextView) findViewById(R.id.signup_instr);
 
-        // extras determine logging in of signing up
-        Bundle extras = getIntent().getExtras();
+        Button signup_button = (Button) findViewById(R.id.sign_up_button);
 
+        // set listeners for buttons
+        findViewById(R.id.sign_up_button).setOnClickListener(this);
+        findViewById(R.id.sign_out_button).setOnClickListener(this);
+        findViewById(R.id.go_menu_button).setOnClickListener(this);
+
+        // get extras from HomeActivity
+        Bundle extras = getIntent().getExtras();
         if (extras != null) {
             title = extras.getString("log_sign");
             instr = extras.getString("instr");
             confirm_pass = extras.getString("pass_confirm");
         }
 
-        Button signup_button = (Button) findViewById(R.id.sign_up_button);
-
-        // Buttons
-        findViewById(R.id.sign_up_button).setOnClickListener(this);
-        findViewById(R.id.sign_out_button).setOnClickListener(this);
-        findViewById(R.id.go_menu_button).setOnClickListener(this);
-
-        // edit text according to log in or sign up
+        // edit initial UI according to logging in or signing up
         title_text.setText(title);
         instr_text.setText(instr);
 
         // display EditText for password confirmation in case of signing up
         if (confirm_pass != null) {
-            if (confirm_pass.equals("visible")) {
-                mUsernameField.setVisibility(View.VISIBLE);
-                mPasswordConfirmField.setVisibility(View.VISIBLE);
-                signup_button.setText("Sign me up!");
+            if (confirm_pass.equals(getString(R.string.home_passconfirm_visible))) {
+                username_field.setVisibility(View.VISIBLE);
+                pass_confirm_field.setVisibility(View.VISIBLE);
+                signup_button.setText(R.string.login_signupbutton_text);
             }
             else {
-                signup_button.setText("Log me in!");
+                signup_button.setText(R.string.login_loginbutton_text);
             }
         }
 
-        // listener for auth state
+        // set Firebase listener for auth state
         mAuth = FirebaseAuth.getInstance();
 
         mAuthListener = new FirebaseAuth.AuthStateListener() {
@@ -117,7 +100,7 @@ public class LoginActivity extends HomeActivity implements View.OnClickListener 
                 if (user != null) {
                     // User is signed in
                     Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
-                    instr_text.setText("Still logged in! Swim on...");
+                    instr_text.setText(R.string.login_stilllogedin_instr);
 
                 } else {
                     // User is signed out
@@ -127,6 +110,7 @@ public class LoginActivity extends HomeActivity implements View.OnClickListener 
             }
         };
 
+        // initialize Firebase reference
         my_database = FirebaseDatabase.getInstance().getReference();
     }
 
@@ -147,68 +131,60 @@ public class LoginActivity extends HomeActivity implements View.OnClickListener 
     /* Create new user account. */
     private void createAccount(String email, String password) {
 
-        final String new_instr = "Logged in succesfully!";
+        final String new_instr = getString(R.string.login_loggedin_newinstr);
 
+        // validate user input and create user with e-mail and password
         Log.d(TAG, "createAccount:" + email);
         if (!validateForm()) {
             return;
         }
 
-        // create user with e-mail
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         Log.d(TAG, "createUserWithEmail:onComplete:" + task.isSuccessful());
 
-                        // If sign in fails, display a message to the user. If sign in succeeds
-                        // the auth state listener will be notified and logic to handle the
-                        // signed in user can be handled in the listener.
+                        // if sign in fails, display a message to the user
                         if (!task.isSuccessful()) {
                             Toast.makeText(LoginActivity.this, R.string.auth_failed,
                                     Toast.LENGTH_SHORT).show();
-
-                            instr_text.setText(new_instr);
-
                         }
+                        // if sign in succeeds, auth state listener will be notified
                         else {
+                            instr_text.setText(new_instr);
                             saveUserInformation();
                         }
                     }
                 });
     }
 
-    /* Sign user in with existing account. */
+    /* Log in user with existing account. */
     private void signIn(String email, String password) {
 
-        final String new_instr = "Signed in succesfully!";
+        final String new_instr = getString(R.string.login_signedup_newinstr);
 
+        // validate user input and sign in user with e-mail and password
         Log.d(TAG, "signIn:" + email);
         if (!validateForm()) {
             return;
         }
 
-        // sign in user with email
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         Log.d(TAG, "signInWithEmail:onComplete:" + task.isSuccessful());
 
-                        // If sign in fails, display a message to the user. If sign in succeeds
-                        // the auth state listener will be notified and logic to handle the
-                        // signed in user can be handled in the listener.
+                        // if sign in fails, display a message to the user.
                         if (!task.isSuccessful()) {
                             Log.w(TAG, "signInWithEmail:failed", task.getException());
                             Toast.makeText(LoginActivity.this, R.string.auth_failed,
                                     Toast.LENGTH_SHORT).show();
-
-                            //status.setText(R.string.auth_failed);
-
-                        } else {
-
+                        }
+                        // if sign in succeeds, auth state listener will be notified
+                        else {
                             instr_text.setText(new_instr);
-
                         }
 
                     }
@@ -223,69 +199,74 @@ public class LoginActivity extends HomeActivity implements View.OnClickListener 
 
     /* Validate user's data. */
     private boolean validateForm() {
+
         boolean valid = true;
 
-        String email = mEmailField.getText().toString();
+        // validate e-mail
+        String email = email_field.getText().toString();
         if (TextUtils.isEmpty(email)) {
-            mEmailField.setError("Required.");
+            email_field.setError(getString(R.string.required));
             valid = false;
         } else {
-            mEmailField.setError(null);
+            email_field.setError(null);
+
+            if (!email.contains("@") || !email.contains(".")) {
+                Toast.makeText(this, R.string.login_email_requirement, Toast.LENGTH_SHORT).show();
+                valid = false;
+            }
         }
 
-        if (!email.contains("@") || !email.contains(".")) {
-            Toast.makeText(this, "Invalid e-mail!", Toast.LENGTH_SHORT).show();
-            valid = false;
-        }
-
+        // validate password
         int min_char = 6;
-
-        String password = mPasswordField.getText().toString();
+        String password = password_field.getText().toString();
         if (TextUtils.isEmpty(password)) {
-            mPasswordField.setError("Required.");
+            password_field.setError(getString(R.string.required));
             valid = false;
         } else {
-            mPasswordField.setError(null);
+            password_field.setError(null);
+
+            if (password.length() < min_char) {
+                Toast.makeText(this, R.string.login_passrequirement, Toast.LENGTH_SHORT).show();
+                valid = false;
+            }
         }
 
-        if (password.length() < min_char) {
-            Toast.makeText(this, "Password must be 6 characters", Toast.LENGTH_SHORT).show();
-            valid = false;
-        }
+        // if user is signing up, validate username and password confirmation
+        if (pass_confirm_field.getVisibility() == View.VISIBLE ) {
 
-        // if user is signing up, validate extra data
-        if (mPasswordConfirmField.getVisibility() == View.VISIBLE ) {
-
-            String username = mUsernameField.getText().toString();
+            // validate username
+            int max_char = 15;
+            String username = username_field.getText().toString();
             if (TextUtils.isEmpty(username)) {
-                mUsernameField.setError("Required.");
+                username_field.setError(getString(R.string.required));
                 valid = false;
             } else {
-                mUsernameField.setError(null);
+                username_field.setError(null);
 
-                if (username.length() > 15) {
-                    Toast.makeText(this, "Maximum of 15 characters", Toast.LENGTH_SHORT).show();
+                if (username.length() > max_char) {
+                    Toast.makeText(this, R.string.login_maxchar_requirement,
+                            Toast.LENGTH_SHORT).show();
                     valid = false;
-
                 }
             }
 
-            String password_confirm = mPasswordConfirmField.getText().toString();
+            // validate password confirmation
+            String password_confirm = pass_confirm_field.getText().toString();
             if (TextUtils.isEmpty(password_confirm)) {
-                mPasswordConfirmField.setError("Required.");
+                pass_confirm_field.setError(getString(R.string.required));
                 valid = false;
             } else if (!password.equals(password_confirm)) {
-                Toast.makeText(this, "Passwords don't match!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.login_no_pass_match, Toast.LENGTH_SHORT).show();
                 valid = false;
             } else {
-                mPasswordField.setError(null);
+                password_field.setError(null);
             }
         }
 
         return valid;
     }
 
-    /* Update interface after logging in. */
+    /* Update interface after logging in or signing up. */
     private void updateUI(FirebaseUser user) {
 
         if (user != null) {
@@ -295,24 +276,22 @@ public class LoginActivity extends HomeActivity implements View.OnClickListener 
                 findViewById(R.id.sign_up_button).setVisibility(View.GONE);
                 findViewById(R.id.sign_out_button).setVisibility(View.VISIBLE);
                 findViewById(R.id.go_menu_button).setVisibility(View.VISIBLE);
-                mUsernameField.setVisibility(View.GONE);
-                mEmailField.setVisibility(View.GONE);
-                mPasswordField.setVisibility(View.GONE);
+                username_field.setVisibility(View.GONE);
+                email_field.setVisibility(View.GONE);
+                password_field.setVisibility(View.GONE);
 
-                if (mPasswordConfirmField.getVisibility() != View.INVISIBLE) {
-                    mPasswordConfirmField.setVisibility(View.GONE);
+                if (pass_confirm_field.getVisibility() != View.INVISIBLE) {
+                    pass_confirm_field.setVisibility(View.GONE);
                 }
             } else {
-                //status.setText(R.string.signed_out);
-                //detail.setText(null);
 
-                mUsernameField.setVisibility(View.VISIBLE);
-                mEmailField.setVisibility(View.VISIBLE);
-                mPasswordField.setVisibility(View.VISIBLE);
+                username_field.setVisibility(View.VISIBLE);
+                email_field.setVisibility(View.VISIBLE);
+                password_field.setVisibility(View.VISIBLE);
 
                 if (confirm_pass != null) {
-                    if (confirm_pass.equals("invisible")) {
-                        mPasswordConfirmField.setVisibility(View.INVISIBLE);
+                    if (confirm_pass.equals(getString(R.string.home_passconfirm_invisible))) {
+                        pass_confirm_field.setVisibility(View.INVISIBLE);
                     }
                 }
             }
@@ -322,8 +301,8 @@ public class LoginActivity extends HomeActivity implements View.OnClickListener 
     /* Save user information to Firebase upon signing up. */
     private void saveUserInformation() {
 
-        String username = mUsernameField.getText().toString().trim();
-        String email = mEmailField.getText().toString().trim();
+        String username = username_field.getText().toString().trim();
+        String email = email_field.getText().toString().trim();
 
         FirebaseUser firebase_user = mAuth.getCurrentUser();
         String user_id = firebase_user.getUid();
@@ -334,32 +313,39 @@ public class LoginActivity extends HomeActivity implements View.OnClickListener 
 
     }
 
-    /* Listen for button click to determine the action. */
+    /* Listen for button click to determine what to do. */
     @Override
     public void onClick (View v){
+
         int i = v.getId();
 
+        // upon pressing sign up button, create new account or log in
         if (i == R.id.sign_up_button) {
 
-            String email = mEmailField.getText().toString();
-            String password = mPasswordField.getText().toString();
+            String email = email_field.getText().toString();
+            String password = password_field.getText().toString();
 
-            if (title.equals("Signing up")) {
+            if (title.equals(getString(R.string.home_signup_title))) {
 
                 if (validateForm()) {
                     createAccount(email, password);
                     signIn(email, password);
                 }
 
-            } else if (title.equals("Logging in")) {
-                signIn(email, password);
+            } else if (title.equals(getString(R.string.home_login_title))) {
+
+                if (validateForm()) {
+                    signIn(email, password);
+                }
             }
 
-        } else if (i == R.id.sign_out_button) {
-            user_manager.logout_user();
+        }
+        // upon pressing sign out button, sign user out and go back to HomeActivity
+        else if (i == R.id.sign_out_button) {
             signOut();
             finish();
         }
+        // upon pressing continue button, move on to MenuActivity
         else if (i == R.id.go_menu_button) {
 
             Intent goToMenu = new Intent(this, MenuActivity.class);

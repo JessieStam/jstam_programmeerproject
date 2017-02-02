@@ -20,8 +20,8 @@
                 android:id="@+id/statistics_toolbutton"
                 android:title="Statistics" />
             <item
-                android:id="@+id/fish_log_toolbutton"
-                android:title="Fish Log" />
+                android:id="@+id/nitrogen_toolbutton"
+                android:title="Nitrogen" />
         </menu>
     </item>/>
 

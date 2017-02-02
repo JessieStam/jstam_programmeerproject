@@ -81,7 +81,7 @@
                     android:text="Nitrogen"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:id="@+id/fish_log_button"
+                    android:id="@+id/nitrogen_button"
                     android:layout_weight="0.6"
                     android:padding="5dp"
                     android:background="#662ddbcd"

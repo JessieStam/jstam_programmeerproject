@@ -7,11 +7,9 @@
     <string name="enter_password_hint_string">Enter your password</string>
     <string name="confirm_password_hint_string">Confirm your password</string>
     <string name="sign_me_out_button_string">Sign me out</string>
-
     <string name="auth_failed">Something went wrong there…</string>
     <string name="emailpassword_status_fmt">Logged in on: %s</string>
     <string name="firebase_status_fmt">Your magical code is: %s</string>
-
     <string name="signed_out">Youre signed out</string>
     <string name="go_menu_button_string">Dive into App</string>
     <string name="enter_username_hint_string">How shall I address you?</string>
@@ -69,6 +67,57 @@
     <string name="time_hint">00:00</string>
     <string name="pressure_hint">. . . bar</string>
     <string name="notes_hint">Add your personal notes here...</string>
+    <string name="home_signup_title">Signing up</string>
+    <string name="home_signup_instr">Welcome! Enter your e-mail and password to sign up.</string>
+    <string name="home_passconfirm_visible">visible</string>
+    <string name="home_login_title">Logging in</string>
+    <string name="home_login_instr">Welcome back! You know the drill: e-mail and password to continue.</string>
+    <string name="home_passconfirm_invisible">invisible</string>
+    <string name="backnav_exit_warning">Press Back again to Exit.</string>
+    <string name="login_signupbutton_text">Sign me up!</string>
+    <string name="login_loginbutton_text">Log me in!</string>
+    <string name="login_stilllogedin_instr">Still logged in! Swim on...</string>
+    <string name="login_loggedin_newinstr">Logged in successfully!</string>
+    <string name="login_signedup_newinstr">Signed in succesfully!</string>
+    <string name="login_passrequirement">Password must be 6 characters</string>
+    <string name="login_email_requirement">Invalid e-mail!</string>
+    <string name="required">Required.</string>
+    <string name="login_maxchar_requirement">Maximum of 15 characters</string>
+    <string name="login_no_pass_match">Passwords don\'t match!</string>
+    <string name="intent_newdive">Logging a new dive...</string>
+    <string name="intent_divelog">Opening dive log...</string>
+    <string name="intent_statistics">Showing statistics...</string>
+    <string name="intent_nitrogen">Showing nitrogen levels...</string>
+    <string name="saved_data">Saved data!</string>
+    <string name="first">first</string>
+    <string name="second">second</string>
+    <string name="third">third</string>
+    <string name="dialog_1">"Dived for "</string>
+    <string name="dialog_2">" minutes. "</string>
+    <string name="dialog_3">"Nitrogen level upon resurfacing was "</string>
+    <string name="dialog_4">" Nitrogen level now is "</string>
+    <string name="dialog_5">"Nitrogen level upon entering the water was "</string>
+    <string name="dialog_6">. Nitrogen level Z can be very dangerous! Make sure you\'ve made a safety stop and be wary of decompression sickness.</string>
+    <string name="dive">"Dive "</string>
+    <string name="edited_data">Edited data!</string>
+    <string name="nitrogen_toast1">"Nitrogen-free in "</string>
+    <string name="nitrogen_toast2">" minutes!"</string>
+    <string name="current_nitrogen_text">Your current nitrogen level is...</string>
+    <string name="recal_level">Recalculated level!</string>
+    <string name="edit">Edit</string>
+    <string name="save">Save</string>
+    <string name="no_safety">no safety stop.</string>
+    <string name="safety"><![CDATA[</b>a<b> safety stop.]]></string>
+    <string name="invalid_date">Invalid date.</string>
+    <string name="invalid_checkbox">Don\'t forget the checkboxes!.</string>
+    <string name="invalid_time">Invalid time.</string>
+    <string name="invalid_depth">Maximum depth is 40 meter</string>
+    <string name="invalid_safertystop">Fill in safety stop!</string>
+    <string name="timer_set">Timer was set!</string>
+    <string name="no_timer_set">No timers set</string>
+    <string name="nitrogen_free_notification">You are nitrogen free!</string>
+    <string name="app_title">Scuba Scan</string>
+    <string name="nitrogen_update_notification">Nitrogen update!</string>
 
 
 </resources>
