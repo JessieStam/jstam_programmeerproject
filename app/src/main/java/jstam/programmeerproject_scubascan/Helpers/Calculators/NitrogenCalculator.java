@@ -76,7 +76,9 @@ public class NitrogenCalculator implements Serializable {
     public String calculateNitrogen(String depth, String bottomtime, long added_time) {
 
         String letter = "";
-        bottomtime += String.valueOf(added_time);
+
+        long new_bottom_time = Integer.valueOf(bottomtime) + added_time;
+        bottomtime = String.valueOf(new_bottom_time);
 
         // check if HashMap exists
         if (nitrogen_first != null) {
@@ -88,11 +90,11 @@ public class NitrogenCalculator implements Serializable {
 
             // if given depth is not in HashMap, add a meter
             boolean depth_not_found = true;
-
             while (depth_not_found) {
                 if (nitrogen_first.get(depth) != null) {
                     depth_not_found = false;
                 } else {
+
                     int depth_int = Integer.parseInt(depth) + 1;
                     depth = String.valueOf(depth_int);
                 }
@@ -109,13 +111,13 @@ public class NitrogenCalculator implements Serializable {
                 if (letter != null) {
                     time_not_found = false;
                 } else {
-                    counter += 1;
+                    counter++;
 
                     int bottomtime_int = Integer.parseInt(bottomtime) + 1;
                     bottomtime = String.valueOf(bottomtime_int);
 
                     // if given time is more than maximum time in table, level is Z
-                    if (counter < 39) {
+                    if (counter > 39) {
                         letter = "Z";
                         time_not_found = false;
                     }

@@ -123,9 +123,7 @@ public class DiveManager {
             }
 
             @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Log.d("test4", "in onCancelled");
-            }
+            public void onCancelled(DatabaseError databaseError) {}
         });
     }
 

@@ -292,15 +292,11 @@ public class NewDiveActivity extends AppCompatActivity implements FirstFragUnfin
                         last_time_out = last_dive.getTimeOut();
                         last_letter = last_dive.getLetter();
                         last_totaltime = last_dive.getTotaltime();
-
-                        Log.d("test8", "last total time is: " + last_totaltime);
                     }
                 }
-
                 // use acquired variables to calculate nitrogen levels
                 calculateValues();
             }
-
             @Override
             public void onCancelled(DatabaseError databaseError) {}
         });
